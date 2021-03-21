@@ -43,13 +43,23 @@ class EmployeeServiceDAL extends EmployeeServiceImpl{
         MessageResponse msgResp = new MessageResponse();
         try
         {
-            mst_employee employeeToModify = empRep.save(employee);
-            msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(), "Employee details modified successfully!");
-            employeeToModify.setReturnMessage(msgResp);
-            return employeeToModify;
+            Optional<mst_employee> isEmpPresent = empRep.findById(employee.getEmp_id());
+            if(isEmpPresent.isPresent()) {
+                mst_employee employeeToModify = empRep.save(employee);
+                msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
+                        "Employee details modified successfully!");
+                employeeToModify.setReturnMessage(msgResp);
+                return employeeToModify;
+            }
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
+                    "Employee details not found to modify");
+            employee.setReturnMessage(msgResp);
+            return employee;
         }catch(Exception ex){
             System.out.println(ex.getMessage());
-            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),"Failed to modify employee");
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
+
+                    "Failed to modify employee");
             employee.setReturnMessage(msgResp);
             return employee;
         }
