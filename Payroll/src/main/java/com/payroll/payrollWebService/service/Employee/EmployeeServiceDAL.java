@@ -58,7 +58,6 @@ class EmployeeServiceDAL extends EmployeeServiceImpl{
         }catch(Exception ex){
             System.out.println(ex.getMessage());
             msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
-
                     "Failed to modify employee");
             employee.setReturnMessage(msgResp);
             return employee;
