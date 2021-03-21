@@ -1,0 +1,36 @@
+pipeline{
+
+  agent any
+
+  tools{
+    maven 'Maven 3.6.3'
+  }
+
+  stages{
+    stage('build'){
+      steps{
+        echo 'This is Build job'
+        sh 'mvn compile'
+      }
+    }
+//    stage('test'){
+//      steps{
+//        echo 'This is Test job'
+//        sh 'mvn clean test'
+//      }
+//    }
+    stage('package'){
+      steps{
+        echo 'This is Package job'
+        sh 'mvn package -DskipTests'
+        archiveArtifacts '**/target/*.jar'
+      }
+    }
+  }
+
+  post{
+    always{
+      echo 'This pipeline has completed ...'
+    }
+  }
+}
