@@ -29,6 +29,18 @@ public class EmpSalStructController {
             return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
         }
     }
+
+    @PostMapping("/modifyEmpSalStruct")
+    public ResponseEntity<?> ModifyEmpSalStruct(@Valid @RequestBody trn_emp_salary_structure empSalStruct) {
+        try
+        {
+            trn_emp_salary_structure empSalStructToModify =empSalStructService.modify(empSalStruct);
+            return ResponseEntity.ok(new MessageResponse(empSalStructToModify.getReturnMessage().getCode(),
+                    empSalStructToModify.getReturnMessage().getMessage()));
+        }catch(Exception ex){
+            return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
+        }
+    }
 }
 
 

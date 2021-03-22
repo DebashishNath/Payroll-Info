@@ -11,7 +11,10 @@ abstract class EmpSalStructServiceImpl implements EmpSalStructService {
     public trn_emp_salary_structure save(trn_emp_salary_structure empSalaryStruct) {
         return new EmpSalStructServiceDAL().save(empSalaryStruct);
     }
-
+    @Override
+    public trn_emp_salary_structure modify(trn_emp_salary_structure empSalaryStruct) {
+        return new EmpSalStructServiceDAL().modify(empSalaryStruct);
+    }
     @Override
     public Optional<trn_emp_salary_structure> findById(EmpEarnDedIdentity empEarnDedIdentity) {
         return new EmpSalStructServiceDAL().findById(empEarnDedIdentity);

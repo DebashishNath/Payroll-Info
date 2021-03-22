@@ -1,6 +1,7 @@
 package com.payroll.payrollWebService.service.EmpSalStruct;
 
 import com.payroll.payrollWebService.models.common.CodeConstants;
+import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.EmpEarnDedIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_emp_salary_structure;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
@@ -14,7 +15,7 @@ import java.util.Optional;
 class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
 
     @Autowired
-    private EmpSalStructRepository empSalStructRepository;
+    private EmpSalStructRepository empSalStructRep;
 
     public EmpSalStructServiceDAL(){}
 
@@ -34,7 +35,7 @@ class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
                 empSalaryStructure.setReturnMessage(msgResp);
                 return empSalaryStructure;
             }
-            trn_emp_salary_structure empSalStructToAdd = empSalStructRepository.save(empSalaryStructure);
+            trn_emp_salary_structure empSalStructToAdd = empSalStructRep.save(empSalaryStructure);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
                     "Salary Structure added successfully!");
             empSalStructToAdd.setReturnMessage(msgResp);
@@ -50,6 +51,32 @@ class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
     }
 
     @Override
+    public trn_emp_salary_structure modify(trn_emp_salary_structure empSalaryStructure)
+    {
+        MessageResponse msgResp = new MessageResponse();
+        try
+        {
+            Optional<trn_emp_salary_structure> isEmpSalStructPresent = empSalStructRep.findById(empSalaryStructure.getEmpEmpEarnDedIdentity());
+            if(isEmpSalStructPresent.isPresent())
+            {
+                trn_emp_salary_structure empSalStructToModify = empSalStructRep.save(empSalaryStructure);
+                msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
+                        "Salary structure modified successfully!");
+                empSalStructToModify.setReturnMessage(msgResp);
+                return empSalStructToModify;
+            }
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
+                    "Salary structure not found to modify");
+            empSalaryStructure.setReturnMessage(msgResp);
+            return empSalaryStructure;
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+            empSalaryStructure.setReturnMessage(ErrorHandling.GetErrorMessage(ex.getMessage()));
+            return empSalaryStructure;
+        }
+    }
+
+    @Override
     public Optional<trn_emp_salary_structure> findById(EmpEarnDedIdentity empEarnDedIdentity) {
-        return empSalStructRepository.findById(empEarnDedIdentity); }
+        return empSalStructRep.findById(empEarnDedIdentity); }
 }
