@@ -1,6 +1,7 @@
 package com.payroll.payrollWebService.service.MonthlyEmpSal;
 
 import com.payroll.payrollWebService.models.common.CodeConstants;
+import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.MonthlyEmpSalaryIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_emp_salary_structure;
 import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
 
     @Autowired
-    private MonthlyEmpSalaryRepository monthlyEmpSalaryRepository;
+    private MonthlyEmpSalaryRepository monthlyEmpSalRep;
 
     public MonthlyEmpSalServiceDAL() {}
 
@@ -36,7 +37,7 @@ public class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
                 monthlyEmpSalary.setReturnMessage(msgResp);
                 return monthlyEmpSalary;
             }
-            trn_monthly_emp_salary monthlyEmpSalaryToAdd = monthlyEmpSalaryRepository.save(monthlyEmpSalary);
+            trn_monthly_emp_salary monthlyEmpSalaryToAdd = monthlyEmpSalRep.save(monthlyEmpSalary);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
                     "Monthly Employee Salary added successfully!");
             System.out.println("Inside save() of monthly employee salary");
@@ -53,8 +54,34 @@ public class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
     }
 
     @Override
+    public trn_monthly_emp_salary modify(trn_monthly_emp_salary monthlyEmpSalary)
+    {
+        MessageResponse msgResp = new MessageResponse();
+        try
+        {
+            Optional<trn_monthly_emp_salary> isMonEmpSalPresent = monthlyEmpSalRep.findById(monthlyEmpSalary.getMonEmpSalIdentity());
+            if(isMonEmpSalPresent.isPresent())
+            {
+                trn_monthly_emp_salary montlyEmpSalaryToModify = monthlyEmpSalRep.save(monthlyEmpSalary);
+                msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
+                        "Monthly Employee Salary modified successfully!");
+                montlyEmpSalaryToModify.setReturnMessage(msgResp);
+                return montlyEmpSalaryToModify;
+            }
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
+                    "Monthly Employee Salary not found to modify");
+            monthlyEmpSalary.setReturnMessage(msgResp);
+            return monthlyEmpSalary;
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+            monthlyEmpSalary.setReturnMessage(ErrorHandling.GetErrorMessage(ex.getMessage()));
+            return monthlyEmpSalary;
+        }
+    }
+
+    @Override
     public Optional<trn_monthly_emp_salary> findById(MonthlyEmpSalaryIdentity monthlyEmpSalaryIdentity) {
-        return monthlyEmpSalaryRepository.findById(monthlyEmpSalaryIdentity);
+        return monthlyEmpSalRep.findById(monthlyEmpSalaryIdentity);
     }
 
 }

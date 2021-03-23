@@ -29,6 +29,18 @@ public class MonthlyEmpSalController {
             return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
         }
     }
+
+    @PostMapping("/modifymonthlysal")
+    public ResponseEntity<?> ModifyEmpSal(@Valid @RequestBody trn_monthly_emp_salary monthlyEmpSal) {
+        try
+        {
+            trn_monthly_emp_salary monthlyEmpSalToModify =empMonthlySalService.modify(monthlyEmpSal);
+            return ResponseEntity.ok(new MessageResponse(monthlyEmpSalToModify.getReturnMessage().getCode(),
+                    monthlyEmpSalToModify.getReturnMessage().getMessage()));
+        }catch(Exception ex){
+            return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
+        }
+    }
 }
 
 

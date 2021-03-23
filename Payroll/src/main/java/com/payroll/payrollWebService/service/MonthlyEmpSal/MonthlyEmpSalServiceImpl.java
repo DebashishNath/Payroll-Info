@@ -13,6 +13,10 @@ abstract class MonthlyEmpSalServiceImpl implements MonthlyEmpSalService {
     }
 
     @Override
+    public trn_monthly_emp_salary modify(trn_monthly_emp_salary monthlyEmpSalary) {
+        return new MonthlyEmpSalServiceDAL().save(monthlyEmpSalary);
+    }
+    @Override
     public Optional<trn_monthly_emp_salary> findById(MonthlyEmpSalaryIdentity monthlyEmpSalaryIdentity) {
         return new MonthlyEmpSalServiceDAL().findById(monthlyEmpSalaryIdentity);
     }

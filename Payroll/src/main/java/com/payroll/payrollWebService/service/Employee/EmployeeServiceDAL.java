@@ -70,7 +70,9 @@ class EmployeeServiceDAL extends EmployeeServiceImpl{
     }
 
     @Override
-    public Optional<mst_employee> findById(Long id) {return empRep.findById(id); }
+    public Optional<mst_employee> findById(Long id) {
+        return empRep.findById(id);
+    }
 
     @Override
     public MessageResponse removeOne(Long id)
