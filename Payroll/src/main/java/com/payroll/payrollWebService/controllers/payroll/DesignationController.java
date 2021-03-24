@@ -26,7 +26,7 @@ public class DesignationController {
     }
 
     @GetMapping("/designation/{id}")
-    public Optional<mst_designation> getOne(@PathVariable(value = "id") Long id){
+    public Optional<mst_designation> getOneDesignation(@PathVariable(value = "id") Long id){
         return designationService.findById(id);
     }
 
