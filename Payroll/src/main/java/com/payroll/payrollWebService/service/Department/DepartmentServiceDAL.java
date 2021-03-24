@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DepartmentServiceDAL extends DepartmentServiceImpl {
+class DepartmentServiceDAL extends DepartmentServiceImpl {
 
     @Autowired
     private DepartmentRepository deptRep;

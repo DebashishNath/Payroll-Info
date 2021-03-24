@@ -12,7 +12,7 @@ public class mst_district {
     private String district_code;
     private String district_name;
 
-    @OneToOne(cascade = CascadeType.DETACH)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "state_id", referencedColumnName = "state_id")
     private mst_state state;
 

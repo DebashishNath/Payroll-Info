@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
+class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
 
     @Autowired
     private MonthlyEmpSalaryRepository monthlyEmpSalRep;

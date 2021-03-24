@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LocationServiceDAL extends LocationServiceImpl {
+class LocationServiceDAL extends LocationServiceImpl {
 
     @Autowired
     private LocationRepository locationRep;
