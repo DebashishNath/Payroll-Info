@@ -1,9 +1,7 @@
 package com.payroll.payrollWebService.service.Category;
 
 import com.payroll.payrollWebService.models.payroll.mst_category;
-import com.payroll.payrollWebService.models.payroll.mst_designation;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
-
 import java.util.List;
 import java.util.Optional;
 
