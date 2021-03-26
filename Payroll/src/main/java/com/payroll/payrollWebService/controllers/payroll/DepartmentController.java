@@ -2,7 +2,6 @@ package com.payroll.payrollWebService.controllers.payroll;
 
 import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.payroll.mst_department;
-import com.payroll.payrollWebService.models.payroll.mst_designation;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.service.Department.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
