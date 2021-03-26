@@ -54,42 +54,44 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
 			throws InvalidKeySpecException, NoSuchAlgorithmException {
-		System.out.println("Inside Sign In");
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		try {
+			System.out.println("Inside Sign In");
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+							loginRequest.getPassword()));
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+			UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-		Set<Role> userRoles=new HashSet<>();
-		if(roles!=null && roles.size()>0)
-		{
-			for(int i=0;i<roles.size();i++){
-				Role role=new Role();
-				if(roles.get(i)=="ROLE_ADMIN")
-				{
-					role.setId(1);
-					role.setName(ERole.ROLE_ADMIN);
+			List<String> roles = userDetails.getAuthorities().stream()
+					.map(item -> item.getAuthority())
+					.collect(Collectors.toList());
+			Set<Role> userRoles = new HashSet<>();
+			if (roles != null && roles.size() > 0) {
+				for (int i = 0; i < roles.size(); i++) {
+					Role role = new Role();
+					if (roles.get(i) == "ROLE_ADMIN") {
+						role.setId(1);
+						role.setName(ERole.ROLE_ADMIN);
+					}
+					if (roles.get(i) == "ROLE_USER") {
+						role.setId(2);
+						role.setName(ERole.ROLE_USER);
+					}
+					userRoles.add(role);
 				}
-				if(roles.get(i)=="ROLE_USER")
-				{
-					role.setId(2);
-					role.setName(ERole.ROLE_USER);
-				}
-				userRoles.add(role);
 			}
+			String jwt = jwtUtils.generateJwtToken(authentication);
+			return ResponseEntity.ok(new JwtResponse(jwt,
+					userDetails.getId(),
+					userDetails.getUsername(),
+					userDetails.getEmail(),
+					userRoles, new MessageResponse(CodeConstants.SUCCESS.getID(),
+					"Successful Sign in.")));
+		}catch(Exception ex){
+			return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
 		}
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		return ResponseEntity.ok(new JwtResponse(jwt,
-									userDetails.getId(),
-									userDetails.getUsername(),
-									userDetails.getEmail(),
-									userRoles, "Successful Sign in."));
-
 	}
 
 	@PostMapping("/signup")

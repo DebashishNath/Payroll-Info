@@ -12,24 +12,16 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private Set<Role> roles=new HashSet<>();
-	private String returnMessage;
+	private MessageResponse msgResp;
 
 	public JwtResponse(String accessToken, Long id, String username, String email,
-					   Set<Role> userRoles, String returnMessage) {
+					   Set<Role> userRoles, MessageResponse msgResp) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = userRoles;
-		this.returnMessage = returnMessage;
-	}
-
-	public String getReturnMessage() {
-		return returnMessage;
-	}
-
-	public void setReturnMessage(String errorMessage) {
-		this.returnMessage = returnMessage;
+		this.msgResp = msgResp;
 	}
 
 	public String getAccessToken() {
@@ -78,5 +70,13 @@ public class JwtResponse {
 
 	public void setRoles(Set<Role> userRoles) {
 		this.roles = userRoles;
+	}
+
+	public MessageResponse getMsgResp() {
+		return msgResp;
+	}
+
+	public void setMsgResp(MessageResponse msgResp) {
+		this.msgResp = msgResp;
 	}
 }
