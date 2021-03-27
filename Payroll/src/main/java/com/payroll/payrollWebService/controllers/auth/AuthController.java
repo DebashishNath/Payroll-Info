@@ -90,8 +90,10 @@ public class AuthController {
 					userRoles, new MessageResponse(CodeConstants.SUCCESS.getID(),
 					"Successful Sign in.")));
 		}catch(Exception ex){
-			return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),
-					"Invalid login/Password"));
+			return ResponseEntity.ok(new JwtResponse("",new Long(0),
+					"","",null,
+					new MessageResponse(CodeConstants.UNAUTHORIZED.getID(),
+					"Invalid login/Password")));
 		}
 	}
 

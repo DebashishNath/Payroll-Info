@@ -6,7 +6,8 @@ public enum CodeConstants{
     INVALID(3),
     WARNING(4),
     FAILURE(5),
-    DUPLICATE(1062);
+    DUPLICATE(1062),
+    UNAUTHORIZED(401);
 
     private Integer id;
 
