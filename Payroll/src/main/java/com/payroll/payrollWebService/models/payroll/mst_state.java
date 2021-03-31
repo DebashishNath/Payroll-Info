@@ -3,10 +3,18 @@ package com.payroll.payrollWebService.models.payroll;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 
 import javax.persistence.*;
+import lombok.Data;
+import java.io.Serializable;
 
 @Entity
 @Table(name="mst_state")
-public class mst_state {
+@Data
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(name = "DisplayAllStates",
+                procedureName = "DisplayAllStates",
+                resultClasses = mst_state.class)
+})
+public class mst_state implements Serializable {
     @Id
     private Long state_id;
     private String state_code;

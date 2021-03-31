@@ -7,6 +7,9 @@ import com.payroll.payrollWebService.repository.payroll.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,9 @@ class StateServiceDAL extends StateServiceImpl {
 
     @Autowired
     private StateRepository stateRepository;
+
+    @PersistenceContext
+    private EntityManager em;
 
     public StateServiceDAL() {}
 
@@ -37,6 +43,7 @@ class StateServiceDAL extends StateServiceImpl {
             return state;
         }
     }
+    
 
     @Override
     public mst_state modify(mst_state state)
@@ -58,7 +65,11 @@ class StateServiceDAL extends StateServiceImpl {
 
     @Override
     public List<mst_state> findAll() {
-        return (List<mst_state>) stateRepository.findAll();
+        System.out.println("Inside findAll() to test procedure");
+        StoredProcedureQuery findAllStates =
+                em.createNamedStoredProcedureQuery("DisplayAllStates");
+        return (List<mst_state>)findAllStates.getResultList();
+        //return (List<mst_state>) stateRepository.findAll();
     }
 
     @Override
