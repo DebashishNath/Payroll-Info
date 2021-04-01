@@ -27,6 +27,7 @@ CREATE TABLE `trn_monthly_emp_salary` (
   `year` int NOT NULL,
   `emp_id` int NOT NULL,
   `earn_ded_id` int NOT NULL,
+  `salary_date` date NOT NULL,
   `earn_ded_amount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`month`,`year`,`emp_id`,`earn_ded_id`),
   KEY `FK_monthly_emp_salary_emp_id_idx` (`emp_id`),
@@ -42,7 +43,7 @@ CREATE TABLE `trn_monthly_emp_salary` (
 
 LOCK TABLES `trn_monthly_emp_salary` WRITE;
 /*!40000 ALTER TABLE `trn_monthly_emp_salary` DISABLE KEYS */;
-INSERT INTO `trn_monthly_emp_salary` VALUES (1,2021,1,1,10000.00),(1,2021,1,2,6000.00),(1,2021,1,3,3000.00),(1,2021,1,4,1200.00),(1,2021,1,5,1000.00),(2,2021,1,1,10000.00),(2,2021,2,2,6000.00),(2,2021,2,3,4000.00),(2,2021,2,4,1200.00),(2,2021,2,5,1100.00);
+INSERT INTO `trn_monthly_emp_salary` VALUES (1,2021,1,1,'0000-00-00',10000.00),(1,2021,1,2,'0000-00-00',6000.00),(1,2021,1,3,'0000-00-00',3000.00),(1,2021,1,4,'0000-00-00',1200.00),(1,2021,1,5,'0000-00-00',1000.00),(1,2021,2,1,'2020-12-31',11000.00),(1,2021,3,1,'2020-12-31',11000.00),(2,2021,2,1,'0000-00-00',6000.00),(2,2021,2,2,'0000-00-00',5000.00),(2,2021,2,3,'0000-00-00',4000.00),(2,2021,2,4,'0000-00-00',1200.00),(2,2021,2,5,'0000-00-00',1300.00);
 /*!40000 ALTER TABLE `trn_monthly_emp_salary` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-21  7:15:27
+-- Dump completed on 2021-04-01  5:22:34

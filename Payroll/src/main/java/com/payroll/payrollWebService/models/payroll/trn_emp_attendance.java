@@ -1,14 +1,18 @@
 package com.payroll.payrollWebService.models.payroll;
 
 import com.payroll.payrollWebService.payload.response.MessageResponse;
+import lombok.Data;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name="trn_emp_attendance")
+@Data
+@NamedStoredProcedureQuery(
+        name="generateMonthlyAttendance",
+        procedureName="GenerateMonthlyAttendance",
+        resultClasses = { trn_emp_attendance.class }
+)
 public class trn_emp_attendance {
 
     @EmbeddedId

@@ -29,7 +29,7 @@ CREATE TABLE `mst_department` (
   PRIMARY KEY (`department_id`),
   UNIQUE KEY `department_code_UNIQUE` (`department_code`),
   UNIQUE KEY `department_name_UNIQUE` (`department_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `mst_department` (
 
 LOCK TABLES `mst_department` WRITE;
 /*!40000 ALTER TABLE `mst_department` DISABLE KEYS */;
-INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts');
+INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts'),(4,'D004','dept-2');
 /*!40000 ALTER TABLE `mst_department` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-21  7:15:27
+-- Dump completed on 2021-04-01  5:22:35

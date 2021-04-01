@@ -29,7 +29,7 @@ CREATE TABLE `mst_location` (
   PRIMARY KEY (`location_id`),
   UNIQUE KEY `location_code_UNIQUE` (`location_code`),
   UNIQUE KEY `location_name_UNIQUE` (`location_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `mst_location` (
 
 LOCK TABLES `mst_location` WRITE;
 /*!40000 ALTER TABLE `mst_location` DISABLE KEYS */;
-INSERT INTO `mst_location` VALUES (1,'LC1','Head Office');
+INSERT INTO `mst_location` VALUES (1,'LC1','Head Office'),(2,'LC2','Factory');
 /*!40000 ALTER TABLE `mst_location` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-21  7:15:28
+-- Dump completed on 2021-04-01  5:22:35

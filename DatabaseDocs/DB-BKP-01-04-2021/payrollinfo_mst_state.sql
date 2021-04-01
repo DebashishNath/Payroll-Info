@@ -16,33 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_district`
+-- Table structure for table `mst_state`
 --
 
-DROP TABLE IF EXISTS `mst_district`;
+DROP TABLE IF EXISTS `mst_state`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_district` (
-  `district_id` int NOT NULL AUTO_INCREMENT,
-  `district_code` varchar(5) NOT NULL,
-  `district_name` varchar(25) NOT NULL,
-  `state_id` int NOT NULL,
-  PRIMARY KEY (`district_id`,`district_code`),
-  UNIQUE KEY `district_code_UNIQUE` (`district_code`),
-  UNIQUE KEY `district_name_UNIQUE` (`district_name`),
-  KEY `mst_district_state_id_idx` (`state_id`),
-  CONSTRAINT `mst_district_state_id` FOREIGN KEY (`state_id`) REFERENCES `mst_state` (`state_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_state` (
+  `state_id` int NOT NULL AUTO_INCREMENT,
+  `state_code` varchar(5) NOT NULL,
+  `state_name` varchar(25) NOT NULL,
+  `country_id` int NOT NULL,
+  PRIMARY KEY (`state_id`),
+  UNIQUE KEY `state_code_UNIQUE` (`state_code`),
+  UNIQUE KEY `state_name_UNIQUE` (`state_name`),
+  KEY `mst_state_country_id_idx` (`country_id`),
+  CONSTRAINT `mst_state_country_id` FOREIGN KEY (`country_id`) REFERENCES `mst_country` (`country_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_district`
+-- Dumping data for table `mst_state`
 --
 
-LOCK TABLES `mst_district` WRITE;
-/*!40000 ALTER TABLE `mst_district` DISABLE KEYS */;
-INSERT INTO `mst_district` VALUES (1,'DC001','Kolkata',1);
-/*!40000 ALTER TABLE `mst_district` ENABLE KEYS */;
+LOCK TABLES `mst_state` WRITE;
+/*!40000 ALTER TABLE `mst_state` DISABLE KEYS */;
+INSERT INTO `mst_state` VALUES (1,'S001','West Bengal',1),(3,'S002','Bihar',1),(4,'S003','Madhya Pradesh',1),(6,'S004','Tamil Nadu',1),(7,'S005','Rajasthan',1),(9,'S006','Orissa',1),(10,'S007','Gujrat',1);
+/*!40000 ALTER TABLE `mst_state` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-21  7:15:29
+-- Dump completed on 2021-04-01  5:22:35
