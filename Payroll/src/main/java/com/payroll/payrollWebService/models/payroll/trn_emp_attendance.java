@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name="trn_emp_attendance")
 @Data
 @NamedStoredProcedureQuery(
-        name="generateMonthlyAttendance",
+        name="GenerateMonthlyAttendance",
         procedureName="GenerateMonthlyAttendance",
         resultClasses = { trn_emp_attendance.class }
 )

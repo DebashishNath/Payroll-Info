@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import java.time.Month;
 import java.util.List;
 
 @Service
@@ -32,7 +33,7 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
             {
                 System.out.println("Emp Code - " + lstEmployees.get(i).getEmp_id());
                 StoredProcedureQuery generateAttendance =
-                        em.createNamedStoredProcedureQuery("generateMonthlyAttendance")
+                        em.createNamedStoredProcedureQuery("GenerateMonthlyAttendance")
                         .registerStoredProcedureParameter("p_month",Integer.class, ParameterMode.IN)
                         .setParameter("p_month", p_month)
                         .registerStoredProcedureParameter("p_year",Integer.class,ParameterMode.IN)
@@ -42,8 +43,7 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
                 generateAttendance.execute();
             }
             msp.setCode(CodeConstants.SUCCESS.getID());
-            msp.setMessage("Attendance Generated Successfully For " + p_month + "-" + p_year);
-
+            msp.setMessage("Attendance Generated Successfully For " + Month.of(p_month) + "-" + p_year);
         } catch (Exception ex) {
             msp.setCode(CodeConstants.FAILURE.getID());
             msp.setMessage(ex.getMessage());
