@@ -3,8 +3,7 @@ package com.payroll.payrollWebService.service.MonthlyEmpSal;
 import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.MonthlyEmpSalaryIdentity;
-import com.payroll.payrollWebService.models.payroll.trn_emp_salary_structure;
-import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary;
+import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_details;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 
 import com.payroll.payrollWebService.repository.payroll.MonthlyEmpSalaryRepository;
@@ -22,13 +21,13 @@ class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
     public MonthlyEmpSalServiceDAL() {}
 
     @Override
-    public trn_monthly_emp_salary save(trn_monthly_emp_salary monthlyEmpSalary)
+    public trn_monthly_emp_salary_details save(trn_monthly_emp_salary_details monthlyEmpSalary)
     {
         MessageResponse msgResp =new MessageResponse();
         try{
             System.out.println("Inside save() of monthly employee salary");
             MonthlyEmpSalaryIdentity monEmpSalaryIdentity= monthlyEmpSalary.getMonEmpSalIdentity();
-            Optional<trn_monthly_emp_salary> optMonEmpSal=findById(monEmpSalaryIdentity);
+            Optional<trn_monthly_emp_salary_details> optMonEmpSal=findById(monEmpSalaryIdentity);
 
             if(optMonEmpSal.isPresent())
             {
@@ -37,7 +36,7 @@ class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
                 monthlyEmpSalary.setReturnMessage(msgResp);
                 return monthlyEmpSalary;
             }
-            trn_monthly_emp_salary monthlyEmpSalaryToAdd = monthlyEmpSalRep.save(monthlyEmpSalary);
+            trn_monthly_emp_salary_details monthlyEmpSalaryToAdd = monthlyEmpSalRep.save(monthlyEmpSalary);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
                     "Monthly Employee Salary added successfully!");
             System.out.println("Inside save() of monthly employee salary");
@@ -54,15 +53,15 @@ class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
     }
 
     @Override
-    public trn_monthly_emp_salary modify(trn_monthly_emp_salary monthlyEmpSalary)
+    public trn_monthly_emp_salary_details modify(trn_monthly_emp_salary_details monthlyEmpSalary)
     {
         MessageResponse msgResp = new MessageResponse();
         try
         {
-            Optional<trn_monthly_emp_salary> isMonEmpSalPresent = monthlyEmpSalRep.findById(monthlyEmpSalary.getMonEmpSalIdentity());
+            Optional<trn_monthly_emp_salary_details> isMonEmpSalPresent = monthlyEmpSalRep.findById(monthlyEmpSalary.getMonEmpSalIdentity());
             if(isMonEmpSalPresent.isPresent())
             {
-                trn_monthly_emp_salary montlyEmpSalaryToModify = monthlyEmpSalRep.save(monthlyEmpSalary);
+                trn_monthly_emp_salary_details montlyEmpSalaryToModify = monthlyEmpSalRep.save(monthlyEmpSalary);
                 msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
                         "Monthly Employee Salary modified successfully!");
                 montlyEmpSalaryToModify.setReturnMessage(msgResp);
@@ -80,7 +79,7 @@ class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
     }
 
     @Override
-    public Optional<trn_monthly_emp_salary> findById(MonthlyEmpSalaryIdentity monthlyEmpSalaryIdentity) {
+    public Optional<trn_monthly_emp_salary_details> findById(MonthlyEmpSalaryIdentity monthlyEmpSalaryIdentity) {
         return monthlyEmpSalRep.findById(monthlyEmpSalaryIdentity);
     }
 

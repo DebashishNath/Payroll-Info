@@ -9,8 +9,8 @@ import javax.persistence.Transient;
 import java.util.Date;
 
 @Entity
-@Table(name="trn_monthly_emp_salary")
-public class trn_monthly_emp_salary {
+@Table(name="trn_monthly_emp_salary_details")
+public class trn_monthly_emp_salary_details {
 
     @EmbeddedId
     private MonthlyEmpSalaryIdentity monEmpSalIdentity;
@@ -20,10 +20,10 @@ public class trn_monthly_emp_salary {
     @Transient
     private MessageResponse returnMessage;
 
-    public trn_monthly_emp_salary(){}
+    public trn_monthly_emp_salary_details(){}
 
-    public trn_monthly_emp_salary(MonthlyEmpSalaryIdentity monEmpSalIdentity,
-                                  Double earn_ded_amount)
+    public trn_monthly_emp_salary_details(MonthlyEmpSalaryIdentity monEmpSalIdentity,
+                                          Double earn_ded_amount)
     {
         this.monEmpSalIdentity =monEmpSalIdentity;
         this.earn_ded_amount=earn_ded_amount;
