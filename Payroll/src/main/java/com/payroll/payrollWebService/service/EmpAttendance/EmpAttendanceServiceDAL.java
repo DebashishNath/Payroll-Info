@@ -29,21 +29,26 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
         {
             List<mst_employee> lstEmployees = (List<mst_employee>) empRep.findAll();
 
-            for (int i = 0; i <=lstEmployees.size() - 1; i++)
-            {
-                System.out.println("Emp Code - " + lstEmployees.get(i).getEmp_id());
-                StoredProcedureQuery generateAttendance =
-                        em.createNamedStoredProcedureQuery("GenerateMonthlyAttendance")
-                        .registerStoredProcedureParameter("p_month",Integer.class, ParameterMode.IN)
-                        .setParameter("p_month", p_month)
-                        .registerStoredProcedureParameter("p_year",Integer.class,ParameterMode.IN)
-                        .setParameter("p_year", p_year)
-                        .registerStoredProcedureParameter("p_emp_id",Long.class,ParameterMode.IN)
-                        .setParameter("p_emp_id", lstEmployees.get(i).getEmp_id());
-                generateAttendance.execute();
+            if(lstEmployees.size()>0) {
+                for (int i = 0; i <= lstEmployees.size() - 1; i++) {
+                    StoredProcedureQuery generateAttendance =
+                            em.createNamedStoredProcedureQuery("GenerateMonthlyAttendance")
+                                    .registerStoredProcedureParameter("p_month", Integer.class, ParameterMode.IN)
+                                    .setParameter("p_month", p_month)
+                                    .registerStoredProcedureParameter("p_year", Integer.class, ParameterMode.IN)
+                                    .setParameter("p_year", p_year)
+                                    .registerStoredProcedureParameter("p_emp_id", Long.class, ParameterMode.IN)
+                                    .setParameter("p_emp_id", lstEmployees.get(i).getEmp_id());
+                    generateAttendance.execute();
+                }
+                msp.setCode(CodeConstants.SUCCESS.getID());
+                msp.setMessage("Attendance Generated Successfully For " + Month.of(p_month) + "-" + p_year);
             }
-            msp.setCode(CodeConstants.SUCCESS.getID());
-            msp.setMessage("Attendance Generated Successfully For " + Month.of(p_month) + "-" + p_year);
+            else
+            {
+                msp.setCode(CodeConstants.FAILURE.getID());
+                msp.setMessage("Failed to generate attendance");
+            }
         } catch (Exception ex) {
             msp.setCode(CodeConstants.FAILURE.getID());
             msp.setMessage(ex.getMessage());
