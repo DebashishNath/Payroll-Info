@@ -23,7 +23,7 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
     private EntityManager em;
 
     @Override
-    public MessageResponse GenerateAttendance(Integer p_month, Integer p_year) {
+    public MessageResponse GenerateAllAttendance(Integer p_month, Integer p_year) {
         MessageResponse msp = new MessageResponse();
         try
         {
@@ -31,15 +31,7 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
 
             if(lstEmployees.size()>0) {
                 for (int i = 0; i <= lstEmployees.size() - 1; i++) {
-                    StoredProcedureQuery generateAttendance =
-                            em.createNamedStoredProcedureQuery("GenerateMonthlyAttendance")
-                                    .registerStoredProcedureParameter("p_month", Integer.class, ParameterMode.IN)
-                                    .setParameter("p_month", p_month)
-                                    .registerStoredProcedureParameter("p_year", Integer.class, ParameterMode.IN)
-                                    .setParameter("p_year", p_year)
-                                    .registerStoredProcedureParameter("p_emp_id", Long.class, ParameterMode.IN)
-                                    .setParameter("p_emp_id", lstEmployees.get(i).getEmp_id());
-                    generateAttendance.execute();
+                    ExecuteAttendance(p_month,p_year,lstEmployees.get(i).getEmp_id());
                 }
                 msp.setCode(CodeConstants.SUCCESS.getID());
                 msp.setMessage("Attendance Generated Successfully For " + Month.of(p_month) + "-" + p_year);
@@ -55,4 +47,33 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
         }
         return msp;
     }
+
+    private void ExecuteAttendance(Integer p_month,Integer p_year,Long emp_id){
+        StoredProcedureQuery generateAttendance =
+                em.createNamedStoredProcedureQuery("GenerateMonthlyAttendance")
+                        .registerStoredProcedureParameter("p_month", Integer.class, ParameterMode.IN)
+                        .setParameter("p_month", p_month)
+                        .registerStoredProcedureParameter("p_year", Integer.class, ParameterMode.IN)
+                        .setParameter("p_year", p_year)
+                        .registerStoredProcedureParameter("p_emp_id", Long.class, ParameterMode.IN)
+                        .setParameter("p_emp_id", emp_id);
+        generateAttendance.execute();
+    }
+
+    @Override
+    public MessageResponse GenerateSingleAttendance(Integer p_month, Integer p_year,Long p_emp_id) {
+        MessageResponse msp = new MessageResponse();
+        try
+        {
+           ExecuteAttendance(p_month,p_year,p_emp_id);
+           msp.setCode(CodeConstants.SUCCESS.getID());
+           msp.setMessage("Attendance Generated Successfully For " + Month.of(p_month) + "-" + p_year);
+        } catch (Exception ex)
+        {
+            msp.setCode(CodeConstants.FAILURE.getID());
+            msp.setMessage(ex.getMessage());
+        }
+        return msp;
+    }
+
 }

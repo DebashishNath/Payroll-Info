@@ -15,6 +15,13 @@ public class AttendanceController {
     @GetMapping("/empattendance/{month}/{year}")
     public MessageResponse GenerateAttendance(@PathVariable(value = "month") Integer month,
                                               @PathVariable(value = "year") Integer year){
-        return empAttendanceService.GenerateAttendance(month,year);
+        return empAttendanceService.GenerateAllAttendance(month,year);
+    }
+
+    @GetMapping("/empsingleattendance/{month}/{year}/{empid}")
+    public MessageResponse GenerateAttendance(@PathVariable(value = "month") Integer month,
+                                              @PathVariable(value = "year") Integer year,
+                                              @PathVariable(value = "empid") Long empid){
+        return empAttendanceService.GenerateSingleAttendance(month,year,empid);
     }
 }
