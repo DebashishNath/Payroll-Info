@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -50,6 +52,16 @@ public class MonthlyEmpSalController {
         }catch(Exception ex){
             return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
         }
+    }
+
+    @PostMapping("/payslip/{month}/{year}/{salarydate}")
+    public MessageResponse generatePaySlip(@PathVariable(value = "month") Integer month,
+                                           @PathVariable(value = "year") Integer year,
+                                           @PathVariable(value = "salarydate") String salarydate)
+            throws Exception
+    {
+        Date payDate=new SimpleDateFormat("yyyy-MM-dd").parse(salarydate);
+        return empMonthlySalService.GeneratePaySlip(month,year,payDate);
     }
 }
 

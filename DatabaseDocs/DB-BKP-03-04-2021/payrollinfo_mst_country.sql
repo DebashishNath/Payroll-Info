@@ -16,34 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trn_monthly_emp_salary`
+-- Table structure for table `mst_country`
 --
 
-DROP TABLE IF EXISTS `trn_monthly_emp_salary`;
+DROP TABLE IF EXISTS `mst_country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trn_monthly_emp_salary` (
-  `month` int NOT NULL,
-  `year` int NOT NULL,
-  `emp_id` int NOT NULL,
-  `earn_ded_id` int NOT NULL,
-  `earn_ded_amount` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`month`,`year`,`emp_id`,`earn_ded_id`),
-  KEY `FK_monthly_emp_salary_emp_id_idx` (`emp_id`),
-  KEY `FK_monthly_emp_salary_earn_ded_id_idx` (`earn_ded_id`),
-  CONSTRAINT `FK_monthly_emp_salary_earn_ded_id` FOREIGN KEY (`earn_ded_id`) REFERENCES `trn_emp_salary_structure` (`earn_ded_id`),
-  CONSTRAINT `FK_monthly_emp_salary_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `trn_emp_salary_structure` (`emp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_country` (
+  `country_id` int NOT NULL AUTO_INCREMENT,
+  `country_code` varchar(5) NOT NULL,
+  `country_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`country_id`),
+  UNIQUE KEY `country_code_UNIQUE` (`country_code`),
+  UNIQUE KEY `country_name_UNIQUE` (`country_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trn_monthly_emp_salary`
+-- Dumping data for table `mst_country`
 --
 
-LOCK TABLES `trn_monthly_emp_salary` WRITE;
-/*!40000 ALTER TABLE `trn_monthly_emp_salary` DISABLE KEYS */;
-INSERT INTO `trn_monthly_emp_salary` VALUES (1,2021,1,1,10000.00),(1,2021,1,2,6000.00),(1,2021,1,3,3000.00),(1,2021,1,4,1200.00),(1,2021,1,5,1000.00),(2,2021,2,1,6000.00),(2,2021,2,2,5000.00),(2,2021,2,3,4000.00),(2,2021,2,4,1200.00),(2,2021,2,5,1300.00);
-/*!40000 ALTER TABLE `trn_monthly_emp_salary` ENABLE KEYS */;
+LOCK TABLES `mst_country` WRITE;
+/*!40000 ALTER TABLE `mst_country` DISABLE KEYS */;
+INSERT INTO `mst_country` VALUES (1,'C001','India'),(2,'C002','Bangladesh');
+/*!40000 ALTER TABLE `mst_country` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23  3:44:56
+-- Dump completed on 2021-04-03  3:49:38

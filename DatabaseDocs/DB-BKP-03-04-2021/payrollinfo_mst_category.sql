@@ -16,31 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_users`
+-- Table structure for table `mst_category`
 --
 
-DROP TABLE IF EXISTS `mst_users`;
+DROP TABLE IF EXISTS `mst_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(1045) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_username` (`username`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_category` (
+  `category_id` int NOT NULL AUTO_INCREMENT,
+  `category_code` varchar(5) NOT NULL,
+  `category_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `category_code_UNIQUE` (`category_code`),
+  UNIQUE KEY `category_name_UNIQUE` (`category_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_users`
+-- Dumping data for table `mst_category`
 --
 
-LOCK TABLES `mst_users` WRITE;
-/*!40000 ALTER TABLE `mst_users` DISABLE KEYS */;
-INSERT INTO `mst_users` VALUES (169,'Sandip','$2a$10$WFzQJI7r0rxVpmj0CLZ29OdhbO93ObMZnsUI29XKNTlyPlwnz7q06','sandip@gmail.com'),(170,'Biren','$2a$10$vdFik0PL43xqR1buiQ2McOIoh8KKTfD504OMOZ52g5c4sX1M6epb6','biren@gmail.com'),(171,'Suresh','$2a$10$USj8XS/IbLPBwS1GMD6cOeFqVtxGlEe/D7RBAp8K7MVVKnOFbohaa','suresh@gmail.com'),(172,'Manish','$2a$10$wySkr.mu.frAaAdmM7B9Xeoi7S6Fr9eiX85WtKfKrTTsVNtHXuooq','manish@gmail.com');
-/*!40000 ALTER TABLE `mst_users` ENABLE KEYS */;
+LOCK TABLES `mst_category` WRITE;
+/*!40000 ALTER TABLE `mst_category` DISABLE KEYS */;
+INSERT INTO `mst_category` VALUES (1,'CT001','Permanent'),(2,'CT002','Temporary'),(4,'CT003','cat-2');
+/*!40000 ALTER TABLE `mst_category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23  3:44:57
+-- Dump completed on 2021-04-03  3:49:40

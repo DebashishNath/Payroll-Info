@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_location`
+-- Table structure for table `mst_department`
 --
 
-DROP TABLE IF EXISTS `mst_location`;
+DROP TABLE IF EXISTS `mst_department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_location` (
-  `location_id` int NOT NULL AUTO_INCREMENT,
-  `location_code` varchar(5) NOT NULL,
-  `location_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`location_id`),
-  UNIQUE KEY `location_code_UNIQUE` (`location_code`),
-  UNIQUE KEY `location_name_UNIQUE` (`location_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_department` (
+  `department_id` int NOT NULL AUTO_INCREMENT,
+  `department_code` varchar(5) NOT NULL,
+  `department_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`department_id`),
+  UNIQUE KEY `department_code_UNIQUE` (`department_code`),
+  UNIQUE KEY `department_name_UNIQUE` (`department_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_location`
+-- Dumping data for table `mst_department`
 --
 
-LOCK TABLES `mst_location` WRITE;
-/*!40000 ALTER TABLE `mst_location` DISABLE KEYS */;
-INSERT INTO `mst_location` VALUES (1,'LC1','Head Office');
-/*!40000 ALTER TABLE `mst_location` ENABLE KEYS */;
+LOCK TABLES `mst_department` WRITE;
+/*!40000 ALTER TABLE `mst_department` DISABLE KEYS */;
+INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts'),(4,'D004','dept-2');
+/*!40000 ALTER TABLE `mst_department` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23  3:44:57
+-- Dump completed on 2021-04-03  3:49:40

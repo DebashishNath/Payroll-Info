@@ -16,31 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trn_emp_salary_structure`
+-- Table structure for table `trn_emp_leave`
 --
 
-DROP TABLE IF EXISTS `trn_emp_salary_structure`;
+DROP TABLE IF EXISTS `trn_emp_leave`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trn_emp_salary_structure` (
+CREATE TABLE `trn_emp_leave` (
   `emp_id` int NOT NULL,
-  `earn_ded_id` int NOT NULL,
-  `earn_ded_amount` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`emp_id`,`earn_ded_id`),
-  KEY `FK_emp_salary_structure_earn_ded_id_idx` (`earn_ded_id`),
-  CONSTRAINT `FK_emp_salary_structure_earn_ded_id` FOREIGN KEY (`earn_ded_id`) REFERENCES `mst_earn_ded_components` (`earn_ded_id`),
-  CONSTRAINT `FK_emp_salary_structure_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `mst_employee` (`emp_id`)
+  `leave_type_code` varchar(2) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`emp_id`,`leave_type_code`,`from_date`,`to_date`),
+  KEY `FK_trn_emp_leave_leave_type_code_idx` (`leave_type_code`),
+  CONSTRAINT `FK_trn_emp_leave_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `mst_employee` (`emp_id`),
+  CONSTRAINT `FK_trn_emp_leave_leave_type_code` FOREIGN KEY (`leave_type_code`) REFERENCES `mst_leave_type` (`leave_type_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trn_emp_salary_structure`
+-- Dumping data for table `trn_emp_leave`
 --
 
-LOCK TABLES `trn_emp_salary_structure` WRITE;
-/*!40000 ALTER TABLE `trn_emp_salary_structure` DISABLE KEYS */;
-INSERT INTO `trn_emp_salary_structure` VALUES (1,1,8000.00),(1,2,6000.00),(1,3,2000.00),(1,4,960.00),(1,5,800.00),(2,1,9000.00),(2,2,5000.00),(2,3,3000.00),(2,4,800.00),(2,5,1500.00),(3,1,15000.00),(3,2,6000.00),(3,3,4000.00),(3,4,3000.00),(3,5,1000.00),(4,1,28000.00);
-/*!40000 ALTER TABLE `trn_emp_salary_structure` ENABLE KEYS */;
+LOCK TABLES `trn_emp_leave` WRITE;
+/*!40000 ALTER TABLE `trn_emp_leave` DISABLE KEYS */;
+INSERT INTO `trn_emp_leave` VALUES (1,'CL','2021-03-15','2021-03-16',NULL),(1,'CL','2021-03-29','2021-03-29',NULL),(1,'SL','2021-03-09','2021-03-12',NULL),(15,'CL','2021-03-23','2021-03-25',NULL),(15,'SL','2021-03-30','2021-04-07',NULL);
+/*!40000 ALTER TABLE `trn_emp_leave` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23  3:44:57
+-- Dump completed on 2021-04-03  3:49:40

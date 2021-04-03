@@ -48,7 +48,7 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
         return msp;
     }
 
-    private void ExecuteAttendance(Integer p_month,Integer p_year,Long emp_id){
+    private void ExecuteAttendance(Integer p_month,Integer p_year,Long p_emp_id){
         StoredProcedureQuery generateAttendance =
                 em.createNamedStoredProcedureQuery("GenerateMonthlyAttendance")
                         .registerStoredProcedureParameter("p_month", Integer.class, ParameterMode.IN)
@@ -56,7 +56,7 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
                         .registerStoredProcedureParameter("p_year", Integer.class, ParameterMode.IN)
                         .setParameter("p_year", p_year)
                         .registerStoredProcedureParameter("p_emp_id", Long.class, ParameterMode.IN)
-                        .setParameter("p_emp_id", emp_id);
+                        .setParameter("p_emp_id", p_emp_id);
         generateAttendance.execute();
     }
 

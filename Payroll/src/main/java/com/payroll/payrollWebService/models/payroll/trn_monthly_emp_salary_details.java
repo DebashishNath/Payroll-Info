@@ -1,15 +1,19 @@
 package com.payroll.payrollWebService.models.payroll;
 
 import com.payroll.payrollWebService.payload.response.MessageResponse;
+import lombok.Data;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name="trn_monthly_emp_salary_details")
+@Data
+@NamedStoredProcedureQuery(
+        name="GeneratePaySlip",
+        procedureName="GeneratePaySlip",
+        resultClasses = { trn_monthly_emp_salary_details.class }
+)
 public class trn_monthly_emp_salary_details {
 
     @EmbeddedId

@@ -16,30 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_department`
+-- Table structure for table `trn_monthly_emp_salary_summary`
 --
 
-DROP TABLE IF EXISTS `mst_department`;
+DROP TABLE IF EXISTS `trn_monthly_emp_salary_summary`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_department` (
-  `department_id` int NOT NULL AUTO_INCREMENT,
-  `department_code` varchar(5) NOT NULL,
-  `department_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`department_id`),
-  UNIQUE KEY `department_code_UNIQUE` (`department_code`),
-  UNIQUE KEY `department_name_UNIQUE` (`department_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `trn_monthly_emp_salary_summary` (
+  `month` int NOT NULL,
+  `year` int NOT NULL,
+  `emp_id` int NOT NULL,
+  `salary_date` date DEFAULT NULL,
+  `total_earn_amount` decimal(10,2) DEFAULT NULL,
+  `total_ded_amount` decimal(10,2) DEFAULT NULL,
+  `net_amount` decimal(10,2) DEFAULT NULL,
+  `remarks` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`month`,`year`,`emp_id`),
+  KEY `trn_monthly_emp_salary_summary_emp_id_idx` (`emp_id`),
+  CONSTRAINT `trn_monthly_emp_salary_summary_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `trn_monthly_emp_salary_details` (`emp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_department`
+-- Dumping data for table `trn_monthly_emp_salary_summary`
 --
 
-LOCK TABLES `mst_department` WRITE;
-/*!40000 ALTER TABLE `mst_department` DISABLE KEYS */;
-INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts');
-/*!40000 ALTER TABLE `mst_department` ENABLE KEYS */;
+LOCK TABLES `trn_monthly_emp_salary_summary` WRITE;
+/*!40000 ALTER TABLE `trn_monthly_emp_salary_summary` DISABLE KEYS */;
+INSERT INTO `trn_monthly_emp_salary_summary` VALUES (3,2021,1,'2021-03-01',16000.00,1760.00,14240.00,''),(3,2021,2,'2021-03-01',17000.00,2300.00,14700.00,''),(3,2021,3,'2021-03-01',25000.00,4000.00,21000.00,''),(3,2021,4,'2021-03-01',28000.00,NULL,28000.00,'');
+/*!40000 ALTER TABLE `trn_monthly_emp_salary_summary` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23  3:44:56
+-- Dump completed on 2021-04-03  3:49:39
