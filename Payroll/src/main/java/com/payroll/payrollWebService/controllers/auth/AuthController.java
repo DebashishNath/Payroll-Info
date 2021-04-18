@@ -2,6 +2,7 @@ package com.payroll.payrollWebService.controllers.auth;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,7 +56,8 @@ public class AuthController {
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
 			throws InvalidKeySpecException, NoSuchAlgorithmException {
 		try {
-			System.out.println("Inside Sign In");
+			LocalTime localDateTime = LocalTime.now();
+			System.out.println("Inside Sign In: " + localDateTime);
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
 							loginRequest.getPassword()));
