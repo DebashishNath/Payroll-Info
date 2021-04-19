@@ -2,8 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import Button from '@material-ui/core/Button'
 
-function doLogin(){
-    const requestOptions = {
+async function doLogin() {
+
+  const requestOptions = {
     crossDomain:true,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -13,22 +14,14 @@ function doLogin(){
       })
   };
 
-  fetch('http://192.168.43.241:8086/api/auth/signin',requestOptions)
-  .then(response=>{return response.json();
-  }).then(result =>{
-      this.setState(state => ({ user: Object.assign({}, state.user, 
-          { id: result.id,
-            username:result.username,
-            email:result.email,
-            roles:result.roles,
-            returnMessage:result.returnMessage,
-            tokenType:result.tokenType,
-            accessToken:result.accessToken
-          })}));
-  }).catch((error) => {
-      //alert(error);
-    });
-    alert('Successful login');
+  var url='http://192.168.43.241:8086/api/auth/signin';
+  // Storing response
+  const response = await fetch(url,requestOptions);
+  
+  // Storing data in form of JSON
+  var data = await response.json();
+  alert(data.returnMessage.message);
+  
 }
 
 function App() {
