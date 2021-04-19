@@ -2,7 +2,6 @@ import './App.css';
 import { Paper, withStyles, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-
 const App=() => {
   
   const paperStyle={padding:20,height:'60vh',width:280,margin:"20px auto"}
