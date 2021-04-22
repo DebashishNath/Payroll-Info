@@ -1,5 +1,5 @@
 import './App.css';
-import { Paper, withStyles, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, Typography,Link } from '@material-ui/core';
+import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const App=() => {
@@ -27,7 +27,7 @@ const App=() => {
     try 
     {
       var data = await response.json();
-      alert(data.returnMessage?data.returnMessage.message:'Failed to fetch')
+      alert(data.returnMessage?data.returnMessage.message:'Failed to fetch');
     }
     catch(err) {
       alert(err.message);
