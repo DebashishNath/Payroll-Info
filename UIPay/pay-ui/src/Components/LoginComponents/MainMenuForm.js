@@ -1,7 +1,8 @@
 import React from 'react';
 import HomeIcon from "@material-ui/icons/Home";
 import ReceiptIcon from "@material-ui/icons/Receipt";
-import SettingsIcon from "@material-ui/icons/Settings";
+import ReportIcon from '@material-ui/icons/Report';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
 
 export default class MainMenuForm extends React.Component {
@@ -35,11 +36,17 @@ export default class MainMenuForm extends React.Component {
         {
           name: "reports",
           label: "Reports",
-          Icon: SettingsIcon,
+          Icon: ReportIcon,
           items: [
             { name: "attendance", label: "Attendance", onClick },
             { name: "payslip", label: "payslip", onClick }
           ]
+        },
+        "divider",
+        {
+          name: "logout",
+          label: "logout",
+          Icon: ExitToAppIcon
         }
       ];
       

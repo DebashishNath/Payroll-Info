@@ -38,6 +38,7 @@ function LoginContent()
         else
         {
           document.getElementById('invalidmsg').innerHTML = data.returnMessage.message;
+          document.getElementById('invalidmsg').style="color:red"
         }
       }
       catch(err) {
