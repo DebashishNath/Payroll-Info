@@ -26,14 +26,12 @@ function LoginContent()
       };
     
       var url='http://192.168.43.241:8086/api/auth/signin';
-      // Storing response
-      const response = await fetch(url,requestOptions);
-      var returnData=-1;
       try 
       {
+        const response = await fetch(url,requestOptions);
         var data = await response.json();
-        returnData=data.returnMessage?data.returnMessage.code:-1;
-        if (returnData ===0)
+        var returnData=data.returnMessage?data.returnMessage.code:-1;
+        if (returnData === 0)
         {
           history.push("/MainMenuForm"); 
         }
