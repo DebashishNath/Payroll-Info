@@ -30,10 +30,8 @@ class CategoryForm extends Component {
       {
         const response = await fetch(url,requestOptions);
         var data = await response.json();
-        
-        var returnData=data.code?data.code:-1;
         document.getElementById('returnMessage').innerHTML = data.message;
-        if (returnData === 0)
+        if (data.code === 0)
         {
           document.getElementById('returnMessage').style="color:green";
         }
