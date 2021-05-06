@@ -4,13 +4,18 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import ReportIcon from '@material-ui/icons/Report';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
+import CategoryForm from "./CategoryForm"
 
 export default class MainMenuForm extends React.Component {
   
   render(){
-    
+  
+    const token = this.props.history.location.state?.tokenValue
+    let itemName=false;
     function onClick(e, item) {
-        window.alert(JSON.stringify(item, null, 2));
+       //window.alert(JSON.stringify(item, null, 2));
+       itemName=true;
+       
     }
       
       const items = [
@@ -53,7 +58,7 @@ export default class MainMenuForm extends React.Component {
       return(
         <div>
             <Sidebar items={items} />
-        </div>
+         </div>
       );
   }
 }

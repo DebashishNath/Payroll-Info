@@ -1,9 +1,10 @@
-import React from "react";
+import React  from "react";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, 
   Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import MainMenuForm from "./MainMenuForm"
+import MainMenuForm from "./MainMenuForm";
+import CategoryForm from "./CategoryForm"
 
 function LoginContent() 
 {
@@ -33,7 +34,10 @@ function LoginContent()
         var returnData=data.returnMessage?data.returnMessage.code:-1;
         if (returnData === 0)
         {
-          history.push("/MainMenuForm"); 
+          history.push({ 
+            pathname: '/CategoryForm',
+            state: { tokenValue : data.accessToken }
+           });
         }
         else
         {
@@ -53,8 +57,8 @@ function LoginContent()
           <h2>Sign In</h2>
           <div><label id = "invalidmsg"></label></div>
         </Grid>
-        <TextField id="uname" label='Username' placeholder='Enter Username' fullWidth required></TextField>
-        <TextField id="pwd" label='Password' placeholder='Enter Password' type='password' fullWidth required></TextField>
+        <TextField id="uname" label='Username' placeholder='Enter Username' variant='outlined' fullWidth required></TextField>
+        <TextField id="pwd" label='Password' placeholder='Enter Password'  variant='outlined' type='password' fullWidth required></TextField>
         <FormControlLabel
           control={
             <Checkbox
@@ -81,7 +85,7 @@ function LoginForm()
 {
   return (
     <Router>
-      <Route path="/MainMenuForm" exact component={MainMenuForm} />
+      <Route path="/CategoryForm" exact component={CategoryForm} />
       <Route path="/" exact component={LoginContent} />
     </Router>
   );
