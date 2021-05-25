@@ -4,7 +4,6 @@ import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar,
   Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MainMenuForm from "./MainMenuForm";
-import CategoryForm from "./CategoryForm"
 
 function LoginContent() 
 {
@@ -35,9 +34,9 @@ function LoginContent()
         if (returnData === 0)
         {
           history.push({ 
-            pathname: '/CategoryForm',
+            pathname: '/MainMenuForm',
             state: { tokenValue : data.accessToken }
-           });
+          });
         }
         else
         {
@@ -85,7 +84,7 @@ function LoginForm()
 {
   return (
     <Router>
-      <Route path="/CategoryForm" exact component={CategoryForm} />
+       <Route path="/MainMenuForm" exact component={MainMenuForm} />
       <Route path="/" exact component={LoginContent} />
     </Router>
   );

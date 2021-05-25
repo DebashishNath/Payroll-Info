@@ -4,27 +4,31 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import ReportIcon from '@material-ui/icons/Report';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
-import CategoryForm from "./CategoryForm"
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import CategoryForm from "./CategoryForm";
+import DepartmentForm from "./DepartmentForm"
 
 export default class MainMenuForm extends React.Component {
   
+  constructor(props) 
+  {
+    super(props);
+    this.state = {
+        accessToken: this.props.history.location.state?.tokenValue
+    };
+  }
+
   render(){
-  
-    const token = this.props.history.location.state?.tokenValue
-    let itemName=false;
-    function onClick(e, item) {
-       //window.alert(JSON.stringify(item, null, 2));
-       itemName=true;
-       
-    }
+    
+    function onClick(e, item) {}
       
-      const items = [
-        { name: "master", label: "Master", Icon: HomeIcon,
+    const items = [
+    { name: "master", label: "Master", Icon: HomeIcon,
         items: [
-          { name: "category", label: "Category", onClick },
-          { name: "department", label: "Department", onClick },
-          { name: "designation", label: "Designation", onClick },
-          { name: "earndedcomponents", label: "Earn Ded Component", onClick }
+          { name: "category", label: "Category", route: '/category', onClick },
+          { name: "department", label: "Department",route: '/department', onClick },
+          { name: "designation", label: "Designation",route: '/designation', onClick },
+          { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents', onClick }
         ] },
         "divider",
         {
@@ -32,9 +36,9 @@ export default class MainMenuForm extends React.Component {
           label: "Transaction",
           Icon: ReceiptIcon,
           items: [
-            { name: "salarystructure", label: "Salary Structure", onClick },
-            { name: "monthlyattendance", label: "Monthly Attendance", onClick },
-            { name: "generatepayslip", label: "Generate Payslip", onClick },
+            { name: "salarystructure", label: "Salary Structure",route: '/salarystructure', onClick },
+            { name: "monthlyattendance", label: "Monthly Attendance",route: '/monthlyattendance', onClick },
+            { name: "generatepayslip", label: "Generate Payslip",route: '/generatepayslip', onClick },
           ]
         },
         "divider",
@@ -43,8 +47,8 @@ export default class MainMenuForm extends React.Component {
           label: "Reports",
           Icon: ReportIcon,
           items: [
-            { name: "attendance", label: "Attendance", onClick },
-            { name: "payslip", label: "payslip", onClick }
+            { name: "attendance", label: "Attendance",route: '/attendance', onClick },
+            { name: "payslip", label: "payslip",route: '/payslip', onClick }
           ]
         },
         "divider",
@@ -57,8 +61,14 @@ export default class MainMenuForm extends React.Component {
       
       return(
         <div>
+          <Router>
             <Sidebar items={items} />
-         </div>
+            <switch>
+              <Route path='/category' exact component={CategoryForm} />
+              <Route path='/department' exact component={DepartmentForm} />
+            </switch>
+          </Router>
+        </div>
       );
   }
 }

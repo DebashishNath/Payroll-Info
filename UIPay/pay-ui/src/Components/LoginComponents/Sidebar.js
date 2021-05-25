@@ -5,6 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Collapse from "@material-ui/core/Collapse";
+import { Link } from "react-router-dom";
 
 function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
   const [collapsed, setCollapsed] = React.useState(true);
@@ -51,7 +52,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
           className="sidebar-item-content"
         >
           {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text">{label}</div>
+          <div className="sidebar-item-text"><Link to={item.route}>{label}</Link></div>
         </div>
         {expandIcon}
       </ListItem>
@@ -93,7 +94,7 @@ function Sidebar({ items, depthStep, depth, expanded }) {
                 expanded={expanded}
                 item={sidebarItem}
               />
-            )}
+             )}
           </React.Fragment>
         ))}
       </List>
