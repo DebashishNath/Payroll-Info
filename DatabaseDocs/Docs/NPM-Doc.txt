@@ -30,3 +30,22 @@ https://www.google.com/search?q=Material-ui+Menu+item+horizontal+menu+in+react+j
 Grid
 
 https://www.youtube.com/watch?v=hBW1a4sQ4Ig
+------------------------------------------------------------------------------------------
+Tab with router
+
+https://www.youtube.com/watch?v=voNhE4vNFa4
+
+------------------------------------------------------------------------------------------
+Functional Component and React Component
+
+https://www.youtube.com/watch?v=uGgPINlKqBs&list=PL7pEw9n3GkoWkHCQsfBh77UP4nc8lvTbS&index=3
+---------------------------------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=DJtI3Pogd88&list=PL7pEw9n3GkoWkHCQsfBh77UP4nc8lvTbS&index=4
+-------------------------------------------------------------------------------------------------------
+2 ways binding
+---------------------
+https://www.youtube.com/watch?v=BWl9bw_nbbs&list=PL7pEw9n3GkoWkHCQsfBh77UP4nc8lvTbS&index=5
+--------------------------------------------------------------------------------------------------------
+Communication between components
+------------------------------------
+https://www.youtube.com/watch?v=dyL99ACQfsM&list=PL7pEw9n3GkoWkHCQsfBh77UP4nc8lvTbS&index=6
