@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, TextField , Button,Paper } from '@material-ui/core';
+import { Table, TextField , Button,Paper,FormControl } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -20,7 +20,7 @@ class CategoryForm extends Component {
         crossDomain:true,
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
-                    'Authorization' : 'Bearer ' + this.state.accessToken },
+                    'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         body: JSON.stringify({
             "category_id" : "0",
             "category_code" : document.getElementById("categoryCode").value,

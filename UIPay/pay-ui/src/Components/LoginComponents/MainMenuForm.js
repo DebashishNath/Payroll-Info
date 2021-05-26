@@ -13,9 +13,6 @@ export default class MainMenuForm extends React.Component {
   constructor(props) 
   {
     super(props);
-    this.state = {
-        accessToken: this.props.history.location.state?.tokenValue
-    };
   }
 
   render(){

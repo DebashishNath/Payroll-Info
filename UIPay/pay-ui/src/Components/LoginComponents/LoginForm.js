@@ -34,9 +34,9 @@ function LoginContent()
         if (returnData === 0)
         {
           history.push({ 
-            pathname: '/MainMenuForm',
-            state: { tokenValue : data.accessToken }
+            pathname: '/MainMenuForm'
           });
+          localStorage.setItem('tokenValue',data.accessToken);
         }
         else
         {
@@ -57,6 +57,7 @@ function LoginContent()
           <div><label id = "invalidmsg"></label></div>
         </Grid>
         <TextField id="uname" label='Username' placeholder='Enter Username' variant='outlined' fullWidth required></TextField>
+        <br /><br />
         <TextField id="pwd" label='Password' placeholder='Enter Password'  variant='outlined' type='password' fullWidth required></TextField>
         <FormControlLabel
           control={

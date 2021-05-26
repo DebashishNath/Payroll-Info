@@ -5,9 +5,6 @@ class DepartmentForm extends Component {
   constructor(props) 
   {
     super(props);
-    this.state = {
-        accessToken: this.props.history.location.state?.tokenValue
-      };
     this.addDepartment = this.addDepartment.bind(this);
   }
 
@@ -17,7 +14,7 @@ class DepartmentForm extends Component {
             crossDomain:true,
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
-                       'Authorization' : 'Bearer ' + this.state.accessToken },
+                       'Authorization' : 'Bearer ' +  localStorage.getItem('tokenValue') },
             body: JSON.stringify({
                 "department_id" : "0",
                 "department_code" : document.getElementById("departmentCode").value,
