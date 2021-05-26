@@ -6,7 +6,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import CategoryForm from "./CategoryForm";
-import DepartmentForm from "./DepartmentForm"
+import DepartmentForm from "./DepartmentForm";
+import EmployeePersonalForm from "./EmployeePersonalForm"
 
 export default class MainMenuForm extends React.Component {
   
@@ -25,7 +26,8 @@ export default class MainMenuForm extends React.Component {
           { name: "category", label: "Category", route: '/category', onClick },
           { name: "department", label: "Department",route: '/department', onClick },
           { name: "designation", label: "Designation",route: '/designation', onClick },
-          { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents', onClick }
+          { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents', onClick },
+          { name: "employee", label: "Employee",route: '/employee', onClick }
         ] },
         "divider",
         {
@@ -63,6 +65,7 @@ export default class MainMenuForm extends React.Component {
             <switch>
               <Route path='/category' exact component={CategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
+              <Route path='/employee' exact component={EmployeePersonalForm} />
             </switch>
           </Router>
         </div>
