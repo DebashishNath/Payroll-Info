@@ -66,7 +66,7 @@ class DistrictServiceDAL extends DistrictServiceImpl {
     }
 
     @Override
-    public List<mst_district> findAll() {
+    public List<mst_district> findAll(Long stateid) {
         return (List<mst_district>) districtRep.findAll();
     }
 

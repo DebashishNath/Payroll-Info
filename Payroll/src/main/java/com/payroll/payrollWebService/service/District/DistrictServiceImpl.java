@@ -19,8 +19,8 @@ abstract class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
-    public List<mst_district> findAll(){
-        return new DistrictServiceDAL().findAll();
+    public List<mst_district> findAll(Long stateid){
+        return new DistrictServiceDAL().findAll(stateid);
     }
 
     @Override

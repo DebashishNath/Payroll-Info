@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, TextField , Button,Paper,FormControl } from '@material-ui/core';
+import { Table, TextField , Button,Paper } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -65,10 +65,10 @@ class CategoryForm extends Component {
           <label id = "returnMessage"></label>
           <Table>
             <tr><td><label>Category Code</label></td>
-                <td><TextField id="categoryCode" placeholder='Enter Category Code' variant='outlined'></TextField></td>
+                <td><TextField id="categoryCode" variant='outlined'></TextField></td>
             </tr>
             <tr><td><label>Category Name</label></td>
-                <td><TextField id="categoryName" placeholder='Enter Category Name' variant='outlined'></TextField></td>
+                <td><TextField id="categoryName" variant='outlined'></TextField></td>
             </tr>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 

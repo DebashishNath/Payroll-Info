@@ -11,7 +11,7 @@ public interface DistrictService {
 
     mst_district modify(mst_district district);
 
-    List<mst_district> findAll();
+    List<mst_district> findAll(Long stateid);
 
     Optional<mst_district> findById(Long id);
 

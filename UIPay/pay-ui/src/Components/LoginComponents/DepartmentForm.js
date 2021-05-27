@@ -52,11 +52,11 @@ class DepartmentForm extends Component {
             <label id = "returnMessage"></label>
             <Table>
               <tr><td><label>Department Code</label></td>
-                  <td><TextField id="departmentCode" placeholder='Enter Department Code' 
-                  variant='outlined'></TextField></td>
+                  <td><TextField id="departmentCode" variant='outlined'></TextField></td>
               </tr>
+              <br/>
               <tr><td><label>Department Name</label></td>
-                  <td><TextField id="departmentName" placeholder='Enter Department Name' variant='outlined'></TextField></td>
+                  <td><TextField id="departmentName" variant='outlined'></TextField></td>
               </tr>
               <tr><td></td>
                   <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 

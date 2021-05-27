@@ -20,9 +20,9 @@ public class DistrictController {
     @Autowired
     private DistrictService districtService;
 
-    @GetMapping("/districts")
-    public List<mst_district> listDistrict(){
-        return districtService.findAll();
+    @GetMapping("/districts/{stateid}")
+    public List<mst_district> listDistrict(@PathVariable(value = "stateid") Long stateid){
+        return districtService.findAll(stateid);
     }
 
     @GetMapping("/district/{id}")

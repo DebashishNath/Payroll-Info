@@ -11,11 +11,6 @@ import EmployeePersonalForm from "./EmployeePersonalForm"
 
 export default class MainMenuForm extends React.Component {
   
-  constructor(props) 
-  {
-    super(props);
-  }
-
   render(){
     
     function onClick(e, item) {}
