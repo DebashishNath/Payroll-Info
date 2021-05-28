@@ -5,9 +5,10 @@ import ReportIcon from '@material-ui/icons/Report';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
 import CategoryForm from "./CategoryForm";
 import DepartmentForm from "./DepartmentForm";
-import EmployeePersonalForm from "./EmployeePersonalForm"
+import EmployeePersonalForm from "./EmployeePersonalForm";
 
 export default class MainMenuForm extends React.Component {
   
@@ -55,6 +56,7 @@ export default class MainMenuForm extends React.Component {
       
       return(
         <div>
+          <Grid container direction="row" spacing="1">
           <Router>
             <Sidebar items={items} />
             <switch>
@@ -63,6 +65,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/employee' exact component={EmployeePersonalForm} />
             </switch>
           </Router>
+          </Grid>
         </div>
       );
   }
