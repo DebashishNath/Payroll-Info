@@ -3,13 +3,17 @@ package com.payroll.payrollWebService.service.District;
 import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.mst_district;
+import com.payroll.payrollWebService.models.payroll.mst_state;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.repository.payroll.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 class DistrictServiceDAL extends DistrictServiceImpl {
@@ -67,7 +71,10 @@ class DistrictServiceDAL extends DistrictServiceImpl {
 
     @Override
     public List<mst_district> findAll(Long stateid) {
-        return (List<mst_district>) districtRep.findAll();
+        List<mst_district> lstDistrict=(ArrayList<mst_district>) districtRep.findAll();
+        Stream<mst_district> streamDistrict=lstDistrict.stream()
+                .filter(c->c.getState().getState_id().equals(stateid));
+        return streamDistrict.collect(Collectors.toList());
     }
 
     @Override
