@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,RadioGroup,FormControlLabel,
         Radio,Select,MenuItem } from '@material-ui/core';
 
-class EmployeePersonalForm extends Component{
+class EmployeePersonalForm extends Component {
   constructor(props) 
   {
     super(props);
@@ -11,14 +11,12 @@ class EmployeePersonalForm extends Component{
       districtsToDisplay:[]
     }
     this.addEmployee = this.addEmployee.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(){
     var url='http://192.168.43.241:8086/api/states';
     this.populateCombos('State',url)
-
-    url='http://192.168.43.241:8086/api/districts/1';
-    this.populateCombos('District',url)
   }
 
   async populateCombos(comboName,url) 
@@ -61,17 +59,24 @@ class EmployeePersonalForm extends Component{
               districtsToDisplay: initialDataToDisplay
             });
         }
-       }
+      }
     }
     catch(err) {
       alert(err.message);
     }
   }
 
-  async addEmployee() 
+  handleChange(event) 
   {
-
+    this.setState({
+      districtsToDisplay: []
+    });
+    var stateId=event.target.value;
+    var url='http://192.168.43.241:8086/api/districts/' + stateId;
+    this.populateCombos('District',url)
   }
+  
+  async addEmployee() {}
 
   render()
   {
@@ -80,7 +85,7 @@ class EmployeePersonalForm extends Component{
    
     return (
       <div>
-          <Paper elevation={10} style={paperStyle}>
+        <Paper elevation={10} style={paperStyle}>
           <label id = "returnMessage"></label>
           <Table>
             <tr>
@@ -119,14 +124,14 @@ class EmployeePersonalForm extends Component{
             </tr>
             <tr><td><label>State</label></td>
                 <td>
-                  <Select>
+                  <Select id="statesCombo" value={this.state.value} onChange={this.handleChange}>
                     {this.state.statesToDisplay}
                   </Select>
                 </td>
             </tr>
             <tr><td><label>District</label></td>
               <td>
-                <Select>
+                <Select id="districtsCombo">
                 {this.state.districtsToDisplay}
                 </Select>
                </td>
@@ -147,9 +152,9 @@ class EmployeePersonalForm extends Component{
                   onClick={() => { this.addEmployee() }}>Save</Button></td>
             </tr>
           </Table>
-          </Paper>
-       </div>
-      );
+        </Paper>
+      </div>
+    );
   }
 }
 
