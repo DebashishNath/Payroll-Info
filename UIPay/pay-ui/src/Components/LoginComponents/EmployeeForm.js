@@ -1,8 +1,8 @@
 import React ,{Component,Fragment} from 'react';
-import { Tabs ,Tab,AppBar } from '@material-ui/core';
+import { Tabs,Tab } from '@material-ui/core';
 import EmployeePersonalForm from "./EmployeePersonalForm";
 import EmployeeOfficialForm from "./EmployeeOfficialForm";
-import { Route,Link, BrowserRouter as Router,Switch,Redirect } from 'react-router-dom';
+import { Route,Link, BrowserRouter as Router,Switch } from 'react-router-dom';
 
 class EmployeeForm extends Component {
     constructor(props) 
@@ -38,7 +38,7 @@ class EmployeeForm extends Component {
                             <Route path={allTabs[1]} exact component={EmployeeOfficialForm}/>
                         </Switch>
                     </Fragment>
-                )}
+                    )}
                 />
             </div>
             </Router>

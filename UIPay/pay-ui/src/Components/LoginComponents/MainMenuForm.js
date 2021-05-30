@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import CategoryForm from "./CategoryForm";
 import DepartmentForm from "./DepartmentForm";
-import EmployeePersonalForm from "./EmployeePersonalForm";
 import EmployeeForm from "./EmployeeForm"
 
 export default class MainMenuForm extends React.Component {
