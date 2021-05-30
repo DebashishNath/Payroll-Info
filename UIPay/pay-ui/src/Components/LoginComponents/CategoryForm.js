@@ -7,9 +7,6 @@ class CategoryForm extends Component {
   constructor(props) 
   {
     super(props);
-    this.state = {
-        accessToken: this.props.history.location.state?.tokenValue
-    };
     this.addCategory = this.addCategory.bind(this);
     this.closeCategory = this.closeCategory.bind(this);
   }
