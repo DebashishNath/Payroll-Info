@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 
 class CategoryForm extends Component {
   constructor(props) 
   {
     super(props);
     this.addCategory = this.addCategory.bind(this);
-    this.closeCategory = this.closeCategory.bind(this);
   }
 
   async addCategory() {
@@ -45,25 +42,18 @@ class CategoryForm extends Component {
     }
   }
   
-  closeCategory(){
-    alert("Inside closeCategory()");
-  }
-
   render() {
-      const paperStyle={padding:20,height:'30vh',width:400,margin:"100px auto"}
-      const btnStyle={margin:'8px 0'}
+    const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px"}
+    const btnStyle={margin:'8px 0'}
       
-      return (
+    return (
       <div>
-        <Paper elevation={10} style={paperStyle}>
-          <IconButton aria-label="close" align="right" >
-          <CloseIcon onClick={() => { this.closeCategory() }}/>
-          </IconButton>
+        <Paper style={paperStyle} variant="outlined">
           <label id = "returnMessage"></label>
           <Table>
             <tr><td><label>Category Code</label></td>
                 <td><TextField id="categoryCode" variant='outlined'></TextField></td>
-            </tr>
+            </tr><br/>
             <tr><td><label>Category Name</label></td>
                 <td><TextField id="categoryName" variant='outlined'></TextField></td>
             </tr>

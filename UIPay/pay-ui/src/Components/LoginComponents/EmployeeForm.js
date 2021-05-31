@@ -1,5 +1,5 @@
 import React ,{Component,Fragment} from 'react';
-import { Tabs,Tab } from '@material-ui/core';
+import { Tabs,Tab,Paper } from '@material-ui/core';
 import EmployeePersonalForm from "./EmployeePersonalForm";
 import EmployeeOfficialForm from "./EmployeeOfficialForm";
 import { Route,Link, BrowserRouter as Router,Switch } from 'react-router-dom';
@@ -21,10 +21,12 @@ class EmployeeForm extends Component {
     render()
     {
         const allTabs = ['/', '/tab2'];
+        const paperStyle={padding:10,height:'120vh',width:650,margin:"20px 40px"}
 
         return (
             <Router>
-            <div className="App">
+            <div>
+                <Paper elevation={0} style={paperStyle} variant="outlined" >
                 <Route
                     path="/"
                     render={({ location }) => (
@@ -40,6 +42,7 @@ class EmployeeForm extends Component {
                     </Fragment>
                     )}
                 />
+                </Paper>
             </div>
             </Router>
         );

@@ -80,12 +80,12 @@ class EmployeePersonalForm extends Component {
 
   render()
   {
-    const paperStyle={padding:20,height:'100vh',width:600,margin:"100px auto"}
+    const paperStyle={padding:20,height:'100vh',width:600,margin:"10px auto"}
     const btnStyle={margin:'8px 0'}
    
     return (
       <div>
-        <Paper elevation={10} style={paperStyle}>
+        <Paper style={paperStyle} variant="outlined">
           <label id = "returnMessage"></label>
           <Table>
             <tr>
@@ -124,14 +124,15 @@ class EmployeePersonalForm extends Component {
             </tr>
             <tr><td><label>State</label></td>
                 <td>
-                  <Select id="statesCombo" value={this.state.value} onChange={this.handleChange}>
+                  <Select id="statesCombo" value={this.state.value} onChange={this.handleChange}
+                    style={{ border: '1px solid' }}>
                     {this.state.statesToDisplay}
                   </Select>
                 </td>
             </tr>
             <tr><td><label>District</label></td>
               <td>
-                <Select id="districtsCombo">
+                <Select id="districtsCombo" style={{ border: '1px solid' }}>
                 {this.state.districtsToDisplay}
                 </Select>
                </td>

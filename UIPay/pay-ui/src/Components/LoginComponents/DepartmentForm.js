@@ -43,12 +43,12 @@ class DepartmentForm extends Component {
     }
 
     render() {
-        const paperStyle={padding:20,height:'25vh',width:400,margin:"100px auto"}
+        const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px"}
         const btnStyle={margin:'8px 0'}
 
         return (
         <div>
-            <Paper elevation={10} style={paperStyle}>
+            <Paper style={paperStyle} variant="outlined">
             <label id = "returnMessage"></label>
             <Table>
               <tr><td><label>Department Code</label></td>
