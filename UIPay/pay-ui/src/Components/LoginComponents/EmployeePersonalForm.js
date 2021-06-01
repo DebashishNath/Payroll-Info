@@ -8,10 +8,14 @@ class EmployeePersonalForm extends Component {
     super(props);
     this.state = {
       statesToDisplay:[],
-      districtsToDisplay:[]
+      districtsToDisplay:[],
+      districtId:null,
+      gender:"M"
     }
     this.addEmployee = this.addEmployee.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.statesComboChange = this.statesComboChange.bind(this);
+    this.districtsComboChange = this.districtsComboChange.bind(this);
+    this.onValueChange=this.onValueChange.bind(this);
   }
 
   componentDidMount(){
@@ -66,7 +70,7 @@ class EmployeePersonalForm extends Component {
     }
   }
 
-  handleChange(event) 
+  statesComboChange(event) 
   {
     this.setState({
       districtsToDisplay: []
@@ -76,11 +80,67 @@ class EmployeePersonalForm extends Component {
     this.populateCombos('District',url)
   }
   
-  async addEmployee() {}
+  districtsComboChange(event) 
+  {
+    this.setState({
+      districtId : event.target.value
+    });
+  }
+
+  onValueChange(event) {
+    this.setState({
+      gender: event.target.value
+    });
+  }
+
+  async addEmployee() 
+  {
+    const requestOptions = 
+    {
+      crossDomain:true,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+                  'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+      body: JSON.stringify({
+        "emp_id" : "0",
+	      "emp_code" : document.getElementById("employeeCode").value,
+        "emp_first_name" : document.getElementById("firstName").value,
+        "emp_middle_name" : document.getElementById("middleName").value,
+        "emp_last_name" : document.getElementById("lastName").value,
+        "emp_image_path" : "",
+        "gender" : this.state.gender,
+	      "dob" : document.getElementById("dob").value,
+	      "address1" : document.getElementById("address1").value,
+        "address2" : document.getElementById("address2").value,
+        "location" : null,
+        "district" : {"district_id" : this.state.districtId},
+        "pin" : document.getElementById("pin").value,
+	      "contact_number" : document.getElementById("contactNumber").value,
+	      "email" : document.getElementById("email").value
+	    })
+    };
+    
+    var url='http://192.168.43.241:8086/api/newemployee';
+    try 
+    {
+      const response = await fetch(url,requestOptions);
+      var data = await response.json();
+      document.getElementById('returnMessage').innerHTML = data.message;
+      if (data.code === 0)
+      {
+        document.getElementById('returnMessage').style="color:green";
+      }
+      else
+      {
+        document.getElementById('returnMessage').style="color:red";
+      }
+    } catch(err) 
+    { alert(err.message); }
+  }
 
   render()
   {
-    const paperStyle={padding:20,height:'100vh',width:600,margin:"10px auto"}
+    const paperStyle={padding:20,height:'105vh',width:600,margin:"10px auto"}
     const btnStyle={margin:'8px 0'}
    
     return (
@@ -103,8 +163,8 @@ class EmployeePersonalForm extends Component {
               <td><label>Gender</label></td>
               <td>
                 <RadioGroup aria-label="Gender" name="gender" row>
-                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                <FormControlLabel value="M" control={<Radio />} label="Male" onChange={this.onValueChange}/>
+                <FormControlLabel value="F" control={<Radio />} label="Female" onChange={this.onValueChange}/>
                 </RadioGroup>
               </td>
             </tr>
@@ -124,7 +184,7 @@ class EmployeePersonalForm extends Component {
             </tr>
             <tr><td><label>State</label></td>
                 <td>
-                  <Select id="statesCombo" value={this.state.value} onChange={this.handleChange}
+                  <Select id="statesCombo" value={this.state.value} onChange={this.statesComboChange}
                     style={{ border: '1px solid' }}>
                     {this.state.statesToDisplay}
                   </Select>
@@ -132,8 +192,9 @@ class EmployeePersonalForm extends Component {
             </tr>
             <tr><td><label>District</label></td>
               <td>
-                <Select id="districtsCombo" style={{ border: '1px solid' }}>
-                {this.state.districtsToDisplay}
+                <Select id="districtsCombo" value={this.state.value} onChange={this.districtsComboChange}
+                  style={{ border: '1px solid' }}>
+                  {this.state.districtsToDisplay}
                 </Select>
                </td>
             </tr>

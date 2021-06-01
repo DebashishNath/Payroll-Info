@@ -34,7 +34,6 @@ public class EmployeeController {
     public ResponseEntity<?> addEmployee(@Valid @RequestBody mst_employee employee) {
         try
         {
-            System.out.println(employee.getAadhar_no());
             mst_employee employeeToAdd=employeeService.save(employee);
             return ResponseEntity.ok(new MessageResponse(employeeToAdd.getReturnMessage().getCode(),
                     employeeToAdd.getReturnMessage().getMessage()));

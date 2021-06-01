@@ -96,5 +96,4 @@ class DistrictServiceDAL extends DistrictServiceImpl {
             return msgResp;
         }
     }
-
 }
