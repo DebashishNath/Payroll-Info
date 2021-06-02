@@ -43,7 +43,7 @@ class CategoryForm extends Component {
   }
   
   render() {
-    const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px"}
+    const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px",backgroundColor:'lightblue'}
     const btnStyle={margin:'8px 0'}
       
     return (
