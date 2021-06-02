@@ -177,10 +177,10 @@ class EmployeePersonalForm extends Component {
             </tr>
             <br/>
             <tr><td><label>Address</label></td>
-                <td><TextField id="address1" variant='outlined'></TextField></td>
+                <td><TextField id="address1" multiline variant='outlined'></TextField></td>
             </tr>
             <tr><td></td>
-                <td><TextField id="address2" variant='outlined'></TextField></td>
+                <td><TextField id="address2" multiline variant='outlined'></TextField></td>
             </tr>
             <tr><td><label>State</label></td>
                 <td>
