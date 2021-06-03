@@ -52,10 +52,10 @@ class CategoryForm extends Component {
           <label id = "returnMessage"></label>
           <Table>
             <tr><td><label>Category Code</label></td>
-                <td><TextField id="categoryCode" variant='outlined'></TextField></td>
+                <td><TextField id="categoryCode" variant='outlined' required inputProps={{ maxLength: 5 }}></TextField></td>
             </tr><br/>
             <tr><td><label>Category Name</label></td>
-                <td><TextField id="categoryName" variant='outlined'></TextField></td>
+                <td><TextField id="categoryName" variant='outlined' required inputProps={{ maxLength: 25 }}></TextField></td>
             </tr>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
