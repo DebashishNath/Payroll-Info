@@ -68,12 +68,15 @@ class ListEmployeesForm extends Component {
 
     render()
     {
+        const paperStyle={padding:30,height:'105vh',width:800,margin:"10px auto"}
         return (
+            <Paper style={paperStyle} variant="outlined">
             <div>
                 <Table>
                     {this.state.employeesToDisplay}
                 </Table>
             </div>
+            </Paper>
         );
     }
 }
