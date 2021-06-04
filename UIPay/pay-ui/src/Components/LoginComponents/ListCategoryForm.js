@@ -21,17 +21,13 @@ function createData(slno, id,code, name) {
 }
 
 const rows = [
-  createData(1, 1, 'CT001', 'Permanent'),
+  createData(1, 1,'CT001','Permanent'),
   createData(1,2,'CT002','Temporary')
 ];
 
 const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-  container: {
-    maxHeight: 440,
-  },
+  root: { width: '100%' },
+  container: { maxHeight: 440 },
 });
 
 export default function ListCategoryForm() {
