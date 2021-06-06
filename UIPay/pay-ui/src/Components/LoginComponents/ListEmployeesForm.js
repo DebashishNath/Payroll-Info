@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button,Paper } from '@material-ui/core';
+import EmployeeForm from "./EmployeeForm";
+import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 
 class ListEmployeesForm extends Component {
     constructor(props) 
@@ -8,12 +10,19 @@ class ListEmployeesForm extends Component {
         this.state = {
             employeesToDisplay:[],
         }
+        this.doEditOfEmployee=this.doEditOfEmployee.bind(this);
     }
 
     componentDidMount(){
         this.DisplayAllEmployees();
     }
 
+    doEditOfEmployee(empId){
+        alert('Employee Id: ' + empId);
+        /*history.push({ 
+            pathname: '/EmployeeForm'
+          });*/
+    }
     async DisplayAllEmployees()
     {
         let initialDataToDisplay = [];
@@ -32,7 +41,7 @@ class ListEmployeesForm extends Component {
           {
             
             initialDataToDisplay.push(<tr>
-                 <th>Slno</th><th className="hidden-xs">EmpId</th><th>Code</th><th>Name</th>
+                 <th>Slno</th><th>Code</th><th>Name</th>
                  <th>Gender</th><th>Department</th><th>Designation</th>
                  <th></th></tr>);
             for(var i=0;i<=data.length-1;i++)
@@ -41,17 +50,16 @@ class ListEmployeesForm extends Component {
                 if(data[i].gender === "F"){
                     gender='Female';
                 }
-                
+                let empId=data[i].emp_id;
                 initialDataToDisplay.push(
-                    <tr>
+                    <tr key={data[i].emp_id}>
                     <td>{i+1}</td>
-                    <td className="hidden-xs">{data[i].emp_id}</td>
                     <td>{data[i].emp_code}</td>
                     <td>{data[i].emp_first_name + ' ' + data[i]?.emp_middle_name + ' ' + data[i].emp_last_name}</td>
                     <td>{gender}</td>
                     <td>{data[i]?.department?.department_name}</td>
                     <td>{data[i]?.designation?.designation_name}</td>
-                    <td><Button>Edit</Button></td>
+                    <td><Button onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
                     </tr>);
             }
             this.setState({
