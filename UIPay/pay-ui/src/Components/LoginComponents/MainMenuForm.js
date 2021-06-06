@@ -23,7 +23,7 @@ export default class MainMenuForm extends React.Component {
           { name: "department", label: "Department",route: '/department', onClick },
           { name: "designation", label: "Designation",route: '/designation', onClick },
           { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents', onClick },
-          { name: "employee", label: "Employee",route: '/employee', onClick }
+          { name: "employee", label: "Employee",route: '/list_employees', onClick }
         ] },
         "divider",
         {
@@ -62,7 +62,7 @@ export default class MainMenuForm extends React.Component {
             <switch>
               <Route path='/category' exact component={ListCategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
-              <Route path='/employee' exact component={ListEmployeesForm} />
+              <Route path='/list_employees' exact component={ListEmployeesForm} />
             </switch>
           </Router>
           </Grid>

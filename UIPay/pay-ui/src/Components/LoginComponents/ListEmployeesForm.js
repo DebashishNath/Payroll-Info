@@ -9,6 +9,7 @@ class ListEmployeesForm extends Component {
         super(props);
         this.state = {
             employeesToDisplay:[],
+            noOfRecords:0
         }
         this.doEditOfEmployee=this.doEditOfEmployee.bind(this);
     }
@@ -17,12 +18,14 @@ class ListEmployeesForm extends Component {
         this.DisplayAllEmployees();
     }
 
-    doEditOfEmployee(empId){
+    doEditOfEmployee(empId)
+    {
         alert('Employee Id: ' + empId);
         /*history.push({ 
             pathname: '/EmployeeForm'
           });*/
     }
+
     async DisplayAllEmployees()
     {
         let initialDataToDisplay = [];
@@ -63,7 +66,8 @@ class ListEmployeesForm extends Component {
                     </tr>);
             }
             this.setState({
-                employeesToDisplay: initialDataToDisplay
+                employeesToDisplay: initialDataToDisplay,
+                noOfRecords:data.length
               });
           }
           else{
@@ -76,14 +80,18 @@ class ListEmployeesForm extends Component {
 
     render()
     {
-        const paperStyle={padding:30,height:'105vh',width:800,margin:"10px auto"}
+        const paperStyle={padding:30,height:'80vh',width:800,margin:"10px auto",overflow:'auto'}
         return (
             <Paper style={paperStyle} variant="outlined">
             <div>
-                <Table>
+                <Table border='1'>
                     {this.state.employeesToDisplay}
                 </Table>
             </div>
+            <label>No Of Records :{this.state.noOfRecords}</label>
+            <Router>
+                <Route path="/employee" exact component={EmployeeForm} />
+            </Router>
             </Paper>
         );
     }
