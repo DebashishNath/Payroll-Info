@@ -42,7 +42,7 @@ class ListEmployeesForm extends Component {
           var data = await response.json();
           if(data!=null && data.length>0)
           {
-            
+            const buttonStyle={ color : 'primary' }
             initialDataToDisplay.push(<tr>
                  <th>Slno</th><th>Code</th><th>Name</th>
                  <th>Gender</th><th>Department</th><th>Designation</th>
@@ -62,7 +62,7 @@ class ListEmployeesForm extends Component {
                     <td>{gender}</td>
                     <td>{data[i]?.department?.department_name}</td>
                     <td>{data[i]?.designation?.designation_name}</td>
-                    <td><Button onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
+                    <td><Button color="primary" variant="contained" onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
                     </tr>);
             }
             this.setState({
