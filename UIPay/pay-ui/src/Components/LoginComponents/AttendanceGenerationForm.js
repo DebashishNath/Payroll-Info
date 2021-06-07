@@ -55,7 +55,7 @@ class AttendanceGenerationForm extends Component {
       var payYear=document.getElementById("year").value;
       
       var url='http://192.168.43.241:8086/api/empattendance/' + payMonth + '/' + payYear 
-      alert(url);
+      
       try 
       {
         const response = await fetch(url,requestOptions);

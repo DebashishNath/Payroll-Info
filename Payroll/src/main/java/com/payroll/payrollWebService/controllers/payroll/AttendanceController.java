@@ -12,13 +12,13 @@ public class AttendanceController {
     @Autowired
     private EmpAttendanceService empAttendanceService;
 
-    @GetMapping("/empattendance/{month}/{year}")
+    @PostMapping("/empattendance/{month}/{year}")
     public MessageResponse GenerateAttendance(@PathVariable(value = "month") Integer month,
                                               @PathVariable(value = "year") Integer year){
         return empAttendanceService.GenerateAllAttendance(month,year);
     }
 
-    @GetMapping("/empsingleattendance/{month}/{year}/{empid}")
+    @PostMapping("/empsingleattendance/{month}/{year}/{empid}")
     public MessageResponse GenerateAttendance(@PathVariable(value = "month") Integer month,
                                               @PathVariable(value = "year") Integer year,
                                               @PathVariable(value = "empid") Long empid){
