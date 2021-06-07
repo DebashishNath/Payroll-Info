@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
 
-class PaySlipGenerationForm extends Component {
+class AttendanceGenerationForm extends Component {
   constructor(props) 
   {
     super(props);
@@ -10,7 +10,7 @@ class PaySlipGenerationForm extends Component {
       monthId:0
     }
     this.monthsComboChange = this.monthsComboChange.bind(this);
-    this.generatePaySlip = this.generatePaySlip.bind(this);
+    this.generateAttendance = this.generateAttendance.bind(this);
   }
 
   componentDidMount()
@@ -42,7 +42,7 @@ class PaySlipGenerationForm extends Component {
     });
   }
 
-  async generatePaySlip() {
+  async generateAttendance() {
         
         const requestOptions = {
             crossDomain:true,
@@ -53,16 +53,9 @@ class PaySlipGenerationForm extends Component {
       
       var payMonth=this.state.monthId;
       var payYear=document.getElementById("year").value;
-      let payDate='';
-      if(payMonth<=9)
-      {
-        payDate=payYear + '-0' +  payMonth + '-01' ;
-      }
-      else
-      {
-        payDate=payYear + '-' +  payMonth + '-01' ;
-      }
-      var url='http://192.168.43.241:8086/api/payslip/' + payMonth + '/' + payYear + '/' + payDate
+      
+      var url='http://192.168.43.241:8086/api/empattendance/' + payMonth + '/' + payYear 
+      alert(url);
       try 
       {
         const response = await fetch(url,requestOptions);
@@ -105,7 +98,7 @@ class PaySlipGenerationForm extends Component {
                 <tr>
                   <br/>
                   <div><Button type='submit' color='primary' variant='contained'  
-                        onClick={() => { this.generatePaySlip() }}>Generate Pay Slip</Button>
+                        onClick={() => { this.generateAttendance() }}>Generate Attendance</Button>
                   </div>
                 </tr>
               </Table>
@@ -115,4 +108,4 @@ class PaySlipGenerationForm extends Component {
   }
 }
 
-export default PaySlipGenerationForm;
+export default AttendanceGenerationForm;
