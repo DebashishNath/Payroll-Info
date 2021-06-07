@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Table, Button,Paper } from '@material-ui/core';
 import EmployeeForm from "./EmployeeForm";
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router,Route,withRouter } from 'react-router-dom';
 
-class ListEmployeesForm extends Component {
+class ListEmployeesForm extends PureComponent {
     constructor(props) 
     {
         super(props);
@@ -21,9 +21,8 @@ class ListEmployeesForm extends Component {
     doEditOfEmployee(empId)
     {
         alert('Employee Id: ' + empId);
-        /*history.push({ 
-            pathname: '/EmployeeForm'
-          });*/
+        const { history } = this.props;
+        if(history) history.push('/employee');
     }
 
     async DisplayAllEmployees()
@@ -42,7 +41,6 @@ class ListEmployeesForm extends Component {
           var data = await response.json();
           if(data!=null && data.length>0)
           {
-            const buttonStyle={ color : 'primary' }
             initialDataToDisplay.push(<tr>
                  <th>Slno</th><th>Code</th><th>Name</th>
                  <th>Gender</th><th>Department</th><th>Designation</th>
@@ -87,8 +85,10 @@ class ListEmployeesForm extends Component {
                 <Table border='1'>
                     {this.state.employeesToDisplay}
                 </Table>
+            </div><br/>
+            <div align='center'>
+                <label>No Of Records :{this.state.noOfRecords}</label>
             </div>
-            <label>No Of Records :{this.state.noOfRecords}</label>
             <Router>
                 <Route path="/employee" exact component={EmployeeForm} />
             </Router>
@@ -97,4 +97,4 @@ class ListEmployeesForm extends Component {
     }
 }
 
-export default ListEmployeesForm;
+export default withRouter(ListEmployeesForm);

@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import ListCategoryForm from "./ListCategoryForm";
 import DepartmentForm from "./DepartmentForm";
 import ListEmployeesForm from './ListEmployeesForm'
+import PaySlipGenerationForm from './PaySlipGenerationForm'
 
 export default class MainMenuForm extends React.Component {
   
@@ -63,6 +64,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/category' exact component={ListCategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
               <Route path='/list_employees' exact component={ListEmployeesForm} />
+              <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
             </switch>
           </Router>
           </Grid>

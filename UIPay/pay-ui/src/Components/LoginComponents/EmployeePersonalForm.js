@@ -185,7 +185,7 @@ class EmployeePersonalForm extends Component {
             <tr><td><label>State</label></td>
                 <td>
                   <Select id="statesCombo" value={this.state.value} onChange={this.statesComboChange}
-                    style={{ border: '1px solid' }}>
+                    style={{ border: '1px solid' ,width:'150px' }}>
                     {this.state.statesToDisplay}
                   </Select>
                 </td>
@@ -193,7 +193,7 @@ class EmployeePersonalForm extends Component {
             <tr><td><label>District</label></td>
               <td>
                 <Select id="districtsCombo" value={this.state.value} onChange={this.districtsComboChange}
-                  style={{ border: '1px solid' }}>
+                  style={{ border: '1px solid' ,width:'150px'  }}>
                   {this.state.districtsToDisplay}
                 </Select>
                </td>
