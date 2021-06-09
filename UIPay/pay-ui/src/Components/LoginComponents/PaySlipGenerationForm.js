@@ -90,7 +90,7 @@ class PaySlipGenerationForm extends Component {
             <Paper style={paperStyle} variant="outlined">
               <label id = "returnMessage"></label>
               <Table>
-                <br/><br/>
+                <br/>
                 <tr>
                   <td>
                     <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined'></TextField>
