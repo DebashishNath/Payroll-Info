@@ -22,7 +22,17 @@ function createData(slno, id,code, name) {
 
 const rows = [
   createData(1, 1,'CT001','Permanent'),
-  createData(1,2,'CT002','Temporary')
+  createData(1,2,'CT002','Temporary'),
+  createData(1, 1,'CT003','Permanent'),
+  createData(1,2,'CT004','Temporary'),
+  createData(1, 1,'CT005','Permanent'),
+  createData(1,2,'CT006','Temporary'),
+  createData(1, 1,'CT007','Permanent'),
+  createData(1,2,'CT008','Temporary'),
+  createData(1, 1,'CT009','Permanent'),
+  createData(1,2,'CT010','Temporary'),
+  createData(1, 1,'CT011','Permanent'),
+  createData(1,2,'CT012','Temporary'),
 ];
 
 const useStyles = makeStyles({

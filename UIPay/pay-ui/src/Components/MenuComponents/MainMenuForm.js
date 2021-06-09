@@ -6,11 +6,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import ListCategoryForm from "./ListCategoryForm";
-import DepartmentForm from "./DepartmentForm";
-import ListEmployeesForm from './ListEmployeesForm';
-import PaySlipGenerationForm from './PaySlipGenerationForm';
-import AttendanceGenerationForm from './AttendanceGenerationForm';
+import ListCategoryForm from "../MasterComponents/ListCategoryForm";
+import DepartmentForm from "../MasterComponents/DepartmentForm";
+import ListEmployeesForm from '../MasterComponents/ListEmployeesForm';
+import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationForm';
+import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
+import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 
 export default class MainMenuForm extends React.Component {
   
@@ -44,8 +45,8 @@ export default class MainMenuForm extends React.Component {
           label: "Reports",
           Icon: ReportIcon,
           items: [
-            { name: "attendance", label: "Attendance",route: '/attendance', onClick },
-            { name: "payslip", label: "payslip",route: '/payslip', onClick }
+            { name: "attendance", label: "Attendance",route: '/printattendance', onClick },
+            { name: "payslip", label: "payslip",route: '/printpayslip', onClick }
           ]
         },
         "divider",
@@ -67,6 +68,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/list_employees' exact component={ListEmployeesForm} />
               <Route path='/monthlyattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
+              <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
             </switch>
           </Router>
           </Grid>

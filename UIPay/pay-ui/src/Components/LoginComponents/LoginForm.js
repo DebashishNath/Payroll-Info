@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, 
   Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import MainMenuForm from "./MainMenuForm";
+import MainMenuForm from "../MenuComponents/MainMenuForm";
 
 function LoginContent() 
 {
