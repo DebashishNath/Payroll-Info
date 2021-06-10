@@ -71,19 +71,24 @@ class PrintPaySlipForm extends Component {
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
-            
-            <Table>
-                <tr><td><label>Employee</label></td>
-                    <td>
-                    <Select id="employeesCombo" value={this.state.value} onChange={this.employeesComboChange}
-                        style={{ border: '1px solid' ,width:'250px' }}>
-                        {this.state.employeesToDisplay}
-                    </Select>
-                    </td>
-                    <td><Button type='submit' color='primary' variant='contained' 
-                        onClick={() => { this.printPaySlip() }}>Print Pay Slip</Button></td>
-                </tr>
-            </Table>
+                <Table>
+                    <tr><td><label>Employee</label></td>
+                        <td>
+                        <Select id="employeesCombo" value={this.state.value} onChange={this.employeesComboChange}
+                            style={{ border: '1px solid' ,width:'250px' }}>
+                            {this.state.employeesToDisplay}
+                        </Select>
+                        </td>
+                        <td><Button type='submit' color='primary' variant='contained' 
+                            onClick={() => { this.printPaySlip() }}>Print Pay Slip</Button></td>
+                    </tr>
+                </Table>
+                <br/>
+                <div>
+                    <Table border='1'>
+                       
+                    </Table>
+                </div>
             </Paper>
          </div>
         );
