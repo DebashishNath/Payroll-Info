@@ -1,9 +1,9 @@
 package com.payroll.payrollWebService.models.payroll;
 
 import com.payroll.payrollWebService.payload.response.MessageResponse;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="trn_monthly_emp_salary_summary")
@@ -103,4 +103,5 @@ public class trn_monthly_emp_salary_summary {
     public void setReturnMessage(MessageResponse returnMessage) {
         this.returnMessage = returnMessage;
     }
+
 }

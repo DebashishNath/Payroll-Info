@@ -18,7 +18,6 @@ public class trn_monthly_emp_salary_details {
 
     @EmbeddedId
     private MonthlyEmpSalaryIdentity monEmpSalIdentity;
-    private Date salary_date;
     private Double earn_ded_amount;
 
     @Transient
@@ -39,14 +38,6 @@ public class trn_monthly_emp_salary_details {
 
     public void setMonEmpSalIdentity(MonthlyEmpSalaryIdentity monEmpSalIdentity) {
         this.monEmpSalIdentity = monEmpSalIdentity;
-    }
-
-    public Date getSalary_date() {
-        return salary_date;
-    }
-
-    public void setSalary_date(Date salary_date) {
-        this.salary_date = salary_date;
     }
 
     public Double getEarn_ded_amount() {
