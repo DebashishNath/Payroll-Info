@@ -90,10 +90,8 @@ class PrintPaySlipForm extends Component {
         
         try
         {
-            let earnData = [];
-            let dedData = [];
-            let payData=[];
-            let i = 0;
+            let earnData = [],dedData = [],payData=[];
+            let i = 0,total_earn_amount=0,total_ded_amount=0,net_amount=0;
 
             const requestOptions = {
                 crossDomain:true,
@@ -114,6 +112,12 @@ class PrintPaySlipForm extends Component {
             {
                 for (i = 0; i < data.lstPrintPaySlip.length; i++)
                 {
+                    if(i===0)
+                    {
+                        total_earn_amount=data.lstPrintPaySlip[i].total_earn_amount;
+                        total_ded_amount=data.lstPrintPaySlip[i].total_ded_amount;
+                        net_amount=data.lstPrintPaySlip[i].net_amount;
+                    }
                     let earnDedType=data.lstPrintPaySlip[i].earn_ded_type;
                     if(earnDedType==='E')
                     {
@@ -150,7 +154,6 @@ class PrintPaySlipForm extends Component {
                     </tr>);
                 for(i=0;i<rows;i++)
                 {
-                    
                     payData.push(<tr>
                         <td>{i+1}</td>
                         <td>{earnData[i][0]}</td>
@@ -159,17 +162,32 @@ class PrintPaySlipForm extends Component {
                         <td>{dedData[i][1]}</td>
                         </tr>);
                 }
+                payData.push(<tr><td>'   '</td><td></td><td></td><td></td><td></td></tr>);
+                payData.push(<tr>
+                    <td></td>
+                    <td>Total Earn Amount</td>
+                    <td>{total_earn_amount}</td>
+                    <td>Total Ded Amount</td>
+                    <td>{total_ded_amount}</td>
+                    </tr>);
+                
+                payData.push(<tr>
+                    <td></td><td></td><td></td>
+                    <td>Net Amount</td><td>{net_amount}</td>
+                    </tr>);
+                
             }
             else
             {
                 payData.push('No records to display');
             }
+
             this.setState({ paySlipData: payData });   
         } catch(err) { alert(err.message); }
     }
     
     render() {
-        const paperStyle={padding:20,height:'100vh',width:850,margin:"40px 100px"}
+        const paperStyle={padding:20,height:'50vh',width:650,margin:"40px 100px"}
         
         return (
         <div>
@@ -200,9 +218,7 @@ class PrintPaySlipForm extends Component {
                 </Table>
                 <br/>
                 <Table border='1'>
-                    <tr>
-                        <td>{this.state.paySlipData}</td>
-                    </tr>
+                    {this.state.paySlipData}
                 </Table>
             </Paper>
          </div>
