@@ -1,24 +1,58 @@
 import React, { Component } from 'react';
-import { Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
+import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
 
 class PrintPaySlipForm extends Component {
     constructor(props) 
     {
         super(props);
         this.state = {
+            monthsToDisplay:[],
             employeesToDisplay:[],
+            paySlipData:[],
+            monthId:0,
             employeeId:0
         }
+        this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
         this.printPaySlip=this.printPaySlip.bind(this);
     }
 
     componentDidMount(){
+        this.populateMonths();
         var url='http://192.168.43.241:8086/api/employees';
-        this.populateCombos('Employee',url)
+        this.populateCombos(url)
     }
 
-    async populateCombos(comboName,url) 
+    populateMonths()
+    {
+      let initialDataToDisplay = [];
+  
+      initialDataToDisplay.push(<MenuItem value={1}>January</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={2}>February</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={3}>March</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={4}>April</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={5}>May</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={6}>June</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={7}>July</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={8}>August</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={9}>September</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={10}>October</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={11}>November</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={12}>December</MenuItem>);
+  
+      this.setState({
+        monthsToDisplay: initialDataToDisplay
+      });
+    }
+  
+    monthsComboChange(event) 
+    {
+      this.setState({
+        monthId : event.target.value
+      });
+    }
+
+    async populateCombos(url) 
     {
         try
         {
@@ -37,19 +71,11 @@ class PrintPaySlipForm extends Component {
             {
                 for(var i=0;i<=data.length-1;i++)
                 {
-                    if(comboName === 'Employee')
-                    {
-                        var emp_name= data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
-                        initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
-                    }
+                    var emp_name= data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
+                    initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
                 }
-                if(comboName === 'Employee')
-                {
-                    this.setState({
-                        employeesToDisplay: initialDataToDisplay
-                    });
-                }
-           }
+                this.setState({ employeesToDisplay: initialDataToDisplay });
+            }
         } catch(err) { alert(err.message); }
     }
 
@@ -61,34 +87,123 @@ class PrintPaySlipForm extends Component {
     }
 
     async printPaySlip(){
+        
+        try
+        {
+            let earnData = [];
+            let dedData = [];
+            let payData=[];
+            let i = 0;
 
+            const requestOptions = {
+                crossDomain:true,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') }
+            };
+            var userId=localStorage.getItem('userId');
+            var payEmpId=this.state.employeeId;
+            var payMonthId=this.state.monthId;
+            var payYear=document.getElementById("year").value;
+            
+            var url='http://192.168.43.241:8086/api/printpayslip/' + userId + '/' + payMonthId + '/' + payYear + '/' + payEmpId;
+            
+            const resp = await fetch(url,requestOptions);
+            var data = await resp.json();
+            if(data!=null && data.lstPrintPaySlip!=null && data.lstPrintPaySlip.length > 0)
+            {
+                for (i = 0; i < data.lstPrintPaySlip.length; i++)
+                {
+                    let earnDedType=data.lstPrintPaySlip[i].earn_ded_type;
+                    if(earnDedType==='E')
+                    {
+                        earnData.push([data.lstPrintPaySlip[i].earn_ded_name,data.lstPrintPaySlip[i].earn_ded_amount]);
+                    }
+                    if(earnDedType==='D')
+                    {
+                        dedData.push([data.lstPrintPaySlip[i].earn_ded_name,data.lstPrintPaySlip[i].earn_ded_amount]);
+                    }
+                }
+                let rows=0;
+                if(earnData.length > dedData.length)
+                { 
+                    rows=earnData.length 
+                }
+                else
+                {
+                    rows=dedData.length 
+                }
+                let diffRows=earnData.length - dedData.length;
+                if(diffRows>0)
+                {
+                    for(i=0;i<diffRows;i++)
+                    { dedData.push(['','']); }
+                }
+                else {
+                    for(i=0;i<diffRows;i++)
+                    { earnData.push(['','']); }
+                }
+                payData.push(<tr>
+                    <th>Slno</th>
+                    <th>Earning Components</th><th>Amount</th>
+                    <th>Deduction Components</th><th>Amount</th>
+                    </tr>);
+                for(i=0;i<rows;i++)
+                {
+                    
+                    payData.push(<tr>
+                        <td>{i+1}</td>
+                        <td>{earnData[i][0]}</td>
+                        <td>{earnData[i][1]}</td>
+                        <td>{dedData[i][0]}</td>
+                        <td>{dedData[i][1]}</td>
+                        </tr>);
+                }
+            }
+            else
+            {
+                payData.push('No records to display');
+            }
+            this.setState({ paySlipData: payData });   
+        } catch(err) { alert(err.message); }
     }
     
     render() {
-        const paperStyle={padding:20,height:'25vh',width:600,margin:"40px 100px"}
-        const btnStyle={margin:'8px 0'}
-
+        const paperStyle={padding:20,height:'100vh',width:850,margin:"40px 100px"}
+        
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
                 <Table>
-                    <tr><td><label>Employee</label></td>
-                        <td>
+                    <tr>
+                    <td>
+                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined'></TextField>
+                    </td>
+                    <td>
+                        <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
+                        style={{ border: '1px solid',width:'140px' }}>
+                        {this.state.monthsToDisplay}
+                        </Select>
+                    </td>
+                    </tr>
+                    <br/>
+                    <tr><td>
                         <Select id="employeesCombo" value={this.state.value} onChange={this.employeesComboChange}
-                            style={{ border: '1px solid' ,width:'250px' }}>
+                            style={{ border: '1px solid' ,width:'220px' }}>
                             {this.state.employeesToDisplay}
                         </Select>
                         </td>
                         <td><Button type='submit' color='primary' variant='contained' 
-                            onClick={() => { this.printPaySlip() }}>Print Pay Slip</Button></td>
+                            onClick={() => { this.printPaySlip() }}>Print Pay Slip</Button>
+                        </td>
                     </tr>
                 </Table>
                 <br/>
-                <div>
-                    <Table border='1'>
-                       
-                    </Table>
-                </div>
+                <Table border='1'>
+                    <tr>
+                        <td>{this.state.paySlipData}</td>
+                    </tr>
+                </Table>
             </Paper>
          </div>
         );

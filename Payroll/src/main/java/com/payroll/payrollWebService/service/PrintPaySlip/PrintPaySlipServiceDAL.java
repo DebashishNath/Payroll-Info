@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +40,7 @@ class PrintPaySlipServiceDAL extends PrintPaySlipServiceImpl {
             List<trn_print_pay_slip> paySlipList = paySlip.getResultList();
             if(paySlipList!=null && paySlipList.size()>0)
             {
+                System.out.println("Inside DAL: " + paySlipList.size());
                 printSinglePaySlip.setLstPrintPaySlip(paySlipList);
                 msp.setCode(CodeConstants.SUCCESS.getID());
                 msp.setMessage("Payslip Printed Successfully");
