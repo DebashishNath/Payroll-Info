@@ -131,11 +131,11 @@ class PrintPaySlipForm extends Component {
                 let rows=0;
                 if(earnData.length > dedData.length)
                 { 
-                    rows=earnData.length 
+                    rows=earnData.length; 
                 }
                 else
                 {
-                    rows=dedData.length 
+                    rows=dedData.length;
                 }
                 let diffRows=earnData.length - dedData.length;
                 if(diffRows>0)
@@ -175,7 +175,6 @@ class PrintPaySlipForm extends Component {
                     <td></td><td></td><td></td>
                     <td>Net Amount</td><td>{net_amount}</td>
                     </tr>);
-                
             }
             else
             {
