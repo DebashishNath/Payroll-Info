@@ -26,7 +26,7 @@ async function createData()
     headers: { 'Content-Type': 'application/json',
                 'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
     };
-    var url='http://192.168.43.241:8086/api/catagories'
+    var url='http://192.168.43.241:8086/api/designations'
     try
     {
       const response = await fetch(url,requestOptions);
@@ -36,7 +36,7 @@ async function createData()
         for(var i=0;i<data.length;i++)
         {
 
-          rows.push({ slno:i+1, id:data[i].category_id,code:data[i].category_code,name:data[i].category_name});
+          rows.push({ slno:i+1, id:data[i].designation_id,code:data[i].designation_code,name:data[i].designation_name});
         }
       }
     }catch(err) 
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
   container: { maxHeight: 440 },
 });
 
-export default function ListCategoryForm() {
+export default function DesignationForm() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
