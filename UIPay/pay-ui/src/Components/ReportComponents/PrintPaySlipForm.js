@@ -9,6 +9,7 @@ class PrintPaySlipForm extends Component {
             monthsToDisplay:[],
             employeesToDisplay:[],
             paySlipData:[],
+            displayMessage:'',
             monthId:0,
             employeeId:0
         }
@@ -178,7 +179,7 @@ class PrintPaySlipForm extends Component {
             }
             else
             {
-                payData.push('No records to display');
+                this.setState({ displayMessage :'No records to display' });
             }
 
             this.setState({ paySlipData: payData });   
@@ -216,9 +217,10 @@ class PrintPaySlipForm extends Component {
                     </tr>
                 </Table>
                 <br/>
-                <Table border='1'>
+                <Table id='tablePaySlip' border='1'>
                     {this.state.paySlipData}
                 </Table>
+                <div>{this.state.displayMessage}</div>
             </Paper>
          </div>
         );
