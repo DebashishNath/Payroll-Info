@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -16,24 +16,34 @@ const columns = [
   { id: 'name',label: 'Name',minWidth: 100 }
 ];
 
-function createData(slno, id,code, name) {
-    return { slno, id,code, name };
-}
+let rows = [];
+createData();
+async function createData() 
+{
+  const requestOptions = {
+    crossDomain:true,
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json',
+                'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+    };
+    var url='http://192.168.43.241:8086/api/catagories'
+    try
+    {
+      const response = await fetch(url,requestOptions);
+      var data = await response.json();
+      if(data!=null && data.length>0)
+      {
+        for(var i=0;i<data.length;i++)
+        {
 
-const rows = [
-  createData(1, 1,'CT001','Permanent'),
-  createData(1,2,'CT002','Temporary'),
-  createData(1, 1,'CT003','Permanent'),
-  createData(1,2,'CT004','Temporary'),
-  createData(1, 1,'CT005','Permanent'),
-  createData(1,2,'CT006','Temporary'),
-  createData(1, 1,'CT007','Permanent'),
-  createData(1,2,'CT008','Temporary'),
-  createData(1, 1,'CT009','Permanent'),
-  createData(1,2,'CT010','Temporary'),
-  createData(1, 1,'CT011','Permanent'),
-  createData(1,2,'CT012','Temporary'),
-];
+          rows.push({ slno:i+1, id:data[i].category_id,code:data[i].category_code,name:data[i].category_name});
+        }
+      }
+    }catch(err) 
+    {
+      alert(err.message);
+    }
+}
 
 const useStyles = makeStyles({
   root: { width: '100%' },
@@ -53,7 +63,7 @@ export default function ListCategoryForm() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+ 
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>

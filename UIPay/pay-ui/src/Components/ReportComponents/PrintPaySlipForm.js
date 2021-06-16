@@ -93,6 +93,8 @@ class PrintPaySlipForm extends Component {
         {
             let earnData = [],dedData = [],payData=[];
             let i = 0,total_earn_amount=0,total_ded_amount=0,net_amount=0;
+            this.setState({ displayMessage :'' });
+            this.setState({ paySlipData: [] });   
 
             const requestOptions = {
                 crossDomain:true,
@@ -176,13 +178,12 @@ class PrintPaySlipForm extends Component {
                     <td></td><td></td><td></td>
                     <td>Net Amount</td><td>{net_amount}</td>
                     </tr>);
+                this.setState({ paySlipData: payData });   
             }
             else
             {
                 this.setState({ displayMessage :'No records to display' });
             }
-
-            this.setState({ paySlipData: payData });   
         } catch(err) { alert(err.message); }
     }
     
