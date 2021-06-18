@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
   container: { maxHeight: 440 },
 });
 
-export default function DesignationForm() {
+export default function ListDesignationForm() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -65,16 +65,12 @@ export default function DesignationForm() {
     setPage(0);
   };
  
-  const handleEachCategory = () => {
-    alert("Row index is: ");
-  };
-
   return (
     <Paper style={paperStyle} className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow onclick="handleEachCategory()">
+            <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}

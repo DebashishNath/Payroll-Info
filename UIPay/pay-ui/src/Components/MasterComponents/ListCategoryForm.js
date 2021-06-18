@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -64,17 +64,13 @@ export default function ListCategoryForm() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
- 
-  const handleEachCategory = () => {
-    alert("Row index is: ");
-  };
 
   return (
     <Paper style={paperStyle} className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow onclick="handleEachCategory()">
+            <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
