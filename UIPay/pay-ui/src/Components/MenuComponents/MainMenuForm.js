@@ -10,6 +10,7 @@ import ListCategoryForm from "../MasterComponents/ListCategoryForm";
 import DepartmentForm from "../MasterComponents/DepartmentForm";
 import ListDesignationForm from "../MasterComponents/ListDesignationForm";
 import ListEmployeesForm from '../MasterComponents/ListEmployeesForm';
+import EmployeeForm from '../MasterComponents/EmployeeForm';
 import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationForm';
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
@@ -68,6 +69,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/department' exact component={DepartmentForm} />
               <Route path='/designation' exact component={ListDesignationForm} />
               <Route path='/list_employees' exact component={ListEmployeesForm} />
+              <Route path="/employee" exact component={EmployeeForm} />
               <Route path='/monthlyattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
