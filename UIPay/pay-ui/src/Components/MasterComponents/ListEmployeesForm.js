@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper } from '@material-ui/core';
-import EmployeeForm from "./EmployeeForm";
-import { BrowserRouter as Router,Route,withRouter } from 'react-router-dom';
 
 class ListEmployeesForm extends PureComponent {
     constructor(props) 
@@ -20,7 +18,7 @@ class ListEmployeesForm extends PureComponent {
 
     doEditOfEmployee(empId)
     {
-        alert('Employee Id: ' + empId);
+        localStorage.setItem('employeeId',empId);
         const { history } = this.props;
         if(history) history.push('/employee');
     }
@@ -89,12 +87,9 @@ class ListEmployeesForm extends PureComponent {
             <div align='center'>
                 <label>No Of Records :{this.state.noOfRecords}</label>
             </div>
-            <Router>
-                <Route path="/employee" exact component={EmployeeForm} />
-            </Router>
             </Paper>
         );
     }
 }
 
-export default withRouter(ListEmployeesForm);
+export default ListEmployeesForm;

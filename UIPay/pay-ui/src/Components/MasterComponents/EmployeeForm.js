@@ -20,7 +20,7 @@ class EmployeeForm extends Component {
 
     render()
     {
-        const allTabs = ['/', '/tab2'];
+        const allTabs = ['/personal', '/official'];
         const paperStyle={padding:10,height:'120vh',width:650,margin:"20px 40px"}
 
         return (
@@ -32,8 +32,8 @@ class EmployeeForm extends Component {
                     render={({ location }) => (
                     <Fragment>
                         <Tabs value={location.pathname}>
-                            <Tab label="Personal" value="/" component={Link} to={allTabs[0]} />
-                            <Tab label="Official" value="/tab2" component={Link} to={allTabs[1]} />
+                            <Tab label="Personal" value="/personal" component={Link} to={allTabs[0]} />
+                            <Tab label="Official" value="/official" component={Link} to={allTabs[1]} />
                         </Tabs>
                         <Switch>
                             <Route path={allTabs[0]} exact component={EmployeePersonalForm}/>

@@ -20,8 +20,49 @@ class EmployeePersonalForm extends Component {
 
   componentDidMount(){
     var url='http://192.168.43.241:8086/api/states';
+    
     this.populateCombos('State',url)
+    let empId= localStorage.getItem('employeeId');
+    if(empId > 0)
+    {
+      this.populatePersonalEmpInfo(empId);
+    }
   }
+
+  async populatePersonalEmpInfo(empId)
+  {
+   
+      document.getElementById("lblEmpId").value=empId;
+      alert(document.getElementById("lblEmpId").value);
+      const requestOptions = {
+        crossDomain:true,
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json',
+                    'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+      };
+      var url='http://192.168.43.241:8086/api/employee/' + empId;
+      const response = await fetch(url,requestOptions);
+      var data = await response.json();
+      if(data!=null)
+      {
+          document.getElementById("employeeCode").value = data.emp_code;
+          document.getElementById("firstName").value = data.emp_first_name;
+          document.getElementById("middleName").value = data.emp_middle_name;
+          document.getElementById("lastName").value = data.emp_last_name;
+          //"emp_image_path" : "",
+          this.state.gender=data.gender;
+          document.getElementById("dob").value = data.dob;
+          document.getElementById("address1").value = data.address1;
+          document.getElementById("address2").value = data.address2;
+          //"location" : null,
+          document.getElementById("statesCombo").value = data.district.state.state_id;
+          this.state.districtId=data.district.district_id;
+          document.getElementById("pin").value = data.pin;
+          document.getElementById("contactNumber").value = data.contact_number;
+          document.getElementById("email").value = data.email;
+      }
+  }
+  
 
   async populateCombos(comboName,url) 
   {
@@ -150,7 +191,7 @@ class EmployeePersonalForm extends Component {
           <Table>
             <tr>
               <td><TextField id="employeeCode" label='Employee Code' variant='outlined' required ></TextField></td>
-              <td></td><td></td>
+              <td></td><td><label id="lblEmpId" value='0'></label></td>
             </tr>
             <br/>
             <tr>
