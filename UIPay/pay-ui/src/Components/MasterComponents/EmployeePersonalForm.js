@@ -33,7 +33,7 @@ class EmployeePersonalForm extends Component {
   {
    
       document.getElementById("lblEmpId").value=empId;
-      alert(document.getElementById("lblEmpId").value);
+      
       const requestOptions = {
         crossDomain:true,
         method: 'GET',
@@ -55,7 +55,7 @@ class EmployeePersonalForm extends Component {
           document.getElementById("address1").value = data.address1;
           document.getElementById("address2").value = data.address2;
           //"location" : null,
-          document.getElementById("statesCombo").value = data.district.state.state_id;
+          document.getElementById("statesCombo").value  = data.district.state.state_id;
           this.state.districtId=data.district.district_id;
           document.getElementById("pin").value = data.pin;
           document.getElementById("contactNumber").value = data.contact_number;
@@ -143,7 +143,7 @@ class EmployeePersonalForm extends Component {
       headers: { 'Content-Type': 'application/json',
                   'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
       body: JSON.stringify({
-        "emp_id" : "0",
+        "emp_id" : document.getElementById("lblEmpId").value,
 	      "emp_code" : document.getElementById("employeeCode").value,
         "emp_first_name" : document.getElementById("firstName").value,
         "emp_middle_name" : document.getElementById("middleName").value,
@@ -160,8 +160,17 @@ class EmployeePersonalForm extends Component {
 	      "email" : document.getElementById("email").value
 	    })
     };
-    
-    var url='http://192.168.43.241:8086/api/newemployee';
+
+    let url='';
+    if (document.getElementById("lblEmpId").value === 0)
+    {
+      url='http://192.168.43.241:8086/api/newemployee';
+    }
+    else
+    {
+      url='http://192.168.43.241:8086/api/modifyemployee';
+    }
+
     try 
     {
       const response = await fetch(url,requestOptions);
@@ -226,7 +235,7 @@ class EmployeePersonalForm extends Component {
             <tr><td><label>State</label></td>
                 <td>
                   <Select id="statesCombo" value={this.state.value} onChange={this.statesComboChange}
-                    style={{ border: '1px solid' ,width:'150px' }}>
+                    style={{ border: '1px solid' ,width:'200px' }}>
                     {this.state.statesToDisplay}
                   </Select>
                 </td>
@@ -234,7 +243,7 @@ class EmployeePersonalForm extends Component {
             <tr><td><label>District</label></td>
               <td>
                 <Select id="districtsCombo" value={this.state.value} onChange={this.districtsComboChange}
-                  style={{ border: '1px solid' ,width:'150px'  }}>
+                  style={{ border: '1px solid' ,width:'200px'  }}>
                   {this.state.districtsToDisplay}
                 </Select>
                </td>
