@@ -10,9 +10,15 @@ class EmployeeOfficialForm extends Component {
     this.state = {
       categoriesToDisplay:[],
       departmentsToDisplay:[],
-      designationsToDisplay:[]
+      designationsToDisplay:[],
+      categoryId:0,
+      departmentId:0,
+      designationId:0
     }
+    this.updateEmployeeOfficial=this.updateEmployeeOfficial.bind(this);
     this.categoryChange = this.categoryChange.bind(this);
+    this.departmentChange = this.departmentChange.bind(this);
+    this.designationChange = this.designationChange.bind(this);
   }
 
   componentDidMount(){
@@ -24,6 +30,7 @@ class EmployeeOfficialForm extends Component {
 
     url='http://192.168.43.241:8086/api/designations';
     this.populateCombos('Designation',url);
+
   }
 
   async populateCombos(comboName,url) 
@@ -84,7 +91,63 @@ class EmployeeOfficialForm extends Component {
   }
 
   categoryChange(event) 
-  {}
+  {
+    this.setState({
+      categoryId : event.target.value
+    });
+  }
+
+  departmentChange(event) 
+  {
+    this.setState({
+      departmentId : event.target.value
+    });
+  }
+
+  designationChange(event) 
+  {
+    this.setState({
+      designationId : event.target.value
+    });
+  }
+
+  async updateEmployeeOfficial(){
+    const requestOptions = 
+    {
+      crossDomain:true,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+                  'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+      body: JSON.stringify({
+          "emp_id"      :   localStorage.getItem('employeeId'),
+          "aadhar_no"   :   document.getElementById("AADHARNo").value,
+          "pan_no"      :   document.getElementById("PANNo").value,
+          "pf_no"       :   document.getElementById("PFNo").value,
+          "esi_no"      :   document.getElementById("ESINo").value,
+          "category"    :   {"category_id"    : this.setState.categoryId},
+          "department"  :   {"department_id"  : this.setState.departmentId},
+          "designation" :   {"designation_id" : this.setState.designationId}
+	    })
+    };
+
+    var url='http://192.168.43.241:8086/api/modifyemployee';
+    
+    try 
+    {
+      const response = await fetch(url,requestOptions);
+      var data = await response.json();
+      document.getElementById('returnMessage').innerHTML = data.message;
+      if (data.code === 0)
+      {
+        document.getElementById('returnMessage').style="color:green";
+      }
+      else
+      {
+        document.getElementById('returnMessage').style="color:red";
+      }
+    } catch(err) 
+    { alert(err.message); }
+  }
 
   render()
   {
@@ -97,7 +160,7 @@ class EmployeeOfficialForm extends Component {
           <label id = "returnMessage"></label>
           <Table>
             <tr><td><label>Employee Name</label></td>
-                <td><label></label></td>
+                <td><label>{localStorage.getItem('employeeName')}</label></td>
             </tr><br/>
             <tr><td><label>AADHAR No</label></td>
                 <td><TextField id="AADHARNo" variant='outlined'></TextField></td>
@@ -121,21 +184,23 @@ class EmployeeOfficialForm extends Component {
             </tr><br/>
             <tr><td><label>Department</label></td>
               <td>
-                <Select id="departmentsCombo" style={{ border: '1px solid' }}>
-                {this.state.departmentsToDisplay}
+                <Select id="departmentsCombo" onChange={this.departmentChange}
+                  style={{ border: '1px solid' }}>
+                  {this.state.departmentsToDisplay}
                 </Select>
                </td>
             </tr><br/>
             <tr><td><label>Designation</label></td>
               <td>
-                <Select id="designationsCombo" style={{ border: '1px solid' }}>
-                {this.state.designationsToDisplay}
+                <Select id="designationsCombo" onChange={this.designationChange}
+                  style={{ border: '1px solid' }}>
+                  {this.state.designationsToDisplay}
                 </Select>
                </td>
             </tr><br/>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
-                  onClick={() => { this.addEmployee() }}>Save</Button></td>
+                  onClick={() => { this.updateEmployeeOfficial() }}>Save</Button></td>
             </tr>
           </Table>
         </Paper>

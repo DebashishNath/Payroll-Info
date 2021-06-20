@@ -12,7 +12,7 @@ class EmployeePersonalForm extends Component {
       districtId:null,
       gender:"M"
     }
-    this.addEmployee = this.addEmployee.bind(this);
+    this.updateEmployeePersonal = this.updateEmployeePersonal.bind(this);
     this.statesComboChange = this.statesComboChange.bind(this);
     this.districtsComboChange = this.districtsComboChange.bind(this);
     this.onValueChange=this.onValueChange.bind(this);
@@ -60,6 +60,10 @@ class EmployeePersonalForm extends Component {
           document.getElementById("pin").value = data.pin;
           document.getElementById("contactNumber").value = data.contact_number;
           document.getElementById("email").value = data.email;
+
+          localStorage.setItem('employeeName',document.getElementById("firstName").value
+            + " " + document.getElementById("middleName").value
+            + " " + document.getElementById("lastName").value);
       }
   }
   
@@ -134,7 +138,7 @@ class EmployeePersonalForm extends Component {
     });
   }
 
-  async addEmployee() 
+  async updateEmployeePersonal() 
   {
     const requestOptions = 
     {
@@ -179,6 +183,10 @@ class EmployeePersonalForm extends Component {
       if (data.code === 0)
       {
         document.getElementById('returnMessage').style="color:green";
+        localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
+        localStorage.setItem('employeeName',document.getElementById("firstName").value
+            + " " + document.getElementById("middleName").value
+            + " " + document.getElementById("lastName").value);
       }
       else
       {
@@ -248,7 +256,7 @@ class EmployeePersonalForm extends Component {
                   {this.state.districtsToDisplay}
                 </Select>
                </td>
-               <td><TextField id="pin" variant='outlined' label='Pin' style ={{width: '50%'}}></TextField></td>
+               <td><TextField id="pin" variant='outlined' label='Pin' style ={{width: '60%'}}></TextField></td>
             </tr>
             <br/>
             <tr><td><label>Contact Numbers</label></td>
@@ -260,7 +268,7 @@ class EmployeePersonalForm extends Component {
             <br/>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
-                  onClick={() => { this.addEmployee() }}>Save</Button></td>
+                  onClick={() => { this.updateEmployeePersonal() }}>Save</Button></td>
             </tr>
           </Table>
         </Paper>
