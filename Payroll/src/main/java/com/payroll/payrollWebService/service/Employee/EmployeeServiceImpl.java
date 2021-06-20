@@ -19,6 +19,9 @@ abstract class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public mst_employee modifyEmployeeOfficial(mst_employee employee){ return new EmployeeServiceDAL().modifyEmployeeOfficial(employee);}
+
+    @Override
     public List<mst_employee> findAll(){
         return new EmployeeServiceDAL().findAll();
     }

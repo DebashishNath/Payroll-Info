@@ -11,6 +11,8 @@ public interface EmployeeService {
 
     mst_employee modify(mst_employee employee);
 
+    mst_employee modifyEmployeeOfficial(mst_employee employee);
+
     List<mst_employee> findAll();
 
     Optional<mst_employee> findById(Long id);

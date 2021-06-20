@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
-import { Table, TextField , Button,Paper,
-  Select,MenuItem } from '@material-ui/core';
+import { Table, TextField , Button,Paper,Select,MenuItem } from '@material-ui/core';
 
 class EmployeeOfficialForm extends Component {
 
@@ -31,6 +30,34 @@ class EmployeeOfficialForm extends Component {
     url='http://192.168.43.241:8086/api/designations';
     this.populateCombos('Designation',url);
 
+    let empId= localStorage.getItem('employeeId');
+    if(empId > 0)
+    {
+      this.populateOfficialEmpInfo(empId);
+    }
+  }
+
+  async populateOfficialEmpInfo(empId)
+  {
+    const requestOptions = {
+      crossDomain:true,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json',
+                  'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+    };
+    var url='http://192.168.43.241:8086/api/employee/' + empId;
+    const response = await fetch(url,requestOptions);
+    var data = await response.json();
+    if(data!=null)
+    {
+      document.getElementById("AADHARNo").value=data.aadhar_no;
+      document.getElementById("PANNo").value=data.pan_no;
+      document.getElementById("PFNo").value=data.pf_no;
+      document.getElementById("ESINo").value=data.esi_no;
+      /*this.setState.categoryId},
+      this.setState.departmentId},
+      this.setState.designationId}*/
+    }
   }
 
   async populateCombos(comboName,url) 
@@ -92,9 +119,11 @@ class EmployeeOfficialForm extends Component {
 
   categoryChange(event) 
   {
+    alert(event.target.value);
     this.setState({
       categoryId : event.target.value
     });
+    alert(this.setState.categoryId);
   }
 
   departmentChange(event) 
@@ -111,7 +140,8 @@ class EmployeeOfficialForm extends Component {
     });
   }
 
-  async updateEmployeeOfficial(){
+  async updateEmployeeOfficial()
+  {
     const requestOptions = 
     {
       crossDomain:true,
@@ -130,7 +160,7 @@ class EmployeeOfficialForm extends Component {
 	    })
     };
 
-    var url='http://192.168.43.241:8086/api/modifyemployee';
+    var url='http://192.168.43.241:8086/api/updateemployeeofficial';
     
     try 
     {
@@ -177,7 +207,7 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Category</label></td>
                 <td>
                   <Select id="categoriesCombo" value={this.state.value} onChange={this.categoryChange}
-                    style={{ border: '1px solid' }}>
+                    style={{ border: '1px solid' ,width:'200px' }}>
                     {this.state.categoriesToDisplay}
                   </Select>
                 </td>
@@ -185,7 +215,7 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Department</label></td>
               <td>
                 <Select id="departmentsCombo" onChange={this.departmentChange}
-                  style={{ border: '1px solid' }}>
+                  style={{ border: '1px solid' ,width:'200px' }}>
                   {this.state.departmentsToDisplay}
                 </Select>
                </td>
@@ -193,7 +223,7 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Designation</label></td>
               <td>
                 <Select id="designationsCombo" onChange={this.designationChange}
-                  style={{ border: '1px solid' }}>
+                  style={{ border: '1px solid' ,width:'200px' }}>
                   {this.state.designationsToDisplay}
                 </Select>
                </td>

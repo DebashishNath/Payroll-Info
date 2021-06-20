@@ -55,6 +55,19 @@ public class EmployeeController {
         }
     }
 
+    @PostMapping("/updateemployeeofficial")
+    public ResponseEntity<?> modifyemployeeofficial(@Valid @RequestBody mst_employee employee) {
+        try
+        {
+            mst_employee employeeToModify=employeeService.modifyEmployeeOfficial(employee);
+            return ResponseEntity.ok(new MessageResponse(employeeToModify.getReturnMessage().getCode(),
+                    employeeToModify.getReturnMessage().getMessage()));
+        }catch(Exception ex){
+            return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),
+                    ex.getMessage()));
+        }
+    }
+
     @PostMapping("/deleteemployee/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable(value = "id") Long id)
     {
