@@ -199,7 +199,7 @@ class EmployeePersonalForm extends Component {
           <label id = "returnMessage"></label>
           <Table>
             <tr>
-              <td><TextField id="employeeCode" label='Employee Code' variant='outlined' required ></TextField></td>
+              <td><TextField id="employeeCode" label='Code' variant='outlined' required  style ={{width: '50%'}}></TextField></td>
               <td></td><td><label id="lblEmpId" value='0'></label></td>
             </tr>
             <br/>
@@ -227,10 +227,10 @@ class EmployeePersonalForm extends Component {
             </tr>
             <br/>
             <tr><td><label>Address</label></td>
-                <td><TextField id="address1" multiline variant='outlined'></TextField></td>
+                <td><TextField id="address1" multiline variant='outlined' style ={{width: '200%'}}></TextField></td>
             </tr>
             <tr><td></td>
-                <td><TextField id="address2" multiline variant='outlined'></TextField></td>
+                <td><TextField id="address2" multiline variant='outlined' style ={{width: '200%'}}></TextField></td>
             </tr>
             <tr><td><label>State</label></td>
                 <td>
@@ -240,23 +240,22 @@ class EmployeePersonalForm extends Component {
                   </Select>
                 </td>
             </tr>
-            <tr><td><label>District</label></td>
+            <tr>
+              <td><label>District</label></td>
               <td>
                 <Select id="districtsCombo" value={this.state.value} onChange={this.districtsComboChange}
                   style={{ border: '1px solid' ,width:'200px'  }}>
                   {this.state.districtsToDisplay}
                 </Select>
                </td>
-            </tr>
-            <tr><td><label>Pin</label></td>
-                <td><TextField id="pin" variant='outlined'></TextField></td>
+               <td><TextField id="pin" variant='outlined' label='Pin' style ={{width: '50%'}}></TextField></td>
             </tr>
             <br/>
-            <tr><td><label>Contact Number</label></td>
-                <td><TextField id="contactNumber" variant='outlined'></TextField></td>
+            <tr><td><label>Contact Numbers</label></td>
+                <td><TextField id="contactNumber" variant='outlined' style ={{width: '200%'}}></TextField></td>
             </tr>
-            <tr><td><label>Email</label></td>
-                <td><TextField id="email" variant='outlined'></TextField></td>
+            <tr><td><label>Email ids</label></td>
+                <td><TextField id="email" variant='outlined' style ={{width: '200%'}}></TextField></td>
             </tr>
             <br/>
             <tr><td></td>
