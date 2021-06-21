@@ -50,13 +50,14 @@ class EmployeeOfficialForm extends Component {
     var data = await response.json();
     if(data!=null)
     {
+      document.getElementById("EmpName").innerHTML=data.emp_first_name + ' ' + data?.emp_middle_name + ' ' + data.emp_last_name;
       document.getElementById("AADHARNo").value=data.aadhar_no;
       document.getElementById("PANNo").value=data.pan_no;
       document.getElementById("PFNo").value=data.pf_no;
       document.getElementById("ESINo").value=data.esi_no;
-      /*this.setState.categoryId},
-      this.setState.departmentId},
-      this.setState.designationId}*/
+      /*this.state.categoryId},
+      this.state.departmentId},
+      this.state.designationId}*/
     }
   }
 
@@ -140,6 +141,23 @@ class EmployeeOfficialForm extends Component {
 
   async updateEmployeeOfficial()
   {
+    let categoryId=null;
+    if(this.state.categoryId>0)
+    {
+      categoryId=this.state.categoryId;
+    }
+    let departmentId=null;
+    if(this.state.departmentId>0)
+    {
+      departmentId=this.state.departmentId;
+    }
+    alert(departmentId);
+    let designationId=null;
+    if(this.state.designationId>0)
+    {
+      designationId=this.state.designationId;
+    }
+    
     const requestOptions = 
     {
       crossDomain:true,
@@ -152,9 +170,9 @@ class EmployeeOfficialForm extends Component {
           "pan_no"      :   document.getElementById("PANNo").value,
           "pf_no"       :   document.getElementById("PFNo").value,
           "esi_no"      :   document.getElementById("ESINo").value,
-          "category"    :   {"category_id"    : this.state.categoryId},
-          "department"  :   {"department_id"  : this.state.departmentId},
-          "designation" :   {"designation_id" : this.state.designationId}
+          "category"    :   {"category_id"    : categoryId},
+          "department"  :   {"department_id"  : departmentId},
+          "designation" :   {"designation_id" : designationId}
 	    })
     };
 
@@ -188,7 +206,7 @@ class EmployeeOfficialForm extends Component {
           <label id = "returnMessage"></label>
           <Table>
             <tr><td><label>Employee Name</label></td>
-                <td><label>{localStorage.getItem('employeeName')}</label></td>
+                <td><label id ="EmpName"></label></td>
             </tr><br/>
             <tr><td><label>AADHAR No</label></td>
                 <td><TextField id="AADHARNo" variant='outlined'></TextField></td>

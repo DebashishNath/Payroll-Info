@@ -51,7 +51,8 @@ class EmployeePersonalForm extends Component {
           document.getElementById("lastName").value = data.emp_last_name;
           //"emp_image_path" : "",
           this.state.gender=data.gender;
-          document.getElementById("dob").value = data.dob;
+          var dateFormat = require('dateformat');
+          document.getElementById("dob").value = dateFormat(data.dob,'yyyy-mm-dd');
           document.getElementById("address1").value = data.address1;
           document.getElementById("address2").value = data.address2;
           //"location" : null,
@@ -60,14 +61,9 @@ class EmployeePersonalForm extends Component {
           document.getElementById("pin").value = data.pin;
           document.getElementById("contactNumber").value = data.contact_number;
           document.getElementById("email").value = data.email;
-
-          localStorage.setItem('employeeName',document.getElementById("firstName").value
-            + " " + document.getElementById("middleName").value
-            + " " + document.getElementById("lastName").value);
       }
   }
   
-
   async populateCombos(comboName,url) 
   {
     try
@@ -184,9 +180,6 @@ class EmployeePersonalForm extends Component {
       {
         document.getElementById('returnMessage').style="color:green";
         localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
-        localStorage.setItem('employeeName',document.getElementById("firstName").value
-            + " " + document.getElementById("middleName").value
-            + " " + document.getElementById("lastName").value);
       }
       else
       {
@@ -236,10 +229,10 @@ class EmployeePersonalForm extends Component {
             <br/>
             <tr><td><label>Address</label></td>
                 <td><TextField id="address1" multiline variant='outlined' style ={{width: '200%'}}></TextField></td>
-            </tr>
+            </tr><br/>
             <tr><td></td>
                 <td><TextField id="address2" multiline variant='outlined' style ={{width: '200%'}}></TextField></td>
-            </tr>
+            </tr><br/>
             <tr><td><label>State</label></td>
                 <td>
                   <Select id="statesCombo" value={this.state.value} onChange={this.statesComboChange}
