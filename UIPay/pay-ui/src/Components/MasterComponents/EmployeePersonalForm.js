@@ -50,7 +50,7 @@ class EmployeePersonalForm extends Component {
           document.getElementById("middleName").value = data.emp_middle_name;
           document.getElementById("lastName").value = data.emp_last_name;
           //"emp_image_path" : "",
-          this.state.gender=data.gender;
+          this.setState({ gender: data.gender });
           var dateFormat = require('dateformat');
           document.getElementById("dob").value = dateFormat(data.dob,'yyyy-mm-dd');
           document.getElementById("address1").value = data.address1;
@@ -213,7 +213,7 @@ class EmployeePersonalForm extends Component {
             <tr>
               <td><label>Gender</label></td>
               <td>
-                <RadioGroup aria-label="Gender" name="gender" row>
+                <RadioGroup aria-label="Gender" name="gender" value={this.state.gender} row>
                 <FormControlLabel value="M" control={<Radio />} label="Male" onChange={this.onValueChange}/>
                 <FormControlLabel value="F" control={<Radio />} label="Female" onChange={this.onValueChange}/>
                 </RadioGroup>
