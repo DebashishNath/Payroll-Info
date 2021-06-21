@@ -119,11 +119,9 @@ class EmployeeOfficialForm extends Component {
 
   categoryChange(event) 
   {
-    alert(event.target.value);
     this.setState({
       categoryId : event.target.value
     });
-    alert(this.setState.categoryId);
   }
 
   departmentChange(event) 
@@ -154,9 +152,9 @@ class EmployeeOfficialForm extends Component {
           "pan_no"      :   document.getElementById("PANNo").value,
           "pf_no"       :   document.getElementById("PFNo").value,
           "esi_no"      :   document.getElementById("ESINo").value,
-          "category"    :   {"category_id"    : this.setState.categoryId},
-          "department"  :   {"department_id"  : this.setState.departmentId},
-          "designation" :   {"designation_id" : this.setState.designationId}
+          "category"    :   {"category_id"    : this.state.categoryId},
+          "department"  :   {"department_id"  : this.state.departmentId},
+          "designation" :   {"designation_id" : this.state.designationId}
 	    })
     };
 
