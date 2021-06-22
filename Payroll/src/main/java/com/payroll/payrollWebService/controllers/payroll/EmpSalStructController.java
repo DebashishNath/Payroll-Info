@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -25,6 +26,11 @@ public class EmpSalStructController {
                                                      @PathVariable(value = "earndedid") Long earnDedId){
         EmpEarnDedIdentity empEarnDedIdentity=new EmpEarnDedIdentity(empId,earnDedId);
         return empSalStructService.findById(empEarnDedIdentity);
+    }
+
+    @GetMapping("/empsalstruct_findbyempid/{empid}")
+    public List<trn_emp_salary_structure> getOne(@PathVariable(value = "empid") Long empId){
+        return empSalStructService.findAll(empId);
     }
 
     @PostMapping("/addEmpSalStruct")

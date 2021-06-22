@@ -4,11 +4,15 @@ import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.EmpEarnDedIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_emp_salary_structure;
+import com.payroll.payrollWebService.models.payroll.mst_earn_ded_components;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
+import com.payroll.payrollWebService.repository.payroll.EarnDeductionRepository;
 import com.payroll.payrollWebService.repository.payroll.EmpSalStructRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +20,9 @@ class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
 
     @Autowired
     private EmpSalStructRepository empSalStructRep;
+
+    @Autowired
+    private EarnDeductionRepository earnDedRep;
 
     public EmpSalStructServiceDAL(){}
 
@@ -79,4 +86,32 @@ class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
     @Override
     public Optional<trn_emp_salary_structure> findById(EmpEarnDedIdentity empEarnDedIdentity) {
         return empSalStructRep.findById(empEarnDedIdentity); }
+
+    @Override
+    public List<trn_emp_salary_structure> findAll(Long empId)
+    {
+        List<trn_emp_salary_structure> lstEmpSalStruct=(List<trn_emp_salary_structure>) empSalStructRep.findAll();
+        List<trn_emp_salary_structure> filterEmpSalStruct=new ArrayList<>();
+        List<mst_earn_ded_components> lstEarnDedComponents=(List<mst_earn_ded_components>)earnDedRep.findAll();
+
+        for(int i=0;i<lstEmpSalStruct.size();i++)
+        {
+            if(lstEmpSalStruct.get(i).getEmpEmpEarnDedIdentity().getEmp_id()==empId){
+                filterEmpSalStruct.add(lstEmpSalStruct.get(i));
+            }
+        }
+
+        for(int i=0;i<filterEmpSalStruct.size();i++)
+        {
+            for(int j=0;j<lstEarnDedComponents.size();j++)
+            {
+                if(filterEmpSalStruct.get(i).getEmpEmpEarnDedIdentity().getEarn_ded_id() ==
+                        lstEarnDedComponents.get(j).getEarn_ded_id())
+                {
+                    filterEmpSalStruct.get(i).setEarnDedComponents(lstEarnDedComponents.get(j));
+                }
+            }
+        }
+        return filterEmpSalStruct;
+    }
 }

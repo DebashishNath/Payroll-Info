@@ -14,6 +14,8 @@ public class trn_emp_salary_structure {
 
     @Transient
     private MessageResponse returnMessage;
+    @Transient
+    private mst_earn_ded_components earnDedComponents;
 
     public trn_emp_salary_structure(){}
 
@@ -47,4 +49,11 @@ public class trn_emp_salary_structure {
         this.returnMessage = returnMessage;
     }
 
+    public mst_earn_ded_components getEarnDedComponents() {
+        return earnDedComponents;
+    }
+
+    public void setEarnDedComponents(mst_earn_ded_components earnDedComponents) {
+        this.earnDedComponents = earnDedComponents;
+    }
 }

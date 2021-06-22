@@ -56,8 +56,8 @@ class EmployeePersonalForm extends Component {
           document.getElementById("address1").value = data.address1;
           document.getElementById("address2").value = data.address2;
           //"location" : null,
-          document.getElementById("statesCombo").value  = data.district.state.state_id;
-          this.state.districtId=data.district.district_id;
+          //document.getElementById("statesCombo").value  = data.district.state.state_id;
+          //this.state.districtId=data.district.district_id;
           document.getElementById("pin").value = data.pin;
           document.getElementById("contactNumber").value = data.contact_number;
           document.getElementById("email").value = data.email;

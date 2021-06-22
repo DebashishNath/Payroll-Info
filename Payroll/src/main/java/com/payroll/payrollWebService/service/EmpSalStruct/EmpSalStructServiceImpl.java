@@ -3,6 +3,7 @@ package com.payroll.payrollWebService.service.EmpSalStruct;
 import com.payroll.payrollWebService.models.payroll.EmpEarnDedIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_emp_salary_structure;
 
+import java.util.List;
 import java.util.Optional;
 
 abstract class EmpSalStructServiceImpl implements EmpSalStructService {
@@ -19,4 +20,9 @@ abstract class EmpSalStructServiceImpl implements EmpSalStructService {
     public Optional<trn_emp_salary_structure> findById(EmpEarnDedIdentity empEarnDedIdentity) {
         return new EmpSalStructServiceDAL().findById(empEarnDedIdentity);
     }
+    @Override
+    public List<trn_emp_salary_structure> findAll(Long empId){
+        return new EmpSalStructServiceDAL().findAll(empId);
+    }
+
 }

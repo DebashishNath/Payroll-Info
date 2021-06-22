@@ -2,9 +2,13 @@ package com.payroll.payrollWebService.models.payroll;
 
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+@Entity
+@Table(name="mst_earn_ded_components")
 public class mst_earn_ded_components {
     @Id
     private Long earn_ded_id;
