@@ -55,9 +55,10 @@ class EmployeeOfficialForm extends Component {
       document.getElementById("PANNo").value=data.pan_no;
       document.getElementById("PFNo").value=data.pf_no;
       document.getElementById("ESINo").value=data.esi_no;
-      /*this.state.categoryId},
-      this.state.departmentId},
-      this.state.designationId}*/
+      
+      this.setState({categoryId : data.category?.category_id});
+      this.setState({departmentId : data.department?.department_id});
+      this.setState({designationId : data.designation?.designation_id});
     }
   }
 
@@ -222,7 +223,7 @@ class EmployeeOfficialForm extends Component {
             </tr><br/>
             <tr><td><label>Category</label></td>
                 <td>
-                  <Select id="categoriesCombo" value={this.state.value} onChange={this.categoryChange}
+                  <Select id="categoriesCombo" value={this.state.categoryId} onChange={this.categoryChange}
                     style={{ border: '1px solid' ,width:'200px' }}>
                     {this.state.categoriesToDisplay}
                   </Select>
@@ -230,7 +231,7 @@ class EmployeeOfficialForm extends Component {
             </tr><br/>
             <tr><td><label>Department</label></td>
               <td>
-                <Select id="departmentsCombo" onChange={this.departmentChange}
+                <Select id="departmentsCombo" value={this.state.departmentId} onChange={this.departmentChange}
                   style={{ border: '1px solid' ,width:'200px' }}>
                   {this.state.departmentsToDisplay}
                 </Select>
@@ -238,7 +239,7 @@ class EmployeeOfficialForm extends Component {
             </tr><br/>
             <tr><td><label>Designation</label></td>
               <td>
-                <Select id="designationsCombo" onChange={this.designationChange}
+                <Select id="designationsCombo" value={this.state.designationId} onChange={this.designationChange}
                   style={{ border: '1px solid' ,width:'200px' }}>
                   {this.state.designationsToDisplay}
                 </Select>
