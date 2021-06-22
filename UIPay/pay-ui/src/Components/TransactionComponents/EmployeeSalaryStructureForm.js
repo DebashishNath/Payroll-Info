@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Table, Button,Paper,Select,MenuItem } from '@material-ui/core';
+import { Table, Button,Paper,Select,MenuItem,TextField } from '@material-ui/core';
 
 class EmployeeSalaryStructureForm extends PureComponent {
     constructor(props) 
@@ -8,16 +8,22 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.state = {
             employeesToDisplay:[],
             earnDedToDisplay:[],
-            employeeId:0
+            employeeStructId:0,
+            earnDedComponentsToDisplay:[],
+            earnDedId:0
         }
         this.employeesComboChange=this.employeesComboChange.bind(this);
+        this.earnDedComponentsComboChange=this.earnDedComponentsComboChange.bind(this);
     }
 
     componentDidMount(){
-        this.DisplayAllEmployees();
+        var url='http://192.168.43.241:8086/api/employees'
+        this.populateCombos('Employee',url);
+        url='http://192.168.43.241:8086/api/earn_deductions'
+        this.populateCombos('EarnDedComponent',url);
     }
 
-    async DisplayAllEmployees()
+    async populateCombos(comboName,url) 
     {
         let initialDataToDisplay = [];
         const requestOptions = {
@@ -26,7 +32,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/employees'
+        
         try 
         {
           const response = await fetch(url,requestOptions);
@@ -35,10 +41,24 @@ class EmployeeSalaryStructureForm extends PureComponent {
           {
             for(var i=0;i<=data.length-1;i++)
             {
-                let emp_name=data[i].emp_code + " - " + data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
-                initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
+                if(comboName === 'Employee')
+                {
+                    let emp_name=data[i].emp_code + " - " + data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
+                    initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
+                }
+                if(comboName === 'EarnDedComponent')
+                {
+                    initialDataToDisplay.push(<MenuItem value={data[i].earn_ded_id}>{data[i].earn_ded_name}</MenuItem>)
+                }
             }
-            this.setState({ employeesToDisplay: initialDataToDisplay });
+            if(comboName === 'Employee')
+            {
+                this.setState({ employeesToDisplay: initialDataToDisplay });
+            }
+            if(comboName === 'EarnDedComponent')
+            {
+                this.setState({ earnDedComponentsToDisplay: initialDataToDisplay });
+            }
           }
         } catch(err) { alert(err.message); }
     }
@@ -46,14 +66,21 @@ class EmployeeSalaryStructureForm extends PureComponent {
     employeesComboChange(event)
     {
         this.setState({
-            employeeId : event.target.value
+            employeeStructId : event.target.value
           });
-        
-        this.displayEmpEarnDeduction(this.state.employeeId);
+        this.displayEmpEarnDeduction(event.target.value);
+    }
+
+    earnDedComponentsComboChange(event)
+    {
+        this.setState({
+            earnDedId : event.target.value
+          });
     }
 
     async displayEmpEarnDeduction(empId)
     {
+        alert(empId);
         let initialDataToDisplay = [];
         
         const requestOptions = {
@@ -70,6 +97,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
           
           if(data!=null && data.length>0)
           {
+
             initialDataToDisplay.push(<tr>
                  <th>Slno</th><th>Code</th><th>Desc.</th>
                  <th>Type</th><th>Amount</th><th></th></tr>);
@@ -91,11 +119,12 @@ class EmployeeSalaryStructureForm extends PureComponent {
                     <td><Button color="primary" variant="contained" onClick={() => { this.doEditOfEmpComponents(earnDedId) }}>Edit</Button></td>
                     </tr>);
             }
-            this.setState({ earnDedToDisplay: initialDataToDisplay });
-          }
-          else{
+           }
+          else
+          {
             initialDataToDisplay.push("No Earning and Deduction Data for this employee");
           }
+          this.setState({ earnDedToDisplay: initialDataToDisplay });
         } catch(err) {
             alert(err.message);
         }
@@ -103,7 +132,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'50vh',width:600,margin:"10px auto",overflow:'auto'}
+        const paperStyle={padding:30,height:'70vh',width:600,margin:"10px auto",overflow:'auto'}
         return (
             <Paper style={paperStyle} variant="outlined">
                 <div>
@@ -111,11 +140,29 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         <tr>
                             <td>Employee</td>
                             <td>
-                                <Select id="employeesCombo" value={this.state.employeeId} onChange={this.employeesComboChange}
-                                    style={{ border: '1px solid' ,width:'300px' }}>
+                                <Select id="employeesCombo" value={this.state.employeeStructId} onChange={this.employeesComboChange}
+                                    style={{ border: '1px solid' ,width:'250px' }}>
                                     {this.state.employeesToDisplay}
                                 </Select>
                             </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>Component</td>
+                            <td>
+                                <Select id="earnDedCombo" value={this.state.earnDedId} onChange={this.earnDedComponentsComboChange}
+                                    style={{ border: '1px solid' ,width:'250px' }}>
+                                    {this.state.earnDedComponentsToDisplay}
+                                </Select>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td>Amount</td>
+                            <td>
+                            <td><TextField id="amount" label='Amount' variant='outlined'></TextField></td>
+                            </td>
+                            <td><Button color="primary" variant="contained" onClick={() => { this.doAddEmpComponents() }}>Update</Button></td>
                         </tr>
                     </Table>
                 </div><br/>
