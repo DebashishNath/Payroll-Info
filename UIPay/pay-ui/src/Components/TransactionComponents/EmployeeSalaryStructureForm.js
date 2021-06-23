@@ -29,8 +29,38 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.setState({ earnDedId : earnDedId });
     }
 
-    async doUpdateEmpComponent(){
-
+    async doUpdateEmpComponent()
+    {
+        const requestOptions = {
+            crossDomain:true,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                        'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+            body: JSON.stringify({
+                "empEmpEarnDedIdentity": { "emp_id": this.state.employeeStructId,
+	                                       "earn_ded_id": this.state.earnDedId },
+                "earn_ded_amount" : document.getElementById("earnDedAmount").value
+              })
+        };
+        
+        var url='http://192.168.43.241:8086/api/updateEmpSalStruct';
+        try 
+        {
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            
+            if (data.code === 0)
+            {
+                document.getElementById('returnMessage').innerHTML = data.message;
+                document.getElementById('returnMessage').style="color:green"
+                this.displayEmpEarnDeduction( this.state.employeeStructId)
+            }
+            else
+            {
+              document.getElementById('returnMessage').innerHTML = data.message;
+              document.getElementById('returnMessage').style="color:red"
+            }
+        }catch(err) { alert(err.message); }
     }
 
     async populateCombos(comboName,url) 
@@ -148,6 +178,10 @@ class EmployeeSalaryStructureForm extends PureComponent {
             <Paper style={paperStyle} variant="outlined">
                 <div>
                     <Table>
+                        <tr>
+                            <td colspan="2"><label id = "returnMessage"></label></td>
+                        </tr>
+                        <br/>
                         <tr>
                             <td>Employee</td>
                             <td>

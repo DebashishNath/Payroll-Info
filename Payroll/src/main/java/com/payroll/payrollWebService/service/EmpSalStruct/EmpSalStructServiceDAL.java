@@ -121,4 +121,26 @@ class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
         }
         return filterEmpSalStruct;
     }
+
+    @Override
+    public trn_emp_salary_structure updateEmpSalStruct(trn_emp_salary_structure empSalaryStructure)
+    {
+        MessageResponse msgResp =new MessageResponse();
+        try
+        {
+            System.out.println("Inside updateEmpSalStruct() of employee salary structure");
+            trn_emp_salary_structure empSalStructToAdd = empSalStructRep.save(empSalaryStructure);
+            msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
+                    "Salary Structure updated successfully!");
+            empSalStructToAdd.setReturnMessage(msgResp);
+            return empSalStructToAdd;
+        }catch(Exception ex)
+        {
+            System.out.println("Error Is: " + ex.getMessage());
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
+                    "Failed to update salary Structure");
+            empSalaryStructure.setReturnMessage(msgResp);
+            return empSalaryStructure;
+        }
+    }
 }

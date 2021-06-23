@@ -56,8 +56,20 @@ public class EmpSalStructController {
             return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
         }
     }
+
+    @PostMapping("/updateEmpSalStruct")
+    public ResponseEntity<?> UpdateEmpSalStruct(@Valid @RequestBody trn_emp_salary_structure empSalStruct) {
+        try
+        {
+            System.out.println("EmpId: " + empSalStruct.getEmpEmpEarnDedIdentity().getEmp_id()
+                    + ",Earn Ded Id: " + empSalStruct.getEmpEmpEarnDedIdentity().getEarn_ded_id()
+                    + ",Amount: " + empSalStruct.getEarn_ded_amount());
+
+            trn_emp_salary_structure empSalStructToUpdate=empSalStructService.updateEmpSalStruct(empSalStruct);
+            return ResponseEntity.ok(new MessageResponse(empSalStructToUpdate.getReturnMessage().getCode(),
+                    empSalStructToUpdate.getReturnMessage().getMessage()));
+        }catch(Exception ex){
+            return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
+        }
+    }
 }
-
-
-
-

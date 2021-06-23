@@ -25,4 +25,8 @@ abstract class EmpSalStructServiceImpl implements EmpSalStructService {
         return new EmpSalStructServiceDAL().findAll(empId);
     }
 
+    @Override
+    public trn_emp_salary_structure updateEmpSalStruct(trn_emp_salary_structure empSalaryStructure){
+        return new EmpSalStructServiceDAL().updateEmpSalStruct(empSalaryStructure);
+    }
 }

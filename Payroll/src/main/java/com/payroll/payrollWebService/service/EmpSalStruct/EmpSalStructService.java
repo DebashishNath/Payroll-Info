@@ -11,4 +11,5 @@ public interface EmpSalStructService {
     trn_emp_salary_structure modify(trn_emp_salary_structure empSalaryStructure);
     Optional<trn_emp_salary_structure> findById(EmpEarnDedIdentity empEarnDedIdentity);
     List<trn_emp_salary_structure> findAll(Long empId);
+    trn_emp_salary_structure updateEmpSalStruct(trn_emp_salary_structure empSalaryStructure);
 }
