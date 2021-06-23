@@ -3,6 +3,7 @@ package com.payroll.payrollWebService.service.EmpSalStruct;
 import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.EmpEarnDedIdentity;
+import com.payroll.payrollWebService.models.payroll.mst_district;
 import com.payroll.payrollWebService.models.payroll.trn_emp_salary_structure;
 import com.payroll.payrollWebService.models.payroll.mst_earn_ded_components;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
@@ -94,12 +97,16 @@ class EmpSalStructServiceDAL extends EmpSalStructServiceImpl{
         List<trn_emp_salary_structure> filterEmpSalStruct=new ArrayList<>();
         List<mst_earn_ded_components> lstEarnDedComponents=(List<mst_earn_ded_components>)earnDedRep.findAll();
 
-        for(int i=0;i<lstEmpSalStruct.size();i++)
+        Stream<trn_emp_salary_structure> streamSalStruct=lstEmpSalStruct.stream()
+                .filter(c->c.getEmpEmpEarnDedIdentity().getEmp_id().equals(empId));
+        filterEmpSalStruct = streamSalStruct.collect(Collectors.toList());
+
+        /*for(int i=0;i<lstEmpSalStruct.size();i++)
         {
             if(lstEmpSalStruct.get(i).getEmpEmpEarnDedIdentity().getEmp_id()==empId){
                 filterEmpSalStruct.add(lstEmpSalStruct.get(i));
             }
-        }
+        }*/
 
         for(int i=0;i<filterEmpSalStruct.size();i++)
         {
