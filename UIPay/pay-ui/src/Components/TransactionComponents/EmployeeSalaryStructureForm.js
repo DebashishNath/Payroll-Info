@@ -14,6 +14,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
         }
         this.employeesComboChange=this.employeesComboChange.bind(this);
         this.earnDedComponentsComboChange=this.earnDedComponentsComboChange.bind(this);
+        this.doEditOfEmpComponents=this.doEditOfEmpComponents.bind(this);
     }
 
     componentDidMount(){
@@ -21,6 +22,13 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.populateCombos('Employee',url);
         url='http://192.168.43.241:8086/api/earn_deductions'
         this.populateCombos('EarnDedComponent',url);
+    }
+
+    doEditOfEmpComponents(earnDedId,earnDedAmount){
+        document.getElementById("earnDedAmount").value=earnDedAmount;
+        this.setState({
+            earnDedId : earnDedId
+          });
     }
 
     async populateCombos(comboName,url) 
@@ -80,7 +88,6 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     async displayEmpEarnDeduction(empId)
     {
-        alert(empId);
         let initialDataToDisplay = [];
         
         const requestOptions = {
@@ -109,14 +116,16 @@ class EmployeeSalaryStructureForm extends PureComponent {
                     earnDedType='Ded';
                 }
                 let earnDedId=data[i].empEmpEarnDedIdentity.earn_ded_id;
+                let earnDedAmt=data[i].earn_ded_amount;
                 initialDataToDisplay.push(
-                    <tr key={data[i].empEmpEarnDedIdentity.earn_ded_id}>
+                    <tr key={earnDedId}>
                     <td>{i+1}</td>
                     <td>{data[i].earnDedComponents.earn_ded_code}</td>
                     <td>{data[i].earnDedComponents.earn_ded_name}</td>
                     <td>{earnDedType}</td>
-                    <td>{data[i].earn_ded_amount}</td>
-                    <td><Button color="primary" variant="contained" onClick={() => { this.doEditOfEmpComponents(earnDedId) }}>Edit</Button></td>
+                    <td>{earnDedAmt}</td>
+                    <td><Button color="primary" variant="contained" onClick={() => 
+                        { this.doEditOfEmpComponents(earnDedId,earnDedAmt) }}>Edit</Button></td>
                     </tr>);
             }
            }
@@ -160,7 +169,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         <tr>
                             <td>Amount</td>
                             <td>
-                            <td><TextField id="amount" label='Amount' variant='outlined'></TextField></td>
+                            <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '50%'}}></TextField></td>
                             </td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.doAddEmpComponents() }}>Update</Button></td>
                         </tr>
