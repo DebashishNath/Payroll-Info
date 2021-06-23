@@ -14,7 +14,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
         }
         this.employeesComboChange=this.employeesComboChange.bind(this);
         this.earnDedComponentsComboChange=this.earnDedComponentsComboChange.bind(this);
-        this.doEditOfEmpComponents=this.doEditOfEmpComponents.bind(this);
+        this.displayOfEmpComponent=this.displayOfEmpComponent.bind(this);
     }
 
     componentDidMount(){
@@ -24,11 +24,13 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.populateCombos('EarnDedComponent',url);
     }
 
-    doEditOfEmpComponents(earnDedId,earnDedAmount){
+    displayOfEmpComponent(earnDedId,earnDedAmount){
         document.getElementById("earnDedAmount").value=earnDedAmount;
-        this.setState({
-            earnDedId : earnDedId
-          });
+        this.setState({ earnDedId : earnDedId });
+    }
+
+    async doUpdateEmpComponent(){
+
     }
 
     async populateCombos(comboName,url) 
@@ -125,7 +127,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
                     <td>{earnDedType}</td>
                     <td>{earnDedAmt}</td>
                     <td><Button color="primary" variant="contained" onClick={() => 
-                        { this.doEditOfEmpComponents(earnDedId,earnDedAmt) }}>Edit</Button></td>
+                        { this.displayOfEmpComponent(earnDedId,earnDedAmt) }}>Edit</Button></td>
                     </tr>);
             }
            }
@@ -171,7 +173,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
                             <td>
                             <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '50%'}}></TextField></td>
                             </td>
-                            <td><Button color="primary" variant="contained" onClick={() => { this.doAddEmpComponents() }}>Update</Button></td>
+                            <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEmpComponent() }}>Update</Button></td>
                         </tr>
                     </Table>
                 </div><br/>
