@@ -152,7 +152,7 @@ class EmployeeOfficialForm extends Component {
     {
       departmentId=this.state.departmentId;
     }
-    alert(departmentId);
+    
     let designationId=null;
     if(this.state.designationId>0)
     {

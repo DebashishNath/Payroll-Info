@@ -9,7 +9,8 @@ class EmployeePersonalForm extends Component {
     this.state = {
       statesToDisplay:[],
       districtsToDisplay:[],
-      districtId:null,
+      stateId:0,
+      districtId:0,
       gender:"M"
     }
     this.updateEmployeePersonal = this.updateEmployeePersonal.bind(this);
@@ -56,8 +57,9 @@ class EmployeePersonalForm extends Component {
           document.getElementById("address1").value = data.address1;
           document.getElementById("address2").value = data.address2;
           //"location" : null,
-          //document.getElementById("statesCombo").value  = data.district.state.state_id;
-          //this.state.districtId=data.district.district_id;
+          this.setState({ stateId : data.district.state.state_id });
+          this.populateDistricts(data.district.state.state_id);
+          this.setState({districtId : data.district.district_id });
           document.getElementById("pin").value = data.pin;
           document.getElementById("contactNumber").value = data.contact_number;
           document.getElementById("email").value = data.email;
@@ -113,14 +115,21 @@ class EmployeePersonalForm extends Component {
 
   statesComboChange(event) 
   {
+    var empStateId=event.target.value;
+    this.populateDistricts(empStateId);
+  }
+  
+  populateDistricts(empStateId)
+  {
     this.setState({
       districtsToDisplay: []
     });
-    var stateId=event.target.value;
-    var url='http://192.168.43.241:8086/api/districts/' + stateId;
+    
+    var url='http://192.168.43.241:8086/api/districts/' + empStateId;
     this.populateCombos('District',url)
+    this.setState({stateId:empStateId});
   }
-  
+
   districtsComboChange(event) 
   {
     this.setState({
@@ -235,7 +244,7 @@ class EmployeePersonalForm extends Component {
             </tr><br/>
             <tr><td><label>State</label></td>
                 <td>
-                  <Select id="statesCombo" value={this.state.value} onChange={this.statesComboChange}
+                  <Select id="statesCombo" value={this.state.stateId} onChange={this.statesComboChange}
                     style={{ border: '1px solid' ,width:'200px' }}>
                     {this.state.statesToDisplay}
                   </Select>
@@ -244,7 +253,7 @@ class EmployeePersonalForm extends Component {
             <tr>
               <td><label>District</label></td>
               <td>
-                <Select id="districtsCombo" value={this.state.value} onChange={this.districtsComboChange}
+                <Select id="districtsCombo" value={this.state.districtId} onChange={this.districtsComboChange}
                   style={{ border: '1px solid' ,width:'200px'  }}>
                   {this.state.districtsToDisplay}
                 </Select>
