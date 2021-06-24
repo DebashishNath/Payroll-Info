@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import ListCategoryForm from "../MasterComponents/ListCategoryForm";
 import DepartmentForm from "../MasterComponents/DepartmentForm";
 import ListDesignationForm from "../MasterComponents/ListDesignationForm";
+import EarnDedComponentsForm from "../MasterComponents/EarnDedComponentsForm";
 import ListEmployeesForm from '../MasterComponents/ListEmployeesForm';
 import EmployeeForm from '../MasterComponents/EmployeeForm';
 import EmployeeSalaryStructureForm from '../TransactionComponents/EmployeeSalaryStructureForm';
@@ -71,6 +72,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/designation' exact component={ListDesignationForm} />
               <Route path='/list_employees' exact component={ListEmployeesForm} />
               <Route path="/employee" exact component={EmployeeForm} />
+              <Route path="/earndedcomponents" exact component={EarnDedComponentsForm}></Route>
               <Route path="/salarystructure" exact component={EmployeeSalaryStructureForm} />
               <Route path='/monthlyattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>

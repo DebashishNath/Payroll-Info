@@ -30,11 +30,11 @@ public class EarnDeductionController {
         return earnDeductionService.findById(id);
     }
 
-    @PostMapping("/add_earn_deduction")
-    public ResponseEntity<?> AddEarnDeduction(@Valid @RequestBody mst_earn_ded_components earnDedComponents) {
+    @PostMapping("/update_earn_deduction")
+    public ResponseEntity<?> UpdateEarnDeduction(@Valid @RequestBody mst_earn_ded_components earnDedComponents) {
         try
         {
-            mst_earn_ded_components earn_ded_componentsToAdd= earnDeductionService.save(earnDedComponents);
+            mst_earn_ded_components earn_ded_componentsToAdd= earnDeductionService.update(earnDedComponents);
             return ResponseEntity.ok(new MessageResponse(earn_ded_componentsToAdd.getReturnMessage().getCode(),
                     earn_ded_componentsToAdd.getReturnMessage().getMessage()));
         }catch(Exception ex){

@@ -5,7 +5,6 @@ import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.mst_earn_ded_components;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.repository.payroll.EarnDeductionRepository;
-import com.payroll.payrollWebService.service.EarnDeduction.EarnDeductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +20,17 @@ class EarnDeductionDAL extends EarnDeductionImpl
     public EarnDeductionDAL() {}
 
     @Override
-    public mst_earn_ded_components save(mst_earn_ded_components earnDedComponents)
+    public mst_earn_ded_components update(mst_earn_ded_components earnDedComponents)
     {
         MessageResponse msgResp =new MessageResponse();
         try
         {
 
-            mst_earn_ded_components earnDedToAdd = earnDedRep.save(earnDedComponents);
+            mst_earn_ded_components earnDedToUpdate = earnDedRep.save(earnDedComponents);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
-                    "New Earn Deduction details added successfully!");
-            earnDedToAdd.setReturnMessage(msgResp);
-            return earnDedToAdd;
+                    "Earn Deduction details updated successfully!");
+            earnDedToUpdate.setReturnMessage(msgResp);
+            return earnDedToUpdate;
         }catch(Exception ex)
         {
             System.out.println("Error Is: " + ex.getMessage());

@@ -9,8 +9,8 @@ import java.util.Optional;
 
 abstract class EarnDeductionImpl implements EarnDeductionService{
     @Override
-    public mst_earn_ded_components save(mst_earn_ded_components earnDedComponents) {
-        return new EarnDeductionDAL().save(earnDedComponents);
+    public mst_earn_ded_components update(mst_earn_ded_components earnDedComponents) {
+        return new EarnDeductionDAL().update(earnDedComponents);
     }
 
     @Override

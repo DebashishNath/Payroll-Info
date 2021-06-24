@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EarnDeductionService {
-    mst_earn_ded_components save(mst_earn_ded_components earnDedComponents);
+    mst_earn_ded_components update(mst_earn_ded_components earnDedComponents);
 
     mst_earn_ded_components modify(mst_earn_ded_components earnDedComponents);
 
