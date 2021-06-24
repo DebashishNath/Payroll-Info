@@ -8,11 +8,13 @@ class EarnDedComponentsForm extends PureComponent {
         this.state = {
             earnDedTypesToDisplay:[],
             earnDedComponentsToDisplay:[],
+            earnDedId:0,
             earnDedType:""
         }
         this.doUpdateEarnDedComponent=this.doUpdateEarnDedComponent.bind(this);
         this.earnDedTypeComboChange=this.earnDedTypeComboChange.bind(this);
         this.displayOfEarnDedComponent=this.displayOfEarnDedComponent.bind(this);
+        this.doClearControls=this.doClearControls.bind(this);
     }
 
     componentDidMount()
@@ -22,6 +24,15 @@ class EarnDedComponentsForm extends PureComponent {
         initialDataToDisplay.push(<MenuItem value={"D"}>{"Deduction"}</MenuItem>)
         this.setState({earnDedTypesToDisplay:initialDataToDisplay});
         this.displayEarnDeductions();
+    }
+
+    doClearControls()
+    {
+        this.setState({ earnDedId : 0 });
+        document.getElementById("earnDedCode").value="";
+        document.getElementById("earnDedName").value="";
+        this.setState({ earnDedType : "" });
+        document.getElementById("earnDedPriority").value="";
     }
 
     displayOfEarnDedComponent(earnDedId,earnDedCode,earnDedName,earnDedType,earnDedPriority)
@@ -60,6 +71,10 @@ class EarnDedComponentsForm extends PureComponent {
                 document.getElementById('returnMessage').innerHTML = data.message;
                 document.getElementById('returnMessage').style="color:green";
                 this.displayEarnDeductions();
+                if(this.state.earnDedId === 0)
+                {
+                    this.doClearControls();
+                }
             }
             else
             {
@@ -138,9 +153,12 @@ class EarnDedComponentsForm extends PureComponent {
                 <div>
                     <Table>
                         <tr>
+                            <td colspan="4"><label id = "returnMessage"></label></td>
+                        </tr>
+                        <tr>
                             <td>Code</td>
                             <td><TextField id="earnDedCode" variant='outlined' style ={{width: '30%'}}></TextField></td>
-                            <td colspan="2"><label id = "returnMessage"></label></td>
+                            <td></td><td></td>
                         </tr>
                         <br/>
                         <tr>
@@ -157,7 +175,8 @@ class EarnDedComponentsForm extends PureComponent {
                         <tr>
                             <td>Priority</td>
                             <td><TextField id="earnDedPriority" variant='outlined' style ={{width: '30%'}}></TextField></td>
-                            <td colspan="2"><Button color="primary" variant="contained" onClick={() => { this.doUpdateEarnDedComponent() }}>Update</Button></td>
+                            <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEarnDedComponent() }}>Update</Button></td>
+                            <td><Button color="primary" variant="contained" onClick={() => { this.doClearControls() }}>Clear</Button></td>
                         </tr>
                     </Table>
                 </div><br/>
