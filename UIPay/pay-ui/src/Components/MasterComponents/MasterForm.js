@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Table, TextField , Button,Paper } from '@material-ui/core';
+import ListOfRecordsForm from './ListOfRecordsForm';
 
 class MasterForm extends PureComponent
 {
@@ -14,9 +15,10 @@ class MasterForm extends PureComponent
         this.validateControls=this.validateControls.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount()
+    {
         document.getElementById("code").focus(); 
-     }
+    }
 
     clearControls()
     {
@@ -92,7 +94,7 @@ class MasterForm extends PureComponent
     }
 
     render() {
-        const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px"}
+        const paperStyle={padding:20,height:'100vh',width:600,margin:"40px 100px"}
         const btnStyle={margin:'8px 0'}
 
         return (
@@ -114,7 +116,9 @@ class MasterForm extends PureComponent
                     </tr>
                     </Table>    
                 </div><br/>
-
+                <div>
+                    <ListOfRecordsForm></ListOfRecordsForm>
+                </div>
             </Paper>
         );
     }
