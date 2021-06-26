@@ -176,7 +176,7 @@ class EarnDedComponentsForm extends PureComponent {
                             <td>Priority</td>
                             <td><TextField id="earnDedPriority" variant='outlined' style ={{width: '30%'}}></TextField></td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEarnDedComponent() }}>Update</Button></td>
-                            <td><Button color="primary" variant="contained" onClick={() => { this.doClearControls() }}>Clear</Button></td>
+                            <td><Button color="primary" variant="contained" onClick={() => { this.doClearControls() }}>Reset</Button></td>
                         </tr>
                     </Table>
                 </div><br/>

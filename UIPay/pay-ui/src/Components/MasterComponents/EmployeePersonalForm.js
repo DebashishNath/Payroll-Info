@@ -20,6 +20,7 @@ class EmployeePersonalForm extends Component {
   }
 
   componentDidMount(){
+    document.getElementById("employeeCode").focus();
     var url='http://192.168.43.241:8086/api/states';
     
     this.populateCombos('State',url)
@@ -258,7 +259,7 @@ class EmployeePersonalForm extends Component {
                   {this.state.districtsToDisplay}
                 </Select>
                </td>
-               <td><TextField id="pin" variant='outlined' label='Pin' style ={{width: '60%'}}></TextField></td>
+               <td>&emsp;&emsp;<TextField id="pin" variant='outlined' label='Pin' style ={{width: '60%'}}></TextField></td>
             </tr>
             <br/>
             <tr><td><label>Contact Numbers</label></td>
