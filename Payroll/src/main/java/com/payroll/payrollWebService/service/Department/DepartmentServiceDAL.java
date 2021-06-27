@@ -28,7 +28,7 @@ class DepartmentServiceDAL extends DepartmentServiceImpl {
 
             mst_department deptToAdd = deptRep.save(department);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
-                    "New Department details added successfully!");
+                    "Department details updated successfully!");
             deptToAdd.setReturnMessage(msgResp);
             return deptToAdd;
         }catch(Exception ex)

@@ -1,23 +1,26 @@
 import React, { PureComponent } from 'react';
 import { Table, TextField , Button,Paper } from '@material-ui/core';
-import ListOfRecordsForm from './ListOfRecordsForm';
 
 class MasterForm extends PureComponent
 {
     constructor(props) 
     {
         super(props);
-        this.state = {
-            id: 0
+        this.state = 
+        { 
+            id: 0,
+            ListRecords:[] 
         }
-        this.updateMasterRecords=this.updateMasterRecords.bind(this);
+        this.updateMasterRecord=this.updateMasterRecord.bind(this);
         this.clearControls=this.clearControls.bind(this);
         this.validateControls=this.validateControls.bind(this);
+        this.doEditMasterRecord=this.doEditMasterRecord.bind(this);
     }
 
     componentDidMount()
     {
         document.getElementById("code").focus(); 
+        this.ListMasterRecords();
     }
 
     clearControls()
@@ -42,7 +45,7 @@ class MasterForm extends PureComponent
         return true;
     }
 
-    async updateMasterRecords() 
+    async updateMasterRecord() 
     {
         if(!this.validateControls())
         {
@@ -53,7 +56,6 @@ class MasterForm extends PureComponent
 
         if(this.props.FormName === "Department")
         {
-            alert('Inside Json: ' + this.state.id)
             json = 
             {
                 "department_id" : this.state.id,
@@ -63,8 +65,7 @@ class MasterForm extends PureComponent
         }
 
         var masterParams = JSON.stringify(json);
-        alert(masterParams);
-
+        
         var requestOptions = {
             crossDomain:true,
             method: 'POST',
@@ -82,6 +83,7 @@ class MasterForm extends PureComponent
         if (data.code === 0)
         {
             alert(data.message);
+            this.ListMasterRecords();
         }
         else
         {
@@ -93,8 +95,68 @@ class MasterForm extends PureComponent
       }
     }
 
+    async ListMasterRecords()
+    {
+        let initialDataToDisplay=[];
+        
+        const requestOptions = 
+        {
+            crossDomain:true,
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json',
+                        'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+        };
+        var url=this.props.ListMasterUrl;
+        
+        try
+        {
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            if(data!=null && data.length>0)
+            {
+                initialDataToDisplay.push(<tr>
+                    <th>Slno</th><th>Id</th><th>Code</th>
+                    <th>Name</th><th></th></tr>);
+                for(var i=0;i<=data.length-1;i++)
+                {
+                    let masterId=data[i].department_id;
+                    let masterCode=data[i].department_code;
+                    let masterName=data[i].department_name;
+                    
+                    initialDataToDisplay.push(
+                        <tr key={masterId}>
+                        <td>{i+1}</td>
+                        <td>{masterId}</td>
+                        <td>{masterCode}</td>
+                        <td>{masterName}</td>
+                        <td><Button color="primary" variant="contained" 
+                            onClick={() => { this.doEditMasterRecord(masterId,masterCode,masterName) }}>Edit</Button></td>
+                        </tr>);
+                }
+                this.setState ({ 
+                    ListRecords: initialDataToDisplay
+                });
+            }
+            else
+            {
+                initialDataToDisplay.push("No Records to display");
+            }
+            
+        }catch(err) 
+        {
+            alert(err.message);
+        }
+    }
+
+    doEditMasterRecord(masterId,masterCode,masterName)
+    {
+        this.setState({ id:masterId });
+        document.getElementById("code").value=masterCode;
+        document.getElementById("name").value=masterName;
+    }
+
     render() {
-        const paperStyle={padding:20,height:'100vh',width:600,margin:"40px 100px"}
+        const paperStyle={padding:20,height:'80vh',width:500,margin:"40px 100px",overflow:'auto'}
         const btnStyle={margin:'8px 0'}
 
         return (
@@ -109,7 +171,7 @@ class MasterForm extends PureComponent
                         <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }}></TextField></td>
                     </tr>
                     <tr><td></td><td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
-                            onClick={() => { this.updateMasterRecords() }}>Update</Button>&nbsp;
+                            onClick={() => { this.updateMasterRecord() }}>Update</Button>&nbsp;
                         <Button color='primary' variant='contained' style={btnStyle} 
                             onClick={() => { this.clearControls()}}>Reset</Button>
                         </td>
@@ -117,7 +179,9 @@ class MasterForm extends PureComponent
                     </Table>    
                 </div><br/>
                 <div>
-                    <ListOfRecordsForm></ListOfRecordsForm>
+                <Table border='1'>
+                    {this.state.ListRecords}
+                </Table>
                 </div>
             </Paper>
         );

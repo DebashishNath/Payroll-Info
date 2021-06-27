@@ -11,14 +11,16 @@ class DepartmentForm extends Component
             FormName    :'Department',
             LabelCode   :'Department Code',
             LabelName   :'Department Name',
-            DeptUrl     :'http://192.168.43.241:8086/api/adddepartment'
+            DeptUrl     :'http://192.168.43.241:8086/api/adddepartment',
+            ListDeptUrl :'http://192.168.43.241:8086/api/departments'
         }
     }
     render(){
         return (
             <div>
                 <MasterForm FormName={this.state.FormName} LabelCode={this.state.LabelCode} 
-                    LabelName={this.state.LabelName} UpdateMasterUrl={this.state.DeptUrl}/>
+                    LabelName={this.state.LabelName} UpdateMasterUrl={this.state.DeptUrl}
+                    ListMasterUrl={this.state.ListDeptUrl}/>
             </div>
         );
     }
