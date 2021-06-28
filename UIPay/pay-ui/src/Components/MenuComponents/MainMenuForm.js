@@ -6,7 +6,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import ListCategoryForm from "../MasterComponents/ListCategoryForm";
+import CategoryForm from "../MasterComponents/CategoryForm";
 import DepartmentForm from "../MasterComponents/DepartmentForm";
 import ListDesignationForm from "../MasterComponents/ListDesignationForm";
 import EarnDedComponentsForm from "../MasterComponents/EarnDedComponentsForm";
@@ -67,7 +67,7 @@ export default class MainMenuForm extends React.Component {
           <Router>
             <Sidebar items={items} />
             <switch>
-              <Route path='/category' exact component={ListCategoryForm} />
+              <Route path='/category' exact component={CategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
               <Route path='/designation' exact component={ListDesignationForm} />
               <Route path='/list_employees' exact component={ListEmployeesForm} />

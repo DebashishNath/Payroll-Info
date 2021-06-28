@@ -118,7 +118,9 @@ class MasterForm extends PureComponent
     async ListMasterRecords()
     {
         let initialDataToDisplay=[];
-        
+        this.setState ({ 
+            ListRecords: []
+        });
         const requestOptions = 
         {
             crossDomain:true,
@@ -131,6 +133,7 @@ class MasterForm extends PureComponent
         {
             const response = await fetch(url,requestOptions);
             var data = await response.json();
+            
             if(data!=null && data.length>0)
             {
                 initialDataToDisplay.push(<tr>

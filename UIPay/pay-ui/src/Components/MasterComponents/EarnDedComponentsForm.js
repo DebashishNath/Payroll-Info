@@ -147,7 +147,7 @@ class EarnDedComponentsForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'70vh',width:600,margin:"10px auto",overflow:'auto'}
+        const paperStyle={padding:30,height:'70vh',width:600,margin:"40px 100px",overflow:'auto'}
         return (
             <Paper style={paperStyle} variant="outlined">
                 <div>

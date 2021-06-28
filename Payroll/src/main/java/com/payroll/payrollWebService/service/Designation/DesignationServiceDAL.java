@@ -28,7 +28,7 @@ class DesignationServiceDAL extends DesignationServiceImpl{
 
             mst_designation designationToAdd = desigRep.save(designation);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
-                    "New Designation details added successfully!");
+                    "Designation details updated successfully!");
             designationToAdd.setReturnMessage(msgResp);
             return designationToAdd;
         }catch(Exception ex)

@@ -11,7 +11,7 @@ class DepartmentForm extends Component
             FormName    :'Department',
             LabelCode   :'Department Code',
             LabelName   :'Department Name',
-            DeptUrl     :'http://192.168.43.241:8086/api/savedepartment',
+            SaveDeptUrl :'http://192.168.43.241:8086/api/savedepartment',
             ListDeptUrl :'http://192.168.43.241:8086/api/masterdatas/Department'
         }
     }
@@ -19,7 +19,7 @@ class DepartmentForm extends Component
         return (
             <div>
                 <MasterForm FormName={this.state.FormName} LabelCode={this.state.LabelCode} 
-                    LabelName={this.state.LabelName} UpdateMasterUrl={this.state.DeptUrl}
+                    LabelName={this.state.LabelName} UpdateMasterUrl={this.state.SaveDeptUrl}
                     ListMasterUrl={this.state.ListDeptUrl}/>
             </div>
         );

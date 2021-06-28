@@ -26,7 +26,7 @@ class CategoryServiceDAL extends CategoryServiceImpl {
         try{
             mst_category categoryToAdd = categoryRep.save(category);
             msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
-                    "New Category details added successfully!");
+                    "Category details updated successfully!");
             categoryToAdd.setReturnMessage(msgResp);
             return categoryToAdd;
         }catch(Exception ex)
