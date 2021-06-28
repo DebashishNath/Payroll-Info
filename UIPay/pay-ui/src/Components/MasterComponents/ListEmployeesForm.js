@@ -76,7 +76,7 @@ class ListEmployeesForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'80vh',width:800,margin:"10px auto",overflow:'auto'}
+        const paperStyle={padding:30,height:'80vh',width:800,margin:"40px 100px",overflow:'auto'}
         return (
             <Paper style={paperStyle} variant="outlined">
             <div>

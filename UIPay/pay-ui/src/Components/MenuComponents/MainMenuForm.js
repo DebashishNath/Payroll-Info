@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import CategoryForm from "../MasterComponents/CategoryForm";
 import DepartmentForm from "../MasterComponents/DepartmentForm";
-import ListDesignationForm from "../MasterComponents/ListDesignationForm";
+import DesignationForm from "../MasterComponents/DesignationForm";
 import EarnDedComponentsForm from "../MasterComponents/EarnDedComponentsForm";
 import ListEmployeesForm from '../MasterComponents/ListEmployeesForm';
 import EmployeeForm from '../MasterComponents/EmployeeForm';
@@ -69,7 +69,7 @@ export default class MainMenuForm extends React.Component {
             <switch>
               <Route path='/category' exact component={CategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
-              <Route path='/designation' exact component={ListDesignationForm} />
+              <Route path='/designation' exact component={DesignationForm} />
               <Route path='/list_employees' exact component={ListEmployeesForm} />
               <Route path="/employee" exact component={EmployeeForm} />
               <Route path="/earndedcomponents" exact component={EarnDedComponentsForm}></Route>
