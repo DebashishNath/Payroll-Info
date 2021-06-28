@@ -183,14 +183,14 @@ class EmployeeOfficialForm extends Component {
     {
       const response = await fetch(url,requestOptions);
       var data = await response.json();
-      document.getElementById('returnMessage').innerHTML = data.message;
+     
       if (data.code === 0)
       {
-        document.getElementById('returnMessage').style="color:green";
+        alert(data.message);
       }
       else
       {
-        document.getElementById('returnMessage').style="color:red";
+        alert(data.message);
       }
     } catch(err) 
     { alert(err.message); }
@@ -204,7 +204,6 @@ class EmployeeOfficialForm extends Component {
     return (
       <div>
         <Paper style={paperStyle} variant="outlined">
-          <label id = "returnMessage"></label>
           <Table>
             <tr><td><label>Employee Name</label></td>
                 <td><label id ="EmpName"></label></td>
