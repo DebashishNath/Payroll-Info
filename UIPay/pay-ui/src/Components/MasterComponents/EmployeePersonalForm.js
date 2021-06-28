@@ -25,6 +25,7 @@ class EmployeePersonalForm extends Component {
     
     this.populateCombos('State',url)
     let empId= localStorage.getItem('employeeId');
+    document.getElementById("lblEmpId").value=empId;
     if(empId > 0)
     {
       this.populatePersonalEmpInfo(empId);
@@ -170,9 +171,9 @@ class EmployeePersonalForm extends Component {
 	      "email" : document.getElementById("email").value
 	    })
     };
-
+    
     let url='';
-    if (document.getElementById("lblEmpId").value === 0)
+    if (document.getElementById("lblEmpId").value === '0')
     {
       url='http://192.168.43.241:8086/api/newemployee';
     }
@@ -180,20 +181,19 @@ class EmployeePersonalForm extends Component {
     {
       url='http://192.168.43.241:8086/api/modifyemployee';
     }
-
+    
     try 
     {
       const response = await fetch(url,requestOptions);
       var data = await response.json();
-      document.getElementById('returnMessage').innerHTML = data.message;
       if (data.code === 0)
       {
-        document.getElementById('returnMessage').style="color:green";
+        alert(data.message);
         localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
       }
       else
       {
-        document.getElementById('returnMessage').style="color:red";
+        alert(data.message);
       }
     } catch(err) 
     { alert(err.message); }
@@ -207,7 +207,6 @@ class EmployeePersonalForm extends Component {
     return (
       <div>
         <Paper style={paperStyle} variant="outlined">
-          <label id = "returnMessage"></label>
           <Table>
             <tr>
               <td><TextField id="employeeCode" label='Code' variant='outlined' required  style ={{width: '50%'}}></TextField></td>
