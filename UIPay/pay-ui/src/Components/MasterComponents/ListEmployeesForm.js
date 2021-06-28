@@ -9,11 +9,19 @@ class ListEmployeesForm extends PureComponent {
             employeesToDisplay:[],
             noOfRecords:0
         }
+        this.addNewEmployee=this.addNewEmployee.bind(this);
         this.doEditOfEmployee=this.doEditOfEmployee.bind(this);
     }
 
     componentDidMount(){
         this.DisplayAllEmployees();
+    }
+
+    addNewEmployee()
+    {
+        localStorage.setItem('employeeId',0);
+        const { history } = this.props;
+        if(history) history.push('/employee');
     }
 
     doEditOfEmployee(empId)
@@ -77,8 +85,13 @@ class ListEmployeesForm extends PureComponent {
     render()
     {
         const paperStyle={padding:30,height:'80vh',width:800,margin:"40px 100px",overflow:'auto'}
+        const btnStyle={margin:'8px 0'}
         return (
             <Paper style={paperStyle} variant="outlined">
+            <div align='right'>
+                <Button color='primary' variant='contained' style={btnStyle} 
+                    onClick={() => { this.addNewEmployee()}}>Add New Employee</Button>
+            </div>
             <div>
                 <Table border='1'>
                     {this.state.employeesToDisplay}
