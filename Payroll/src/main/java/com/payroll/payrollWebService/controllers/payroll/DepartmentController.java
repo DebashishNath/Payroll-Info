@@ -30,8 +30,8 @@ public class DepartmentController {
         return deptService.findById(id);
     }
 
-    @PostMapping("/adddepartment")
-    public ResponseEntity<?> AddEmpSalStruct(@Valid @RequestBody mst_department dept) {
+    @PostMapping("/savedepartment")
+    public ResponseEntity<?> saveDepartment(@Valid @RequestBody mst_department dept) {
         try
         {
             mst_department deptToAdd= deptService.save(dept);

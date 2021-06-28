@@ -30,8 +30,8 @@ public class CategoryController {
         return categoryService.findById(id);
     }
 
-    @PostMapping("/addcategory")
-    public ResponseEntity<?> AddEmpSalStruct(@Valid @RequestBody mst_category category) {
+    @PostMapping("/savecategory")
+    public ResponseEntity<?> saveCategory(@Valid @RequestBody mst_category category) {
         try
         {
             mst_category categoryToAdd= categoryService.save(category);

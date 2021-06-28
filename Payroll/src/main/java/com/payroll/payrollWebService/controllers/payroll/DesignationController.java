@@ -30,8 +30,8 @@ public class DesignationController {
         return designationService.findById(id);
     }
 
-    @PostMapping("/newdesignation")
-    public ResponseEntity<?> addDesignation(@Valid @RequestBody mst_designation designation) {
+    @PostMapping("/savedesignation")
+    public ResponseEntity<?> saveDesignation(@Valid @RequestBody mst_designation designation) {
         try
         {
             mst_designation designationToAdd=designationService.save(designation);

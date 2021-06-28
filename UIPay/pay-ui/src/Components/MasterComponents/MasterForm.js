@@ -64,6 +64,26 @@ class MasterForm extends PureComponent
             };
         }
 
+        if(this.props.FormName === "Category")
+        {
+            json = 
+            {
+                "category_id" : this.state.id,
+                "category_code" : document.getElementById("code").value,
+                "category_name" : document.getElementById("name").value
+            };
+        }
+
+        if(this.props.FormName === "Designation")
+        {
+            json = 
+            {
+                "designation_id" : this.state.id,
+                "designation_code" : document.getElementById("code").value,
+                "designation_name" : document.getElementById("name").value
+            };
+        }
+
         var masterParams = JSON.stringify(json);
         
         var requestOptions = {
@@ -90,7 +110,7 @@ class MasterForm extends PureComponent
             alert(data.message);
         }
       }
-      catch(err) {
+      catch(err) { 
         alert(err.message);
       }
     }
@@ -107,7 +127,6 @@ class MasterForm extends PureComponent
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
         var url=this.props.ListMasterUrl;
-        
         try
         {
             const response = await fetch(url,requestOptions);
@@ -119,18 +138,18 @@ class MasterForm extends PureComponent
                     <th>Name</th><th></th></tr>);
                 for(var i=0;i<=data.length-1;i++)
                 {
-                    let masterId=data[i].department_id;
-                    let masterCode=data[i].department_code;
-                    let masterName=data[i].department_name;
+                    let id=data[i].masterId;
+                    let code=data[i].masterCode;
+                    let name=data[i].masterName;
                     
                     initialDataToDisplay.push(
-                        <tr key={masterId}>
+                        <tr key={id}>
                         <td>{i+1}</td>
-                        <td>{masterId}</td>
-                        <td>{masterCode}</td>
-                        <td>{masterName}</td>
+                        <td>{id}</td>
+                        <td>{code}</td>
+                        <td>{name}</td>
                         <td><Button color="primary" variant="contained" 
-                            onClick={() => { this.doEditMasterRecord(masterId,masterCode,masterName) }}>Edit</Button></td>
+                            onClick={() => { this.doEditMasterRecord(id,code,name) }}>Edit</Button></td>
                         </tr>);
                 }
                 this.setState ({ 
