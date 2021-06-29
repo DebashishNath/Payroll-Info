@@ -175,6 +175,7 @@ class MasterForm extends PureComponent
         this.setState({ id:masterId });
         document.getElementById("code").value=masterCode;
         document.getElementById("name").value=masterName;
+        document.getElementById("code").focus();
     }
 
     render() {

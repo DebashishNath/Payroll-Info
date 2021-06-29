@@ -16,6 +16,8 @@ import EmployeeSalaryStructureForm from '../TransactionComponents/EmployeeSalary
 import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationForm';
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
+import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
+import LogoutForm from '../LogoutComponents/LogoutForm'
 
 export default class MainMenuForm extends React.Component {
   
@@ -57,7 +59,10 @@ export default class MainMenuForm extends React.Component {
         {
           name: "logout",
           label: "logout",
-          Icon: ExitToAppIcon
+          Icon: ExitToAppIcon,
+          items: [
+            { name: "logout", label: "Logout",route: '/logout', onClick }
+          ]
         }
       ];
       
@@ -76,7 +81,9 @@ export default class MainMenuForm extends React.Component {
               <Route path="/salarystructure" exact component={EmployeeSalaryStructureForm} />
               <Route path='/monthlyattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
+              <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
+              <Route path='/logout' exact component={LogoutForm}></Route>
             </switch>
           </Router>
           </Grid>

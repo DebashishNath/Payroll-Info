@@ -1,9 +1,12 @@
 package com.payroll.payrollWebService.service.EmpAttendance;
 
 import com.payroll.payrollWebService.models.common.CodeConstants;
+import com.payroll.payrollWebService.models.payroll.AttendanceIdentity;
 import com.payroll.payrollWebService.models.payroll.mst_employee;
+import com.payroll.payrollWebService.models.payroll.trn_emp_attendance;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.repository.payroll.EmployeeRepository;
+import com.payroll.payrollWebService.repository.payroll.EmpAttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import java.time.Month;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
     @Autowired
     private EmployeeRepository empRep;
+
+    @Autowired
+    private EmpAttendanceRepository empAttendanceRep;
 
     @PersistenceContext
     private EntityManager em;
@@ -74,6 +82,15 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
             msp.setMessage(ex.getMessage());
         }
         return msp;
+    }
+
+    @Override
+    public List<trn_emp_attendance> GetAttendanceOfSingleEmployee(AttendanceIdentity attendanceIdentity){
+        return ((List<trn_emp_attendance>)empAttendanceRep.findAll()).stream()
+                .filter(c->c.getAttendanceIdentity().getEmp_id() == attendanceIdentity.getEmp_id()
+                && c.getAttendanceIdentity().getMonth() == attendanceIdentity.getMonth()
+                && c.getAttendanceIdentity().getYear() == attendanceIdentity.getYear()
+        ).collect(Collectors.toList());
     }
 
 }

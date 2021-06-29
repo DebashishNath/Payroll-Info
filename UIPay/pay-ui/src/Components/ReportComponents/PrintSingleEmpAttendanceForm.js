@@ -1,0 +1,185 @@
+import React, { Component } from 'react';
+import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
+
+class PrintSingleEmpAttendanceForm extends Component {
+    constructor(props) 
+    {
+        super(props);
+        this.state = {
+            monthsToDisplay:[],
+            employeesToDisplay:[],
+            attendanceData:[],
+            displayMessage:'',
+            monthId:0,
+            employeeId:0
+        }
+        this.monthsComboChange=this.monthsComboChange.bind(this);
+        this.employeesComboChange = this.employeesComboChange.bind(this);
+        this.printSingleEmpAttendance=this.printSingleEmpAttendance.bind(this);
+    }
+
+    componentDidMount(){
+        this.populateMonths();
+        var url='http://192.168.43.241:8086/api/employees';
+        this.populateCombos(url)
+    }
+
+    populateMonths()
+    {
+      let initialDataToDisplay = [];
+  
+      initialDataToDisplay.push(<MenuItem value={1}>January</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={2}>February</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={3}>March</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={4}>April</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={5}>May</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={6}>June</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={7}>July</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={8}>August</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={9}>September</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={10}>October</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={11}>November</MenuItem>);
+      initialDataToDisplay.push(<MenuItem value={12}>December</MenuItem>);
+  
+      this.setState({
+        monthsToDisplay: initialDataToDisplay
+      });
+    }
+  
+    monthsComboChange(event) 
+    {
+      this.setState({
+        monthId : event.target.value
+      });
+    }
+
+    async populateCombos(url) 
+    {
+        try
+        {
+            let initialDataToDisplay = [];
+
+            const requestOptions = {
+                crossDomain:true,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json',
+                            'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+            };
+        
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            if(data!=null && data.length>0)
+            {
+                for(var i=0;i<=data.length-1;i++)
+                {
+                    var emp_name= data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
+                    initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
+                }
+                this.setState({ employeesToDisplay: initialDataToDisplay });
+            }
+        } catch(err) { alert(err.message); }
+    }
+
+    employeesComboChange(event) 
+    {
+        this.setState({
+            employeeId : event.target.value
+        });
+    }
+
+    async printSingleEmpAttendance(){
+        let initialDataToDisplay=[];
+        try
+        {
+            this.setState({ displayMessage :'' });
+            this.setState({ attendanceData :[] });   
+
+            const requestOptions = 
+            {
+                crossDomain:true,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') }
+            };
+            
+            var empId=this.state.employeeId;
+            var monthId=this.state.monthId;
+            var year=document.getElementById("year").value;
+            
+            var url='http://192.168.43.241:8086/api/get_single_emp_attendance/'  + monthId + '/' + year + '/' + empId;
+            
+            const resp = await fetch(url,requestOptions);
+            var data = await resp.json();
+            if(data!=null && data.length > 0)
+            {
+                initialDataToDisplay.push(<tr>
+                    <th>Slno</th>
+                    <th>Date</th><th>Type</th>
+                    <th>Leave</th>
+                    </tr>);
+                for (var i = 0; i < data.length; i++)
+                {
+                    let leaveTypeName='';
+                    try
+                    {
+                        leaveTypeName=data[i].leaveType.leave_type_name;
+                    }catch(err){}
+                    
+                    initialDataToDisplay.push(<tr>
+                        <td>{i+1}</td><td>{data[i].attendanceIdentity.attendance_date}</td>
+                        <td>{data[i].attendanceType.attendance_type_code}</td>
+                        <td>{leaveTypeName}</td>
+                    </tr>)
+                }
+                
+                this.setState({ attendanceData: initialDataToDisplay });   
+            }
+            else
+            {
+                this.setState({ displayMessage :'No records to display' });
+            }
+        } catch(err) { alert(err.message); }
+    }
+    
+    render() {
+        const paperStyle={padding:20,height:'100vh',width:650,margin:"40px 100px",overflow:'auto'}
+        
+        return (
+        <div>
+            <Paper style={paperStyle} variant="outlined">
+                <Table>
+                    <tr>
+                    <td>
+                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined'></TextField>
+                    </td>
+                    <td>
+                        <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
+                        style={{ border: '1px solid',width:'140px' }}>
+                        {this.state.monthsToDisplay}
+                        </Select>
+                    </td>
+                    </tr>
+                    <br/>
+                    <tr><td>
+                        <Select id="employeesCombo" value={this.state.value} onChange={this.employeesComboChange}
+                            style={{ border: '1px solid' ,width:'220px' }}>
+                            {this.state.employeesToDisplay}
+                        </Select>
+                        </td>
+                        <td><Button type='submit' color='primary' variant='contained' 
+                            onClick={() => { this.printSingleEmpAttendance() }}>Print Attendance</Button>
+                        </td>
+                    </tr>
+                </Table>
+                <br/>
+                <Table id='tableAttendance' border='1'>
+                    {this.state.attendanceData}
+                </Table>
+                <div>{this.state.displayMessage}</div>
+            </Paper>
+         </div>
+        );
+    }
+}
+
+export default PrintSingleEmpAttendanceForm;
