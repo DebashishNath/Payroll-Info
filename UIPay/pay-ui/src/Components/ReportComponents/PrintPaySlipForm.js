@@ -87,8 +87,35 @@ class PrintPaySlipForm extends Component {
         });
     }
 
-    async printPaySlip(){
-        
+    validateControls()
+    {
+        if(document.getElementById("year").value.trim().length === 0)
+        {
+            alert("Enter Year for Pay Slip printing");
+            document.getElementById("year").focus();
+            return false;
+        }
+        if(this.state.monthId === 0)
+        {
+            alert("Select Month for Pay Slip printing");
+            document.getElementById("monthsCombo").focus();
+            return false;
+        }
+        if(this.state.employeeId === 0)
+        {
+            alert("Select Employee for Pay Slip printing");
+            document.getElementById("employeesCombo").focus();
+            return false;
+        }
+        return true;
+    }
+
+    async printPaySlip()
+    {
+        if(!this.validateControls()) 
+        {
+            return;
+        }
         try
         {
             let earnData = [],dedData = [],payData=[];
@@ -165,7 +192,7 @@ class PrintPaySlipForm extends Component {
                         <td>{dedData[i][1]}</td>
                         </tr>);
                 }
-                payData.push(<tr><td>'   '</td><td></td><td></td><td></td><td></td></tr>);
+                payData.push(<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>);
                 payData.push(<tr>
                     <td></td>
                     <td>Total Earn Amount</td>
@@ -196,10 +223,10 @@ class PrintPaySlipForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined'></TextField>
+                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style ={{width: '20%'}}></TextField>
                     </td>
                     <td>
-                        <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
+                        <Select id="monthsCombo" value={this.state.monthId} onChange={this.monthsComboChange}
                         style={{ border: '1px solid',width:'140px' }}>
                         {this.state.monthsToDisplay}
                         </Select>
@@ -207,7 +234,7 @@ class PrintPaySlipForm extends Component {
                     </tr>
                     <br/>
                     <tr><td>
-                        <Select id="employeesCombo" value={this.state.value} onChange={this.employeesComboChange}
+                        <Select id="employeesCombo" value={this.state.employeeId} onChange={this.employeesComboChange}
                             style={{ border: '1px solid' ,width:'220px' }}>
                             {this.state.employeesToDisplay}
                         </Select>

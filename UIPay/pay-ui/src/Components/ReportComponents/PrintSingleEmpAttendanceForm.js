@@ -88,7 +88,36 @@ class PrintSingleEmpAttendanceForm extends Component {
         });
     }
 
-    async printSingleEmpAttendance(){
+    validateControls()
+    {
+        if(document.getElementById("year").value.trim().length === 0)
+        {
+            alert("Enter Year for attendance");
+            document.getElementById("year").focus();
+            return false;
+        }
+        if(this.state.monthId === 0)
+        {
+            alert("Select Month for attendance");
+            document.getElementById("monthsCombo").focus();
+            return false;
+        }
+        if(this.state.employeeId === 0)
+        {
+            alert("Select Employee for attendance");
+            document.getElementById("employeesCombo").focus();
+            return false;
+        }
+        return true;
+    }
+
+    async printSingleEmpAttendance()
+    {
+        if(!this.validateControls())
+        {
+            return;
+        }
+
         let initialDataToDisplay=[];
         try
         {
