@@ -42,38 +42,59 @@ class AttendanceGenerationForm extends Component {
     });
   }
 
-  async generateAttendance() {
-        
-        const requestOptions = {
-            crossDomain:true,
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                       'Authorization' : 'Bearer ' +  localStorage.getItem('tokenValue') }
-        };
+  validateControls()
+  {
+    if(document.getElementById("year").value.trim().length === 0)
+    {
+      alert("Enter Year for attendance generation");
+      document.getElementById("year").focus();
+      return false;
+    }
+    if(this.state.monthId === 0)
+    {
+      alert("Select Month for attendance generation");
+      document.getElementById("monthsCombo").focus();
+      return false;
+    }
+    return true;
+  }
+
+  async generateAttendance() 
+  {
+    if(!this.validateControls())
+    {
+      return;
+    }
+    const requestOptions = {
+        crossDomain:true,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+                    'Authorization' : 'Bearer ' +  localStorage.getItem('tokenValue') }
+    };
+    
+    var payMonth=this.state.monthId;
+    var payYear=document.getElementById("year").value;
+    
+    var url='http://192.168.43.241:8086/api/empattendance/' + payMonth + '/' + payYear 
+    
+    try 
+    {
+      const response = await fetch(url,requestOptions);
+      var data = await response.json();
       
-      var payMonth=this.state.monthId;
-      var payYear=document.getElementById("year").value;
-      
-      var url='http://192.168.43.241:8086/api/empattendance/' + payMonth + '/' + payYear 
-      
-      try 
+      if (data.code === 0)
       {
-        const response = await fetch(url,requestOptions);
-        var data = await response.json();
-        document.getElementById('returnMessage').innerHTML = data.message;
-        if (data.code === 0)
-        {
-          document.getElementById('returnMessage').style="color:green";
-        }
-        else
-        {
-          document.getElementById('returnMessage').style="color:red";
-        }
+        alert(data.message);
       }
-      catch(err) {
-        alert(err.message);
+      else
+      {
+        alert(data.message);
       }
     }
+    catch(err) {
+      alert(err.message);
+    }
+  }
 
     render() {
         const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px"}
@@ -81,12 +102,10 @@ class AttendanceGenerationForm extends Component {
       return (
         <div>
             <Paper style={paperStyle} variant="outlined">
-              <label id = "returnMessage"></label>
               <Table>
-                <br/><br/>
                 <tr>
                   <td>
-                    <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined'></TextField>
+                    <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style={{width: '40%'}}></TextField>
                   </td>
                   <td>
                     <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
@@ -102,7 +121,7 @@ class AttendanceGenerationForm extends Component {
                   </div>
                 </tr>
               </Table>
-             </Paper>
+            </Paper>
          </div>
         );
   }

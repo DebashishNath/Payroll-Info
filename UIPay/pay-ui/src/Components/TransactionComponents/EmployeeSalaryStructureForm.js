@@ -15,22 +15,54 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.employeesComboChange=this.employeesComboChange.bind(this);
         this.earnDedComponentsComboChange=this.earnDedComponentsComboChange.bind(this);
         this.displayOfEmpComponent=this.displayOfEmpComponent.bind(this);
+        this.clearControls=this.clearControls.bind(this);
+        this.doUpdateEmpComponent=this.doUpdateEmpComponent.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount()
+    {
         var url='http://192.168.43.241:8086/api/employees'
         this.populateCombos('Employee',url);
         url='http://192.168.43.241:8086/api/earn_deductions'
         this.populateCombos('EarnDedComponent',url);
     }
 
-    displayOfEmpComponent(earnDedId,earnDedAmount){
+    displayOfEmpComponent(earnDedId,earnDedAmount)
+    {
         document.getElementById("earnDedAmount").value=earnDedAmount;
         this.setState({ earnDedId : earnDedId });
     }
 
+    validateControls()
+    {
+      if(this.state.employeeStructId === 0)
+      {
+        alert("Select employee for creating salary structure");
+        document.getElementById("employeesCombo").focus();
+        return false;
+      }
+      if(this.state.earnDedId === 0)
+      {
+        alert("Select earn deduction component for creating salary structure");
+        document.getElementById("earnDedCombo").focus();
+        return false;
+      }
+      if(document.getElementById("earnDedAmount").value.trim().length === 0)
+      {
+        alert("Enter earn deduction amount for creating salary structure");
+        document.getElementById("earnDedAmount").focus();
+        return false;
+      }
+      return true;
+    }
+
     async doUpdateEmpComponent()
     {
+        if(!this.validateControls())
+        {
+            return;
+        }
+
         const requestOptions = {
             crossDomain:true,
             method: 'POST',
@@ -51,14 +83,12 @@ class EmployeeSalaryStructureForm extends PureComponent {
             
             if (data.code === 0)
             {
-                document.getElementById('returnMessage').innerHTML = data.message;
-                document.getElementById('returnMessage').style="color:green"
+                alert(data.message);
                 this.displayEmpEarnDeduction( this.state.employeeStructId)
             }
             else
             {
-              document.getElementById('returnMessage').innerHTML = data.message;
-              document.getElementById('returnMessage').style="color:red"
+                alert(data.message);
             }
         }catch(err) { alert(err.message); }
     }
@@ -108,6 +138,8 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.setState({
             employeeStructId : event.target.value
           });
+        this.setState({eearnDedId : 0});
+        document.getElementById("earnDedAmount").value="";
         this.displayEmpEarnDeduction(event.target.value);
     }
 
@@ -171,6 +203,17 @@ class EmployeeSalaryStructureForm extends PureComponent {
         }
     }
 
+    clearControls()
+    {
+        this.setState({ 
+            employeeStructId:0,
+            earnDedId:0,
+            earnDedToDisplay:[]
+        });
+        document.getElementById("earnDedAmount").value="";
+        document.getElementById("employeesCombo").focus();
+    }
+
     render()
     {
         const paperStyle={padding:30,height:'70vh',width:600,margin:"10px auto",overflow:'auto'}
@@ -178,10 +221,6 @@ class EmployeeSalaryStructureForm extends PureComponent {
             <Paper style={paperStyle} variant="outlined">
                 <div>
                     <Table>
-                        <tr>
-                            <td colspan="2"><label id = "returnMessage"></label></td>
-                        </tr>
-                        <br/>
                         <tr>
                             <td>Employee</td>
                             <td>
@@ -204,10 +243,9 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         <br/>
                         <tr>
                             <td>Amount</td>
-                            <td>
                             <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '50%'}}></TextField></td>
-                            </td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEmpComponent() }}>Update</Button></td>
+                            <td><Button color="primary" variant="contained" onClick={() => { this.clearControls() }}>Reset</Button></td>
                         </tr>
                     </Table>
                 </div><br/>
