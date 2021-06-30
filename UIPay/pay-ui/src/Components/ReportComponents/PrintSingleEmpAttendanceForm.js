@@ -172,8 +172,13 @@ class PrintSingleEmpAttendanceForm extends Component {
     }
     
     render() {
-        const paperStyle={padding:20,height:'100vh',width:450,margin:"40px 100px",overflow:'auto'}
-        
+        const paperStyle={padding:20,height:'100vh',width:450,margin:"40px 100px"}
+        const divStyle = {
+            border: '5px solid pink',
+            height: '80vh',
+            overflow: 'auto'
+          };
+
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
@@ -202,9 +207,11 @@ class PrintSingleEmpAttendanceForm extends Component {
                     </tr>
                 </Table>
                 <br/>
+                <div style={divStyle}>
                 <Table id='tableAttendance' border='1'>
                     {this.state.attendanceData}
                 </Table>
+                </div>
                 <div>{this.state.displayMessage}</div>
             </Paper>
          </div>
