@@ -147,7 +147,8 @@ class EmployeeSalaryStructureForm extends PureComponent {
     {
         this.setState({
             earnDedId : event.target.value
-          });
+        });
+        document.getElementById("earnDedAmount").value="";
     }
 
     async displayEmpEarnDeduction(empId)
@@ -195,7 +196,8 @@ class EmployeeSalaryStructureForm extends PureComponent {
            }
           else
           {
-            initialDataToDisplay.push("No Earning and Deduction Data for this employee");
+            this.setState({ earnDedToDisplay: [] });
+            alert("Salary structure not created for this employeee");
           }
           this.setState({ earnDedToDisplay: initialDataToDisplay });
         } catch(err) {

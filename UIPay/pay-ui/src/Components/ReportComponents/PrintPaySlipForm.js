@@ -168,13 +168,14 @@ class PrintPaySlipForm extends Component {
                     rows=dedData.length;
                 }
                 let diffRows=earnData.length - dedData.length;
+                alert(diffRows);
                 if(diffRows>0)
                 {
                     for(i=0;i<diffRows;i++)
                     { dedData.push(['','']); }
                 }
                 else {
-                    for(i=0;i<diffRows;i++)
+                    for(i=0;i<-diffRows;i++)
                     { earnData.push(['','']); }
                 }
                 payData.push(<tr>
@@ -209,7 +210,7 @@ class PrintPaySlipForm extends Component {
             }
             else
             {
-                this.setState({ displayMessage :'No records to display' });
+                alert('No records to display');
             }
         } catch(err) { alert(err.message); }
     }
@@ -248,7 +249,6 @@ class PrintPaySlipForm extends Component {
                 <Table id='tablePaySlip' border='1'>
                     {this.state.paySlipData}
                 </Table>
-                <div>{this.state.displayMessage}</div>
             </Paper>
          </div>
         );

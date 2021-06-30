@@ -166,7 +166,7 @@ class PrintSingleEmpAttendanceForm extends Component {
             }
             else
             {
-                this.setState({ displayMessage :'No records to display' });
+                alert('No records to display');
             }
         } catch(err) { alert(err.message); }
     }
@@ -212,7 +212,6 @@ class PrintSingleEmpAttendanceForm extends Component {
                     {this.state.attendanceData}
                 </Table>
                 </div>
-                <div>{this.state.displayMessage}</div>
             </Paper>
          </div>
         );
