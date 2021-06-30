@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
+import moment from 'moment';
 
 class PrintSingleEmpAttendanceForm extends Component {
     constructor(props) 
@@ -120,18 +121,18 @@ class PrintSingleEmpAttendanceForm extends Component {
                 for (var i = 0; i < data.length; i++)
                 {
                     let leaveTypeName='';
+                    let attendanceDate=moment(data[i].attendanceIdentity.attendance_date).format('DD-MM-YYYY');
                     try
                     {
                         leaveTypeName=data[i].leaveType.leave_type_name;
                     }catch(err){}
                     
                     initialDataToDisplay.push(<tr>
-                        <td>{i+1}</td><td>{data[i].attendanceIdentity.attendance_date}</td>
+                        <td>{i+1}</td><td>{attendanceDate}</td>
                         <td>{data[i].attendanceType.attendance_type_code}</td>
                         <td>{leaveTypeName}</td>
                     </tr>)
                 }
-                
                 this.setState({ attendanceData: initialDataToDisplay });   
             }
             else
@@ -142,7 +143,7 @@ class PrintSingleEmpAttendanceForm extends Component {
     }
     
     render() {
-        const paperStyle={padding:20,height:'100vh',width:650,margin:"40px 100px",overflow:'auto'}
+        const paperStyle={padding:20,height:'100vh',width:450,margin:"40px 100px",overflow:'auto'}
         
         return (
         <div>
@@ -150,11 +151,11 @@ class PrintSingleEmpAttendanceForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined'></TextField>
+                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style ={{width: '40%'}}></TextField>
                     </td>
                     <td>
                         <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
-                        style={{ border: '1px solid',width:'140px' }}>
+                        style={{ border: '1px solid',width:'180px' }}>
                         {this.state.monthsToDisplay}
                         </Select>
                     </td>
