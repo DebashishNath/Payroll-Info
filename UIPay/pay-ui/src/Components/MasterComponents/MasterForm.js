@@ -32,14 +32,16 @@ class MasterForm extends PureComponent
 
     validateControls()
     {
-        if(document.getElementById("code").value.length === 0)
+        if(document.getElementById("code").value.trim().length === 0)
         {
             alert(this.props.LabelCode + " cannot be blank");
+            document.getElementById("code").focus();
             return false;
         }
-        if(document.getElementById("name").value.length === 0)
+        if(document.getElementById("name").value.trim().length === 0)
         {
             alert(this.props.LabelName + " cannot be blank");
+            document.getElementById("name").focus();
             return false;
         }
         return true;

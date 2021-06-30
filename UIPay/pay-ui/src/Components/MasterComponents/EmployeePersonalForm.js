@@ -145,8 +145,78 @@ class EmployeePersonalForm extends Component {
     });
   }
 
+  validateControls()
+  {
+    if(document.getElementById("employeeCode").value.trim().length === 0)
+    {
+        alert("Employee code cannot be blank");
+        document.getElementById("employeeCode").focus();
+        return false;
+    }
+    if(document.getElementById("firstName").value.trim().length === 0)
+    {
+        alert("First name cannot be blank");
+        document.getElementById("firstName").focus();
+        return false;
+    }
+    if(document.getElementById("lastName").value.trim().length === 0)
+    {
+        alert("Last name cannot be blank");
+        document.getElementById("lastName").focus();
+        return false;
+    }
+    if(document.getElementById("dob").value.trim().length === 0)
+    {
+        alert("Date of birth should be in DD-MM-YYYY");
+        document.getElementById("dob").focus();
+        return false;
+    }
+    if(document.getElementById("address1").value.trim().length === 0)
+    {
+        alert("Address1 cannot be blank");
+        document.getElementById("address1").focus();
+        return false;
+    }
+    if(this.state.stateId === 0)
+    {
+        alert("State cannot be blank");
+        document.getElementById("statesCombo").focus();
+        return false;
+    }
+    if(this.state.districtId === 0)
+    {
+        alert("District cannot be blank");
+        document.getElementById("districtsCombo").focus();
+        return false;
+    }
+    if(document.getElementById("pin").value.trim().length === 0)
+    {
+        alert("Pin cannot be blank");
+        document.getElementById("pin").focus();
+        return false;
+    }
+    if(document.getElementById("contactNumber").value.trim().length === 0)
+    {
+        alert("Contact Numbers cannot be blank");
+        document.getElementById("contactNumber").focus();
+        return false;
+    }
+    if(document.getElementById("email").value.trim().length === 0)
+    {
+        alert("Email Ids cannot be blank");
+        document.getElementById("email").focus();
+        return false;
+    }
+    return true;
+  }
+
   async updateEmployeePersonal() 
   {
+    if(!this.validateControls())
+    {
+      return;
+    }
+
     const requestOptions = 
     {
       crossDomain:true,
