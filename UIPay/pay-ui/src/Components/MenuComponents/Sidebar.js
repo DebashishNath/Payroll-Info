@@ -52,7 +52,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
           className="sidebar-item-content"
         >
           {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text"><Link to={item.route}>{label}</Link></div>
+          <div className="sidebar-item-text"><Link to={item.route} style={{ color: 'brown' }}>{label}</Link></div>
         </div>
         {expandIcon}
       </ListItem>

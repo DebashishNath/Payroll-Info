@@ -7,7 +7,7 @@ import MainMenuForm from "../MenuComponents/MainMenuForm";
 
 function LoginContent() 
 {
-    const paperStyle={padding:20,height:'60vh',width:280,margin:"20px auto"}
+    const paperStyle={padding:20,height:'60vh',width:280,margin:"60px auto"}
     const avatarStyle={backgroundColor:'green'} 
     const btnStyle={margin:'8px 0'}
 

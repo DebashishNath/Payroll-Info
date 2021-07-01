@@ -9,7 +9,9 @@ class MasterForm extends PureComponent
         this.state = 
         { 
             id: 0,
-            ListRecords:[] 
+            ListRecords:[],
+            showMasterRecords: false,
+            paperHeight:'20vh'
         }
         this.updateMasterRecord=this.updateMasterRecord.bind(this);
         this.clearControls=this.clearControls.bind(this);
@@ -158,12 +160,17 @@ class MasterForm extends PureComponent
                         </tr>);
                 }
                 this.setState ({ 
+                    paperHeight:'80vh',
+                    showMasterRecords:true,
                     ListRecords: initialDataToDisplay
                 });
             }
             else
             {
-                initialDataToDisplay.push("No Records to display");
+                this.setState ({ 
+                    paperHeight:'20vh',
+                    showMasterRecords:false });
+                alert("No Records to display");
             }
             
         }catch(err) 
@@ -181,8 +188,13 @@ class MasterForm extends PureComponent
     }
 
     render() {
-        const paperStyle={padding:20,height:'80vh',width:500,margin:"40px 100px",overflow:'auto'}
+        const paperStyle={padding:20,height:this.state.paperHeight,width:500,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
+        const divStyle = {
+            border: '5px solid green',
+            height: '50vh',
+            overflow: 'auto'
+          };
 
         return (
             <Paper style={paperStyle} variant="outlined">
@@ -203,11 +215,13 @@ class MasterForm extends PureComponent
                     </tr>
                     </Table>    
                 </div><br/>
-                <div>
-                <Table border='1'>
-                    {this.state.ListRecords}
-                </Table>
-                </div>
+                { this.state.showMasterRecords ?
+                    <div style={divStyle}>
+                        <Table border='1'>
+                            {this.state.ListRecords}
+                        </Table>
+                    </div> : null
+                }
             </Paper>
         );
     }

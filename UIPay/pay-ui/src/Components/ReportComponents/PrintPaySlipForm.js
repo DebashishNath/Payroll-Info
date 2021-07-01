@@ -168,7 +168,6 @@ class PrintPaySlipForm extends Component {
                     rows=dedData.length;
                 }
                 let diffRows=earnData.length - dedData.length;
-                alert(diffRows);
                 if(diffRows>0)
                 {
                     for(i=0;i<diffRows;i++)

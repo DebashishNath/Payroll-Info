@@ -17,7 +17,7 @@ import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationFor
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
-import LogoutForm from '../LogoutComponents/LogoutForm'
+import LogoutForm from '../LogoutComponents/LogoutForm';
 
 export default class MainMenuForm extends React.Component {
   
@@ -66,8 +66,13 @@ export default class MainMenuForm extends React.Component {
         }
       ];
       
+      const mainDivStyle = { 
+        background: '#CAE4DB',
+        backgroundImage: `url('PayrollBackground.jpg')`
+      }
+
       return(
-        <div>
+        <div style={mainDivStyle}>
           <Grid container direction="row" spacing="1">
           <Router>
             <Sidebar items={items} />

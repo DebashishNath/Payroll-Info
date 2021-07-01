@@ -13,7 +13,8 @@ class PrintSingleEmpAttendanceForm extends Component {
             displayMessage:'',
             monthId:0,
             employeeId:0,
-            showAttendance: false
+            showAttendance: false,
+            paperHeight:'20vh'
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
@@ -164,12 +165,14 @@ class PrintSingleEmpAttendanceForm extends Component {
                     </tr>)
                 }
                 this.setState({ 
+                    paperHeight:'100vh',
                     showAttendance:true,
                     attendanceData: initialDataToDisplay });   
                 }
             else
             {
                 this.setState({ 
+                    paperHeight:'20vh',
                     showAttendance:false,
                     attendanceData: [] });   
                 alert('No records to display');
@@ -178,9 +181,9 @@ class PrintSingleEmpAttendanceForm extends Component {
     }
     
     render() {
-        const paperStyle={padding:20,height:'100vh',width:450,margin:"40px 100px"}
+        const paperStyle={padding:20,height:this.state.paperHeight,width:450,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
-            border: '5px solid pink',
+            border: '5px solid green',
             height: '80vh',
             overflow: 'auto'
           };
@@ -191,7 +194,7 @@ class PrintSingleEmpAttendanceForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style ={{width: '40%'}}></TextField>
+                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style ={{width: '30%'}}></TextField>
                     </td>
                     <td>
                         <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
