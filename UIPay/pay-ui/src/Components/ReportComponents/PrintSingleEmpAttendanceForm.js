@@ -12,7 +12,8 @@ class PrintSingleEmpAttendanceForm extends Component {
             attendanceData:[],
             displayMessage:'',
             monthId:0,
-            employeeId:0
+            employeeId:0,
+            showAttendance: false
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
@@ -162,10 +163,15 @@ class PrintSingleEmpAttendanceForm extends Component {
                         <td>{leaveTypeName}</td>
                     </tr>)
                 }
-                this.setState({ attendanceData: initialDataToDisplay });   
-            }
+                this.setState({ 
+                    showAttendance:true,
+                    attendanceData: initialDataToDisplay });   
+                }
             else
             {
+                this.setState({ 
+                    showAttendance:false,
+                    attendanceData: [] });   
                 alert('No records to display');
             }
         } catch(err) { alert(err.message); }
@@ -207,11 +213,14 @@ class PrintSingleEmpAttendanceForm extends Component {
                     </tr>
                 </Table>
                 <br/>
-                <div style={divStyle}>
-                <Table id='tableAttendance' border='1'>
-                    {this.state.attendanceData}
-                </Table>
-                </div>
+                { this.state.showAttendance
+                    ?<div style={divStyle}>
+                    <Table id='tableAttendance' border='1'>
+                        {this.state.attendanceData}
+                    </Table>
+                    </div>
+                      : null
+                }
             </Paper>
          </div>
         );
