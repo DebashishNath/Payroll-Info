@@ -24,6 +24,7 @@ class PrintPaySlipForm extends Component {
         this.populateMonths();
         var url='http://192.168.43.241:8086/api/employees';
         this.populateCombos(url)
+        document.getElementById("year").focus();
     }
 
     populateMonths()
@@ -238,7 +239,7 @@ class PrintPaySlipForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style ={{width: '20%'}}></TextField>
+                        <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '20%'}}></TextField>
                     </td>
                     <td>
                         <Select id="monthsCombo" value={this.state.monthId} onChange={this.monthsComboChange}

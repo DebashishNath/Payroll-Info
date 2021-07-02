@@ -15,6 +15,12 @@ class AttendanceGenerationForm extends Component {
 
   componentDidMount()
   {
+    this.PopulateMonths();
+    document.getElementById("year").focus();
+  }
+
+  PopulateMonths()
+  {
     let initialDataToDisplay = [];
 
     initialDataToDisplay.push(<MenuItem value={1}>January</MenuItem>);
@@ -105,7 +111,7 @@ class AttendanceGenerationForm extends Component {
               <Table>
                 <tr>
                   <td>
-                    <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style={{width: '40%'}}></TextField>
+                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '40%'}}></TextField>
                   </td>
                   <td>
                     <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}

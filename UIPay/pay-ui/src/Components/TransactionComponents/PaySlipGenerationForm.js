@@ -15,6 +15,12 @@ class PaySlipGenerationForm extends Component {
 
   componentDidMount()
   {
+    this.PopulateMonths();
+    document.getElementById("year").focus();
+  }
+
+  PopulateMonths()
+  {
     let initialDataToDisplay = [];
 
     initialDataToDisplay.push(<MenuItem value={1}>January</MenuItem>);

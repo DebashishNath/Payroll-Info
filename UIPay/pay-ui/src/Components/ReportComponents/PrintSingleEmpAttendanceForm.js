@@ -25,6 +25,7 @@ class PrintSingleEmpAttendanceForm extends Component {
         this.populateMonths();
         var url='http://192.168.43.241:8086/api/employees';
         this.populateCombos(url)
+        document.getElementById("year").focus();
     }
 
     populateMonths()
@@ -194,7 +195,7 @@ class PrintSingleEmpAttendanceForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Enter Year' variant='outlined' style ={{width: '30%'}}></TextField>
+                        <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}}></TextField>
                     </td>
                     <td>
                         <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
