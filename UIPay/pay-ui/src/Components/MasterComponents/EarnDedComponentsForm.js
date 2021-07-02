@@ -33,6 +33,7 @@ class EarnDedComponentsForm extends PureComponent {
         document.getElementById("earnDedName").value="";
         this.setState({ earnDedType : "" });
         document.getElementById("earnDedPriority").value="";
+        document.getElementById("earnDedCode").focus();
     }
 
     displayOfEarnDedComponent(earnDedId,earnDedCode,earnDedName,earnDedType,earnDedPriority)
@@ -44,8 +45,40 @@ class EarnDedComponentsForm extends PureComponent {
         document.getElementById("earnDedPriority").value=earnDedPriority;
     }
 
+    validateControls()
+    {
+        if(document.getElementById("earnDedCode").value.trim().length === 0)
+        {
+            alert("Enter earn deduction code");
+            document.getElementById("earnDedCode").focus();
+            return false;
+        }
+        if(document.getElementById("earnDedName").value.trim().length === 0)
+        {
+            alert("Enter earn deduction name");
+            document.getElementById("earnDedName").focus();
+            return false;
+        }
+        if(this.state.earnDedType === "" )
+        {
+            alert("Select earn deduction type");
+            document.getElementById("earnDedTypeCombo").focus();
+            return false;
+        }
+        if(document.getElementById("earnDedPriority").value.trim().length ===0)
+        {
+            alert("Enter earn deduction priority");
+            document.getElementById("earnDedPriority").focus();
+            return false;
+        }
+        return true;
+    }
     async doUpdateEarnDedComponent()
     {
+        if(!this.validateControls())
+        {
+            return;
+        }
         const requestOptions = {
             crossDomain:true,
             method: 'POST',
@@ -68,8 +101,7 @@ class EarnDedComponentsForm extends PureComponent {
             
             if (data.code === 0)
             {
-                document.getElementById('returnMessage').innerHTML = data.message;
-                document.getElementById('returnMessage').style="color:green";
+                alert(data.message);
                 this.displayEarnDeductions();
                 if(this.state.earnDedId === 0)
                 {
@@ -78,8 +110,7 @@ class EarnDedComponentsForm extends PureComponent {
             }
             else
             {
-              document.getElementById('returnMessage').innerHTML = data.message;
-              document.getElementById('returnMessage').style="color:red"
+              alert(data.message);
             }
         }catch(err) { alert(err.message); }
     }
@@ -147,14 +178,16 @@ class EarnDedComponentsForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'70vh',width:600,margin:"40px 100px",overflow:'auto'}
+        const paperStyle={padding:30,height:'80vh',width:600,margin:"40px 100px",border: '5px solid brown'}
+        const divStyle = {
+            border: '5px solid green',
+            height: '45vh',
+            overflow: 'auto'
+          };
         return (
             <Paper style={paperStyle} variant="outlined">
                 <div>
                     <Table>
-                        <tr>
-                            <td colspan="4"><label id = "returnMessage"></label></td>
-                        </tr>
                         <tr>
                             <td>Code</td>
                             <td><TextField id="earnDedCode" variant='outlined' style ={{width: '30%'}}></TextField></td>
@@ -180,7 +213,7 @@ class EarnDedComponentsForm extends PureComponent {
                         </tr>
                     </Table>
                 </div><br/>
-                <div>
+                <div style={divStyle}>
                     <Table border='1'>
                         {this.state.earnDedComponentsToDisplay}
                     </Table>

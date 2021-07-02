@@ -97,7 +97,7 @@ class AttendanceGenerationForm extends Component {
   }
 
     render() {
-        const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px"}
+        const paperStyle={padding:20,height:'25vh',width:400,margin:"40px 100px",border: '5px solid brown'}
       
       return (
         <div>

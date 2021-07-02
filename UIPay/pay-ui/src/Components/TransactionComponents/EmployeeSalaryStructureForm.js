@@ -10,7 +10,8 @@ class EmployeeSalaryStructureForm extends PureComponent {
             earnDedToDisplay:[],
             employeeStructId:0,
             earnDedComponentsToDisplay:[],
-            earnDedId:0
+            earnDedId:0,
+            showEmpSalStruct:false
         }
         this.employeesComboChange=this.employeesComboChange.bind(this);
         this.earnDedComponentsComboChange=this.earnDedComponentsComboChange.bind(this);
@@ -164,45 +165,48 @@ class EmployeeSalaryStructureForm extends PureComponent {
         var url='http://192.168.43.241:8086/api/empsalstruct_findbyempid/' + empId;
         try 
         {
-          const response = await fetch(url,requestOptions);
-          var data = await response.json();
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
           
-          if(data!=null && data.length>0)
-          {
-
-            initialDataToDisplay.push(<tr>
-                 <th>Slno</th><th>Code</th><th>Desc.</th>
-                 <th>Type</th><th>Amount</th><th></th></tr>);
-            for(var i=0;i<=data.length-1;i++)
+            if(data!=null && data.length>0)
             {
-                let earnDedType='Earn';
-                if(data[i].earnDedComponents.earn_ded_type === "D")
+
+                initialDataToDisplay.push(<tr>
+                    <th>Slno</th><th>Code</th><th>Desc.</th>
+                    <th>Type</th><th>Amount</th><th></th></tr>);
+                for(var i=0;i<=data.length-1;i++)
                 {
-                    earnDedType='Ded';
+                    let earnDedType='Earn';
+                    if(data[i].earnDedComponents.earn_ded_type === "D")
+                    {
+                        earnDedType='Ded';
+                    }
+                    let earnDedId=data[i].empEmpEarnDedIdentity.earn_ded_id;
+                    let earnDedAmt=data[i].earn_ded_amount;
+                    initialDataToDisplay.push(
+                        <tr key={earnDedId}>
+                        <td>{i+1}</td>
+                        <td>{data[i].earnDedComponents.earn_ded_code}</td>
+                        <td>{data[i].earnDedComponents.earn_ded_name}</td>
+                        <td>{earnDedType}</td>
+                        <td>{earnDedAmt}</td>
+                        <td><Button color="primary" variant="contained" onClick={() => 
+                            { this.displayOfEmpComponent(earnDedId,earnDedAmt) }}>Edit</Button></td>
+                        </tr>);
                 }
-                let earnDedId=data[i].empEmpEarnDedIdentity.earn_ded_id;
-                let earnDedAmt=data[i].earn_ded_amount;
-                initialDataToDisplay.push(
-                    <tr key={earnDedId}>
-                    <td>{i+1}</td>
-                    <td>{data[i].earnDedComponents.earn_ded_code}</td>
-                    <td>{data[i].earnDedComponents.earn_ded_name}</td>
-                    <td>{earnDedType}</td>
-                    <td>{earnDedAmt}</td>
-                    <td><Button color="primary" variant="contained" onClick={() => 
-                        { this.displayOfEmpComponent(earnDedId,earnDedAmt) }}>Edit</Button></td>
-                    </tr>);
+                this.setState({ earnDedId:0 });
+                document.getElementById("earnDedAmount").value="";
+                document.getElementById("earnDedCombo").focus();
+                this.setState({ showEmpSalStruct : true });
+                this.setState({ earnDedToDisplay: initialDataToDisplay });
             }
-           }
-          else
-          {
-            this.setState({ earnDedToDisplay: [] });
-            alert("Salary structure not created for this employeee");
-          }
-          this.setState({ earnDedToDisplay: initialDataToDisplay });
-        } catch(err) {
-            alert(err.message);
-        }
+            else
+            {
+                alert("Salary structure not created for this employeee");
+                this.setState({ showEmpSalStruct : false });
+                this.setState({ earnDedToDisplay: [] });
+            }
+        } catch(err) { alert(err.message); }
     }
 
     clearControls()
@@ -218,7 +222,12 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'70vh',width:600,margin:"10px auto",overflow:'auto'}
+        const paperStyle={padding:30,height:'70vh',width:600,margin:"40px 100px",border: '5px solid brown'}
+        const divStyle = {
+            border: '5px solid green',
+            height: '40vh',
+            overflow: 'auto'
+          };
         return (
             <Paper style={paperStyle} variant="outlined">
                 <div>
@@ -251,11 +260,14 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         </tr>
                     </Table>
                 </div><br/>
-                <div>
-                    <Table border='1'>
-                        {this.state.earnDedToDisplay}
-                    </Table>
-                </div>
+                { this.state.showEmpSalStruct
+                  ?
+                    <div style={divStyle}>
+                        <Table border='1'>
+                            {this.state.earnDedToDisplay}
+                        </Table>
+                    </div> : null
+                }
             </Paper>
         );
     }

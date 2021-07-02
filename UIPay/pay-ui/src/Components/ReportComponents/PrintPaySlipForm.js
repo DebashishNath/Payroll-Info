@@ -11,7 +11,9 @@ class PrintPaySlipForm extends Component {
             paySlipData:[],
             displayMessage:'',
             monthId:0,
-            employeeId:0
+            employeeId:0,
+            showPaySlip: false,
+            paperHeight:'20vh'
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
@@ -205,18 +207,31 @@ class PrintPaySlipForm extends Component {
                     <td></td><td></td><td></td>
                     <td>Net Amount</td><td>{net_amount}</td>
                     </tr>);
-                this.setState({ paySlipData: payData });   
+                
+                this.setState({ 
+                    showPaySlip:true,
+                    paperHeight : '60vh',
+                    paySlipData: payData });   
+                document.getElementById("employeesCombo").focus();
             }
             else
             {
+                this.setState({ 
+                    showPaySlip:false,
+                    paperHeight : '20vh',
+                    paySlipData: [] });   
                 alert('No records to display');
             }
         } catch(err) { alert(err.message); }
     }
     
     render() {
-        const paperStyle={padding:20,height:'50vh',width:650,margin:"40px 100px"}
-        
+        const paperStyle={padding:20,height:this.state.paperHeight,width:650,margin:"40px 100px",border: '5px solid brown'}
+        const divStyle = {
+            border: '5px solid green',
+            height: '40vh',
+            overflow: 'auto'
+          };
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
@@ -245,9 +260,12 @@ class PrintPaySlipForm extends Component {
                     </tr>
                 </Table>
                 <br/>
-                <Table id='tablePaySlip' border='1'>
-                    {this.state.paySlipData}
-                </Table>
+                { this.state.showPaySlip
+                 ?   <div style={divStyle}>
+                        <Table id='tablePaySlip' border='1'>
+                            {this.state.paySlipData}
+                        </Table>
+                    </div> : null }
             </Paper>
          </div>
         );

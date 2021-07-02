@@ -84,15 +84,21 @@ class ListEmployeesForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'80vh',width:800,margin:"40px 100px",overflow:'auto'}
+        const paperStyle={padding:30,height:'80vh',width:800,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
+        const divStyle = {
+            border: '5px solid green',
+            height: '65vh',
+            overflow: 'auto'
+          };
+
         return (
             <Paper style={paperStyle} variant="outlined">
             <div align='right'>
                 <Button color='primary' variant='contained' style={btnStyle} 
                     onClick={() => { this.addNewEmployee()}}>Add New Employee</Button>
             </div>
-            <div>
+            <div style={divStyle}>
                 <Table border='1'>
                     {this.state.employeesToDisplay}
                 </Table>
