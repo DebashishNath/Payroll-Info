@@ -30,6 +30,7 @@ class MasterForm extends PureComponent
         this.setState({ id:0 });
         document.getElementById("code").value="";
         document.getElementById("name").value="";
+        document.getElementById("code").focus();
     }
 
     validateControls()
