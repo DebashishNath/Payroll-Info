@@ -14,6 +14,7 @@ import ListEmployeesForm from '../MasterComponents/ListEmployeesForm';
 import EmployeeForm from '../MasterComponents/EmployeeForm';
 import EmployeeSalaryStructureForm from '../TransactionComponents/EmployeeSalaryStructureForm';
 import ListEmployeeLeaveForm from '../TransactionComponents/ListEmployeeLeaveForm';
+import EmployeeLeaveForm from '../TransactionComponents/EmployeeLeaveForm';
 import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationForm';
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
@@ -43,7 +44,7 @@ export default class MainMenuForm extends React.Component {
           Icon: ReceiptIcon,
           items: [
             { name: "salarystructure", label: "Salary Structure",route: '/salarystructure', onClick },
-            { name: "empleave", label: "Leave",route: '/empleave', onClick },
+            { name: "listempleave", label: "Leave",route: '/listempleave', onClick },
             { name: "monthlyattendance", label: "Monthly Attendance",route: '/monthlyattendance', onClick },
             { name: "generatepayslip", label: "Generate Payslip",route: '/generatepayslip', onClick },
           ]
@@ -82,7 +83,8 @@ export default class MainMenuForm extends React.Component {
               <Route path="/employee" exact component={EmployeeForm} />
               <Route path="/earndedcomponents" exact component={EarnDedComponentsForm}></Route>
               <Route path="/salarystructure" exact component={EmployeeSalaryStructureForm} />
-              <Route path="/empleave" exact component={ListEmployeeLeaveForm} />
+              <Route path="/listempleave" exact component={ListEmployeeLeaveForm} />
+              <Route path="/empleave" exact component={EmployeeLeaveForm} />
               <Route path='/monthlyattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>

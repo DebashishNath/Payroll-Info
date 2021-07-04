@@ -30,6 +30,7 @@ class ListEmployeeLeaveForm extends PureComponent {
     doEditOfEmpLeave(leaveApplicationId)
     {
         localStorage.setItem('LeaveApplicationId',leaveApplicationId);
+        this.setState({LeaveApplicationId : leaveApplicationId });
         const { history } = this.props;
         if(history) history.push('/empleave');
     }
