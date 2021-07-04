@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommonServiceDAL extends CommonServiceImpl {
@@ -34,7 +35,9 @@ public class CommonServiceDAL extends CommonServiceImpl {
         List<master_data> lstMstData=new ArrayList<>();
         if(formName.equals("Department"))
         {
-            List<mst_department> lstMstDept = (List<mst_department>) deptRep.findAll();
+            List<mst_department> lstMstDept = ((List<mst_department>) deptRep.findAll())
+                    .stream().filter(c->!c.getDepartment_name().trim().equals("N/A"))
+                    .collect(Collectors.toList());
             for (int i = 0; i < lstMstDept.size(); i++)
             {
                 master_data mstData = new master_data();
@@ -47,7 +50,9 @@ public class CommonServiceDAL extends CommonServiceImpl {
 
         if(formName.equals("Category"))
         {
-            List<mst_category> lstMstCategory = (List<mst_category>) catRep.findAll();
+            List<mst_category> lstMstCategory = ((List<mst_category>) catRep.findAll())
+                    .stream().filter(c->!c.getCategory_name().trim().equals("N/A"))
+                    .collect(Collectors.toList());
 
             for (int i = 0; i < lstMstCategory.size(); i++)
             {
@@ -61,7 +66,9 @@ public class CommonServiceDAL extends CommonServiceImpl {
 
         if(formName.equals("Designation"))
         {
-            List<mst_designation> lstMstDesignation = (List<mst_designation>) desigRep.findAll();
+            List<mst_designation> lstMstDesignation = ((List<mst_designation>) desigRep.findAll())
+                    .stream().filter(c->!c.getDesignation_name().trim().equals("N/A"))
+                    .collect(Collectors.toList());
 
             for (int i = 0; i < lstMstDesignation.size(); i++)
             {
