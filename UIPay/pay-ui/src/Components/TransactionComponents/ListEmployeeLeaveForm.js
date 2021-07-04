@@ -74,6 +74,9 @@ class ListEmployeeLeaveForm extends PureComponent {
     async DisplayAllEmpLeaves(empId)
     {
         let initialDataToDisplay = [];
+        this.setState({
+            empLeavesToDisplay: []                
+          });
         const requestOptions = {
             crossDomain:true,
             method: 'GET',
@@ -89,18 +92,26 @@ class ListEmployeeLeaveForm extends PureComponent {
           {
             initialDataToDisplay.push(<tr>
                  <th>Slno</th><th>Id</th><th>App. Date</th>
-                 <th>From Date</th><th>To Date</th><th>Approve(Y/N)</th>
+                 <th>From Date</th><th>To Date</th><th>No Days</th>
+                 <th>Approve(Y/N)</th>
                  <th></th></tr>);
             for(var i=0;i<=data.length-1;i++)
             {
                 let leaveApplicationId=data[i].leave_application_id;
+                let startDate = moment(data[i].from_date);
+                let toDate = moment(data[i].to_date);
+                let diff = toDate.diff(startDate);
+                let diffDuration = moment.duration(diff);
+                let noDays=diffDuration.days() + 1;
+
                 initialDataToDisplay.push(
                     <tr key={leaveApplicationId}>
                     <td>{i+1}</td>
                     <td>{leaveApplicationId}</td>
                     <td>{moment(data[i].leave_application_date).format('DD-MMM-YY')}</td>
-                    <td>{moment(data[i].from_date).format('DD-MMM-YY')}</td>
-                    <td>{moment(data[i].to_date).format('DD-MMM-YY')}</td>
+                    <td>{startDate.format('DD-MMM-YY')}</td>
+                    <td>{toDate.format('DD-MMM-YY')}</td>
+                    <td>{noDays}</td>
                     <td>{data[i].is_approved}</td>
                     <td><Button color="primary" variant="contained" onClick={() => { this.doEditOfEmpLeave(leaveApplicationId) }}>Edit</Button></td>
                     </tr>);
@@ -110,7 +121,10 @@ class ListEmployeeLeaveForm extends PureComponent {
               });
           }
           else{
-            alert("No Leaves taken");
+             alert("No Leaves taken");
+             this.setState({
+                empLeavesToDisplay: []                
+              });
           }
         } catch(err) {
             alert(err.message);
@@ -119,7 +133,7 @@ class ListEmployeeLeaveForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'80vh',width:800,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:30,height:'80vh',width:600,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
