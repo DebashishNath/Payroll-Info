@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -20,7 +21,12 @@ public class EmpLeaveController {
     private EmpLeaveService empLeaveService;
 
     @GetMapping("/emp_leave/{id}")
-    public List<trn_emp_leave> listEmpLeave(@PathVariable(value = "id") Long empId) {
+    public Optional<trn_emp_leave> listEmpLeaveById(@PathVariable(value = "id") Long id) {
+        return empLeaveService.findById(id);
+    }
+
+    @GetMapping("/leave_of_single_emp/{empId}")
+    public List<trn_emp_leave> listEmpLeaveByEmp(@PathVariable(value = "empId") Long empId) {
         return empLeaveService.findAll(empId);
     }
 

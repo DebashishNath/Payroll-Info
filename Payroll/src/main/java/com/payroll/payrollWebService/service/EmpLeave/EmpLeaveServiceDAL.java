@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,5 +52,10 @@ public class EmpLeaveServiceDAL extends EmpLeaveServiceImpl {
             System.out.println("Error Is: " + ex.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public Optional<trn_emp_leave> findById(Long id){
+        return empLeaveRep.findById(id);
     }
 }
