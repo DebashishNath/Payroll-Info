@@ -8,23 +8,79 @@ class EmployeeLeaveForm extends PureComponent {
         super(props);
         this.setState({
             approveById:0,
+            approveByToDisplay:[],
             leaveTypeCode:"",
+            leaveTypesToDisplay:[],
             checked:false
         });
         this.setChecked=this.setChecked.bind(this);
         this.updateEmployeeOfficial=this.updateEmployeeOfficial.bind(this);
         this.leaveTypeCodeChange=this.leaveTypeCodeChange.bind(this);
     }
+
     componentDidMount()
     {
         alert(localStorage.getItem('LeaveApplicationId'));
+        var url='http://192.168.43.241:8086/api/leave_types';
+        this.populateCombos('LeaveType',url);
+        url='http://192.168.43.241:8086/api/employees';
+        this.populateCombos('Employee',url);
+    }
+
+    async populateCombos(comboName,url) 
+    {
+        try
+        {
+            let initialDataToDisplay = [];
+
+            const requestOptions = {
+                crossDomain:true,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json',
+                            'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+            };
+        
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            if(data!=null && data.length>0)
+            {
+                for(var i=0;i<=data.length-1;i++)
+                {
+                    if(comboName === 'LeaveType')
+                    {
+                        initialDataToDisplay.push(<MenuItem value={data[i].leave_type_code}>{data[i].leave_type_name}</MenuItem>)
+                    }
+                    if(comboName === 'Employee')
+                    {
+                        let emp_name=data[i].emp_first_name + ' ' + data[i]?.emp_middle_name + ' ' + data[i].emp_last_name;
+                        initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
+                    }
+                }
+                if(comboName === 'LeaveType')
+                {
+                    this.setState({leaveTypesToDisplay:initialDataToDisplay});
+                }
+                if(comboName ==="Employee"){
+                    this.setState({approveByToDisplay:initialDataToDisplay});
+                }
+            }
+        }
+        catch(err) {
+        alert(err.message);
+        }
     }
 
     setChecked(){}
 
     updateEmployeeOfficial(){}
 
-    leaveTypeCodeChange(){}
+    leaveTypeCodeChange(event) 
+    {
+        this.setState({
+            leaveTypeCode : event.target.value
+        });
+    }
+    
 
     render()
     {
@@ -67,9 +123,10 @@ class EmployeeLeaveForm extends PureComponent {
                             InputLabelProps={{shrink: true,}} />
                         </td>
                     </tr><br/>
-                    <tr><td><label>Approved By</label></td>
+                    <tr><td><label>Is Approved</label></td>
                         <td><label><input type="checkbox" defaultChecked={this.state.checked}
                             onChange={() => this.setChecked()} />Approved</label></td>
+                        <td><label>Approved By</label></td>
                         <td>
                         <Select id="approvedByCombo" value={this.state.approveById} onChange={this.approvedByComboChange}
                             style={{ border: '1px solid' ,width:'200px' }}>
