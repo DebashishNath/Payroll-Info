@@ -54,8 +54,7 @@ class EmployeeLeaveForm extends PureComponent {
             document.getElementById("NoDays").innerHTML=noDays;
             document.getElementById("ApplicationDetails").value=data.leave_application_details;
             this.setState({leaveTypeCode : data.leaveType.leave_type_code});
-            this.setState({approveById : data.approvedBy.leave_type_code});
-            alert(data.is_approved);
+            this.setState({approveById : data.approvedBy.emp_id});
             if(data.is_approved === "Y")
             {
                 this.setState({checked : true});
@@ -140,7 +139,7 @@ class EmployeeLeaveForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:20,height:'75vh',width:700,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:20,height:'80vh',width:700,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
    
         return(
@@ -185,10 +184,10 @@ class EmployeeLeaveForm extends PureComponent {
                     </tr><br/>
                     <tr>
                         <td><label>App. Details</label></td>
-                        <td colspan="2"><TextField id="ApplicationDetails" multiline variant='outlined' style={{width :'150%'}}></TextField></td>
+                        <td colspan="2"><TextField id="ApplicationDetails" multiline rows={4} variant='outlined' style={{width :'150%'}}></TextField></td>
                     </tr><br/>
                     <tr><td><label>Approved</label></td>
-                        <td><input type="checkbox" defaultChecked={this.state.checked}
+                        <td><input type="checkbox" checked={this.state.checked}
                             onChange={() => this.setChecked()} /></td>
                         <td><label>Approved By</label></td>
                         <td>
@@ -201,7 +200,7 @@ class EmployeeLeaveForm extends PureComponent {
                     </tr><br/>
                     <tr>
                         <td><label>Remarks</label></td>
-                        <td colspan="2"><TextField id="Remarks" multiline variant='outlined' style={{width :'150%'}}></TextField></td>
+                        <td colspan="2"><TextField id="Remarks" variant='outlined' style={{width :'150%'}}></TextField></td>
                     </tr><br/>
                     <tr><td></td><td></td><td></td>
                         <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
