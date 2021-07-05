@@ -7,6 +7,7 @@ class EmployeeLeaveForm extends PureComponent {
     {
         super(props);
         this.state ={
+            empId:0,
             approveById:0,
             approveByToDisplay:[],
             leaveTypeCode:"",
@@ -43,6 +44,7 @@ class EmployeeLeaveForm extends PureComponent {
         var data = await response.json();
         if(data!=null)
         {
+            this.setState({empId : data.emp.emp_id});
             document.getElementById("EmpCode").innerHTML=data.emp.emp_code;
             document.getElementById("EmpName").innerHTML=data.emp.emp_first_name + ' ' + data?.emp?.emp_middle_name + ' ' + data.emp.emp_last_name;
             document.getElementById("ApplicationNo").value=data.leave_application_no;
@@ -63,6 +65,7 @@ class EmployeeLeaveForm extends PureComponent {
             {
                 this.setState({checked : false});
             }
+            document.getElementById("Remarks").value=data.remarks;
         }
     }
 
@@ -117,7 +120,19 @@ class EmployeeLeaveForm extends PureComponent {
         }
     }
 
-    clearControls(){}
+    clearControls()
+    {
+        document.getElementById("ApplicationNo").value="";
+        document.getElementById("AppDate").value="";
+        document.getElementById("FromDate").value="";
+        document.getElementById("ToDate").value="";
+        document.getElementById("NoDays").innerHTML="";
+        document.getElementById("ApplicationDetails").value="";
+        this.setState({leaveTypeCode : ""});
+        this.setState({approveById : 0});
+        this.setState({checked : false});
+        document.getElementById("Remarks").value="";
+    }
 
     updateEmployeeLeave(){}
 
