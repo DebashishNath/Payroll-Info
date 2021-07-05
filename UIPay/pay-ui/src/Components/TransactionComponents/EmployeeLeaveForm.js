@@ -6,16 +6,18 @@ class EmployeeLeaveForm extends PureComponent {
     constructor(props) 
     {
         super(props);
-        this.setState({
+        this.state ={
             approveById:0,
             approveByToDisplay:[],
             leaveTypeCode:"",
             leaveTypesToDisplay:[],
             checked:false
-        });
+        };
         this.setChecked=this.setChecked.bind(this);
-        this.updateEmployeeOfficial=this.updateEmployeeOfficial.bind(this);
+        this.updateEmployeeLeave=this.updateEmployeeLeave.bind(this);
         this.leaveTypeCodeChange=this.leaveTypeCodeChange.bind(this);
+        this.approvedByComboChange=this.approvedByComboChange.bind(this);
+        this.clearControls=this.clearControls.bind(this);
     }
 
     componentDidMount()
@@ -70,9 +72,16 @@ class EmployeeLeaveForm extends PureComponent {
         }
     }
 
-    setChecked(){}
+    clearControls(){}
 
-    updateEmployeeOfficial(){}
+    updateEmployeeLeave(){}
+
+    approvedByComboChange(event)
+    {
+        this.setState({
+            approveById : event.target.value
+        });
+    }
 
     leaveTypeCodeChange(event) 
     {
@@ -81,10 +90,11 @@ class EmployeeLeaveForm extends PureComponent {
         });
     }
     
+    setChecked(){}
 
     render()
     {
-        const paperStyle={padding:20,height:'90vh',width:600,margin:"10px auto"}
+        const paperStyle={padding:20,height:'50vh',width:700,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
    
         return(
@@ -97,7 +107,7 @@ class EmployeeLeaveForm extends PureComponent {
                         <td><label id ="EmpName"></label></td>
                     </tr><br/>
                     <tr><td><label>App. No</label></td>
-                        <td><label id ="AppNo"></label></td>
+                        <td> <td><TextField id="ApplicationNo" variant='outlined' style={{width :'80%'}}></TextField></td></td>
                         <td><label>App. Date</label></td>
                         <td>
                             <TextField id="AppDate" label="" type="date" defaultValue=""
@@ -110,33 +120,40 @@ class EmployeeLeaveForm extends PureComponent {
                             style={{ border: '1px solid' ,width:'200px' }}>
                             {this.state.leaveTypesToDisplay}
                         </Select>
-                        </td><td></td><td></td>
-                    </tr><br/>
-                    <tr><td><label>From Date</label></td>
+                        </td>
+                        <td><label>From Date</label></td>
                         <td>
                             <TextField id="FromDate" label="" type="date" defaultValue=""
                             InputLabelProps={{shrink: true,}} />
                         </td>
+                    </tr><br/>
+                    <tr>
                         <td><label>To Date</label></td>
                         <td>
                             <TextField id="ToDate" label="" type="date" defaultValue=""
                             InputLabelProps={{shrink: true,}} />
                         </td>
+                        <td><label>No. Days</label></td>
+                        <td><td><label id ="NoDays"></label></td>
+                        </td>
                     </tr><br/>
                     <tr><td><label>Is Approved</label></td>
-                        <td><label><input type="checkbox" defaultChecked={this.state.checked}
-                            onChange={() => this.setChecked()} />Approved</label></td>
+                        <td><input type="checkbox" defaultChecked={this.state.checked}
+                            onChange={() => this.setChecked()} /></td>
                         <td><label>Approved By</label></td>
                         <td>
-                        <Select id="approvedByCombo" value={this.state.approveById} onChange={this.approvedByComboChange}
-                            style={{ border: '1px solid' ,width:'200px' }}>
-                            {this.state.approveByToDisplay}
-                        </Select>
+                            <Select id="approvedByCombo" value={this.state.approveById} 
+                                        onChange={this.approvedByComboChange}
+                                style={{ border: '1px solid' ,width:'200px' }}>
+                                {this.state.approveByToDisplay}
+                            </Select>
                         </td>
-                    </tr>
-                    <tr><td></td>
+                    </tr><br/>
+                    <tr><td></td><td></td><td></td>
                         <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
-                        onClick={() => { this.updateEmployeeOfficial() }}>Save</Button></td>
+                            onClick={() => { this.updateEmployeeLeave() }}>Save</Button>&nbsp;&nbsp;
+                            <Button type='submit' color='primary' variant='contained' style={btnStyle} 
+                            onClick={() => { this.clearControls() }}>Reset</Button></td>
                     </tr>
                 </Table>
                 </Paper>
