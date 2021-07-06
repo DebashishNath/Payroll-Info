@@ -7,6 +7,7 @@ class EmployeeLeaveForm extends PureComponent {
     {
         super(props);
         this.state ={
+            leaveApplicationId:0,
             empId:0,
             approveById:0,
             approveByToDisplay:[],
@@ -27,11 +28,11 @@ class EmployeeLeaveForm extends PureComponent {
         this.populateCombos('LeaveType',url);
         url='http://192.168.43.241:8086/api/employees';
         this.populateCombos('Employee',url);
-        var leaveApplicationId=localStorage.getItem('LeaveApplicationId');
-        this.PopulateLeaveRecord(leaveApplicationId);
+        this.setState({leaveApplicationId : localStorage.getItem('LeaveApplicationId')});
+        this.PopulateLeaveRecord(this.state.leaveApplicationId);
     }
 
-    async PopulateLeaveRecord(leaveApplicationId)
+    async PopulateLeaveRecord(applicationId)
     {
         const requestOptions = {
             crossDomain:true,
@@ -39,7 +40,7 @@ class EmployeeLeaveForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/emp_leave/' + leaveApplicationId;
+        var url='http://192.168.43.241:8086/api/emp_leave/' + applicationId;
         const response = await fetch(url,requestOptions);
         var data = await response.json();
         if(data!=null)
@@ -136,8 +137,109 @@ class EmployeeLeaveForm extends PureComponent {
         document.getElementById("ApplicationNo").focus();
     }
 
-    updateEmployeeLeave(){}
+    validateControls()
+    {
+        if(this.state.empId ===0)
+        {
+            alert("No Employee have been selected for updating leave");
+            return false;
+        }
+        if(document.getElementById("ApplicationNo").value.trim().length === 0)
+        {
+            alert("Application No cannot be blank");
+            document.getElementById("ApplicationNo").focus();
+            return false;
+        }
+        if(document.getElementById("AppDate").value.trim().length === 0)
+        {
+            alert("Application Date should be in DD-MM-YYYY");
+            document.getElementById("AppDate").focus();
+            return false;
+        }
+        if(document.getElementById("FromDate").value.trim().length === 0)
+        {
+            alert("From Date should be in DD-MM-YYYY");
+            document.getElementById("AppDate").focus();
+            return false;
+        }
+        if(document.getElementById("ToDate").value.trim().length === 0)
+        {
+            alert("To Date should be in DD-MM-YYYY");
+            document.getElementById("AppDate").focus();
+            return false;
+        }
+        if(this.state.leaveTypeCode ==="")
+        {
+            alert("Select Leave Type");
+            document.getElementById("leaveTypesCombo").focus();
+            return false;
+        }
+        if(this.state.checked && this.state.approveById ===0)
+        {
+            alert("Select the approved By");
+            document.getElementById("approvedByCombo").focus();
+            return false;
+        }
+        if(document.getElementById("ApplicationDetails").value.trim().length === 0)
+        {
+            alert("Application Details cannot be blank");
+            document.getElementById("ApplicationDetails").focus();
+            return false;
+        }
+        return true;
+    }
+    async updateEmployeeLeave()
+    {
+        if(!this.validateControls())
+        {
+            return;
+        }
+    
+        let isApproved="N";
+        if(this.state.checked) 
+        {
+            isApproved="Y";
+        }
 
+        const requestOptions = 
+        {
+            crossDomain:true,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                        'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+            body: JSON.stringify({
+                "leave_application_id" : this.state.leaveApplicationId,
+                "emp" : {"emp_id" : this.state.empId },
+                "leave_application_no" : document.getElementById("ApplicationNo").value,
+                "leave_application_date" : document.getElementById("AppDate").value,
+                "leaveType" : {"leave_type_code" : this.state.leaveTypeCode},
+                "from_date" : document.getElementById("FromDate").value,
+                "to_date" : document.getElementById("ToDate").value,
+                "leave_application_details" : document.getElementById("ApplicationDetails").value,
+                "is_approved" : isApproved,
+                "approvedBy": {"emp_id" : this.state.approveById },
+                "remarks" : document.getElementById("Remarks").value })
+            };
+    
+        let url='http://192.168.43.241:8086/api/save_emp_leave';
+        
+        try 
+        {
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            if (data.code === 0)
+            {
+                alert(data.message);
+                localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
+            }
+            else
+            {
+                alert(data.message);
+            }
+        } catch(err) 
+        { alert(err.message); }
+    }
+    
     approvedByComboChange(event)
     {
         this.setState({
