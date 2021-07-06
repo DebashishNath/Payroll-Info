@@ -23,6 +23,8 @@ class ListEmployeeLeaveForm extends PureComponent {
     addEmpLeave()
     {
         localStorage.setItem('LeaveApplicationId',0);
+        localStorage.setItem('EmpIdLeave',this.state.employeeId);
+        alert(localStorage.getItem('EmpIdLeave'));
         const { history } = this.props;
         if(history) history.push('/empleave');
     }
@@ -62,7 +64,7 @@ class ListEmployeeLeaveForm extends PureComponent {
             {
                 for(var i=0;i<=data.length-1;i++)
                 {
-                    var emp_name= data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
+                    var emp_name= data[i].emp_code + " " + data[i].emp_first_name + " " + data[i]?.emp_middle_name + " " + data[i].emp_last_name;
                     initialDataToDisplay.push(<MenuItem value={data[i].emp_id}>{emp_name}</MenuItem>)
                 }
                 this.setState({ employeesToDisplay: initialDataToDisplay });
@@ -149,7 +151,7 @@ class ListEmployeeLeaveForm extends PureComponent {
                     <tr>
                     <td><label>Employee</label></td>
                     <td><Select id="employeesCombo" value={this.state.employeeId} onChange={this.employeesComboChange}
-                        style={{ border: '1px solid' ,width:'200px' }}>
+                        style={{ border: '1px solid' ,width:'250px' }}>
                         {this.state.employeesToDisplay}
                     </Select></td>
                     <td><Button color='primary' variant='contained' style={btnStyle} 

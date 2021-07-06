@@ -29,7 +29,34 @@ class EmployeeLeaveForm extends PureComponent {
         url='http://192.168.43.241:8086/api/employees';
         this.populateCombos('Employee',url);
         this.setState({leaveApplicationId : localStorage.getItem('LeaveApplicationId')});
-        this.PopulateLeaveRecord(this.state.leaveApplicationId);
+        if(this.state.leaveApplicationId >0)
+        {
+            this.PopulateLeaveRecord(this.state.leaveApplicationId);
+        }
+        else
+        {
+            alert(localStorage.getItem('EmpIdLeave'));
+            this.setState({empId : localStorage.getItem('EmpIdLeave')});
+            this.PopulateEmployee();
+        }
+    }
+
+    async PopulateEmployee()
+    {
+        const requestOptions = {
+            crossDomain:true,
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json',
+                        'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+        };
+        var url='http://192.168.43.241:8086/api/employee/' + this.state.empId;
+        const response = await fetch(url,requestOptions);
+        var data = await response.json();
+        if(data!=null)
+        {
+            document.getElementById("EmpCode").innerHTML=data.emp_code;
+            document.getElementById("EmpName").innerHTML=data.emp_first_name + ' ' + data?.emp_middle_name + ' ' + data.emp_last_name;
+        }
     }
 
     async PopulateLeaveRecord(applicationId)
