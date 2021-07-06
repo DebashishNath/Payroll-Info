@@ -132,6 +132,8 @@ class EmployeeLeaveForm extends PureComponent {
         this.setState({approveById : 0});
         this.setState({checked : false});
         document.getElementById("Remarks").value="";
+
+        document.getElementById("ApplicationNo").focus();
     }
 
     updateEmployeeLeave(){}
