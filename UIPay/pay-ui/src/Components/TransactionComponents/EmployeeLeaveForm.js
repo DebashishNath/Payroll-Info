@@ -28,30 +28,31 @@ class EmployeeLeaveForm extends PureComponent {
         this.populateCombos('LeaveType',url);
         url='http://192.168.43.241:8086/api/employees';
         this.populateCombos('Employee',url);
-        this.setState({leaveApplicationId : localStorage.getItem('LeaveApplicationId')});
-        if(this.state.leaveApplicationId >0)
+        var application_id= localStorage.getItem('LeaveApplicationId');
+        if(application_id > 0)
         {
-            this.PopulateLeaveRecord(this.state.leaveApplicationId);
+            this.PopulateLeaveRecord(application_id);
         }
         else
         {
-            alert(localStorage.getItem('EmpIdLeave'));
-            this.setState({empId : localStorage.getItem('EmpIdLeave')});
-            this.PopulateEmployee();
+            var employeeId= localStorage.getItem('EmpIdLeave');
+            this.PopulateEmployee(employeeId);
         }
     }
 
-    async PopulateEmployee()
+    async PopulateEmployee(employeeId)
     {
+        this.setState({empId:employeeId});
         const requestOptions = {
             crossDomain:true,
             method: 'GET',
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/employee/' + this.state.empId;
+        var url='http://192.168.43.241:8086/api/employee/' + employeeId;
         const response = await fetch(url,requestOptions);
         var data = await response.json();
+        
         if(data!=null)
         {
             document.getElementById("EmpCode").innerHTML=data.emp_code;
@@ -61,6 +62,7 @@ class EmployeeLeaveForm extends PureComponent {
 
     async PopulateLeaveRecord(applicationId)
     {
+        this.setState({leaveApplicationId : applicationId});
         const requestOptions = {
             crossDomain:true,
             method: 'GET',
@@ -166,7 +168,8 @@ class EmployeeLeaveForm extends PureComponent {
 
     validateControls()
     {
-        if(this.state.empId ===0)
+        if((this.state.empId ===0) || 
+            (document.getElementById("EmpCode").innerHTML.trim().length === 0))
         {
             alert("No Employee have been selected for updating leave");
             return false;
@@ -183,28 +186,22 @@ class EmployeeLeaveForm extends PureComponent {
             document.getElementById("AppDate").focus();
             return false;
         }
-        if(document.getElementById("FromDate").value.trim().length === 0)
-        {
-            alert("From Date should be in DD-MM-YYYY");
-            document.getElementById("AppDate").focus();
-            return false;
-        }
-        if(document.getElementById("ToDate").value.trim().length === 0)
-        {
-            alert("To Date should be in DD-MM-YYYY");
-            document.getElementById("AppDate").focus();
-            return false;
-        }
         if(this.state.leaveTypeCode ==="")
         {
             alert("Select Leave Type");
             document.getElementById("leaveTypesCombo").focus();
             return false;
         }
-        if(this.state.checked && this.state.approveById ===0)
+        if(document.getElementById("FromDate").value.trim().length === 0)
         {
-            alert("Select the approved By");
-            document.getElementById("approvedByCombo").focus();
+            alert("From Date should be in DD-MM-YYYY");
+            document.getElementById("FromDate").focus();
+            return false;
+        }
+        if(document.getElementById("ToDate").value.trim().length === 0)
+        {
+            alert("To Date should be in DD-MM-YYYY");
+            document.getElementById("ToDate").focus();
             return false;
         }
         if(document.getElementById("ApplicationDetails").value.trim().length === 0)
@@ -213,6 +210,13 @@ class EmployeeLeaveForm extends PureComponent {
             document.getElementById("ApplicationDetails").focus();
             return false;
         }
+        if(this.state.checked && this.state.approveById ===0)
+        {
+            alert("Select the approved By");
+            document.getElementById("approvedByCombo").focus();
+            return false;
+        }
+       
         return true;
     }
     async updateEmployeeLeave()
@@ -227,6 +231,12 @@ class EmployeeLeaveForm extends PureComponent {
         {
             isApproved="Y";
         }
+        
+        /*var approved_ById=null;
+        if(this.state.approveById>0)
+        {
+            approved_ById=this.state.approveById;
+        }*/
 
         const requestOptions = 
         {
@@ -237,15 +247,15 @@ class EmployeeLeaveForm extends PureComponent {
             body: JSON.stringify({
                 "leave_application_id" : this.state.leaveApplicationId,
                 "emp" : {"emp_id" : this.state.empId },
-                "leave_application_no" : document.getElementById("ApplicationNo").value,
+                "leave_application_no" : document.getElementById("ApplicationNo").value.trim(),
                 "leave_application_date" : document.getElementById("AppDate").value,
                 "leaveType" : {"leave_type_code" : this.state.leaveTypeCode},
                 "from_date" : document.getElementById("FromDate").value,
                 "to_date" : document.getElementById("ToDate").value,
-                "leave_application_details" : document.getElementById("ApplicationDetails").value,
+                "leave_application_details" : document.getElementById("ApplicationDetails").value.trim(),
                 "is_approved" : isApproved,
                 "approvedBy": {"emp_id" : this.state.approveById },
-                "remarks" : document.getElementById("Remarks").value })
+                "remarks" : document.getElementById("Remarks").value.trim() })
             };
     
         let url='http://192.168.43.241:8086/api/save_emp_leave';
@@ -257,7 +267,6 @@ class EmployeeLeaveForm extends PureComponent {
             if (data.code === 0)
             {
                 alert(data.message);
-                localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
             }
             else
             {
@@ -281,7 +290,17 @@ class EmployeeLeaveForm extends PureComponent {
         });
     }
     
-    setChecked(){}
+    setChecked()
+    {
+        if(this.state.checked === false)
+        {
+            this.setChecked({checked:true});
+        }
+        else 
+        {
+            this.setChecked({checked:false});
+        }
+    }
 
     render()
     {

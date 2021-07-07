@@ -22,9 +22,14 @@ class ListEmployeeLeaveForm extends PureComponent {
 
     addEmpLeave()
     {
+        if(this.state.employeeId === 0)
+        {
+            alert('Select employee to add new leave record')
+            return;
+        }
         localStorage.setItem('LeaveApplicationId',0);
         localStorage.setItem('EmpIdLeave',this.state.employeeId);
-        alert(localStorage.getItem('EmpIdLeave'));
+        
         const { history } = this.props;
         if(history) history.push('/empleave');
     }
@@ -32,7 +37,6 @@ class ListEmployeeLeaveForm extends PureComponent {
     doEditOfEmpLeave(leaveApplicationId)
     {
         localStorage.setItem('LeaveApplicationId',leaveApplicationId);
-        this.setState({LeaveApplicationId : leaveApplicationId });
         const { history } = this.props;
         if(history) history.push('/empleave');
     }
