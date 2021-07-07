@@ -152,6 +152,7 @@ class EmployeeLeaveForm extends PureComponent {
 
     clearControls()
     {
+        this.setState({leaveApplicationId : 0});
         document.getElementById("ApplicationNo").value="";
         document.getElementById("AppDate").value="";
         document.getElementById("FromDate").value="";
@@ -290,17 +291,10 @@ class EmployeeLeaveForm extends PureComponent {
         });
     }
     
-    setChecked()
+    setChecked = () =>
     {
-        if(this.state.checked === false)
-        {
-            this.setChecked({checked:true});
-        }
-        else 
-        {
-            this.setChecked({checked:false});
-        }
-    }
+        this.setState(prevState => ({ checked: !prevState.checked }));
+    };
 
     render()
     {
