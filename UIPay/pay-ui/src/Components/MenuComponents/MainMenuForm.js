@@ -71,7 +71,7 @@ export default class MainMenuForm extends React.Component {
       ];
       
       return(
-        <div style={{ backgroundImage: `url(${background})` }}>
+        <div style={{ backgroundImage: `url(${background})`}}>
           <Grid container direction="row" spacing="1">
           <Router>
             <Sidebar items={items} />
