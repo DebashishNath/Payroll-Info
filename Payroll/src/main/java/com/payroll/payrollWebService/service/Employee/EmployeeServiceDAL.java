@@ -49,6 +49,7 @@ class EmployeeServiceDAL extends EmployeeServiceImpl{
             {
                 mst_employee employeeToModify=isEmpPresent.get();
 
+                employee.setEmp_doj(employeeToModify.getEmp_doj());
                 employee.setAadhar_no(employeeToModify.getAadhar_no());
                 employee.setPan_no(employeeToModify.getPan_no());
                 employee.setPf_no(employeeToModify.getPf_no());

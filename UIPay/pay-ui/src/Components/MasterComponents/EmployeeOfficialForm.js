@@ -50,6 +50,11 @@ class EmployeeOfficialForm extends Component {
     var data = await response.json();
     if(data!=null)
     {
+      if(data.emp_doj!=null)
+      {
+        var dateFormat = require('dateformat');
+        document.getElementById("EmpDOJ").value=dateFormat(data.emp_doj,'yyyy-mm-dd');
+      }
       document.getElementById("EmpName").innerHTML=data.emp_first_name + ' ' + data?.emp_middle_name + ' ' + data.emp_last_name;
       document.getElementById("AADHARNo").value=data.aadhar_no;
       document.getElementById("PANNo").value=data.pan_no;
@@ -167,6 +172,7 @@ class EmployeeOfficialForm extends Component {
                   'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
       body: JSON.stringify({
           "emp_id"      :   localStorage.getItem('employeeId'),
+          "emp_doj"     :   document.getElementById("EmpDOJ").value,
           "aadhar_no"   :   document.getElementById("AADHARNo").value,
           "pan_no"      :   document.getElementById("PANNo").value,
           "pf_no"       :   document.getElementById("PFNo").value,
@@ -208,6 +214,12 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Employee Name</label></td>
                 <td><label id ="EmpName"></label></td>
             </tr><br/>
+            <tr><td><label>Date Of Joining</label></td>
+              <td>
+                <TextField id="EmpDOJ" label="" type="date" defaultValue=""
+                  InputLabelProps={{shrink: true,}} />
+              </td>
+            </tr><br/>
             <tr><td><label>AADHAR No</label></td>
                 <td><TextField id="AADHARNo" variant='outlined'></TextField></td>
             </tr><br/>
@@ -223,7 +235,7 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Category</label></td>
                 <td>
                   <Select id="categoriesCombo" value={this.state.categoryId} onChange={this.categoryChange}
-                    style={{ border: '1px solid' ,width:'200px' }}>
+                    style={{ border: '1px solid' ,width:'220px' }}>
                     {this.state.categoriesToDisplay}
                   </Select>
                 </td>
@@ -231,7 +243,7 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Department</label></td>
               <td>
                 <Select id="departmentsCombo" value={this.state.departmentId} onChange={this.departmentChange}
-                  style={{ border: '1px solid' ,width:'200px' }}>
+                  style={{ border: '1px solid' ,width:'220px' }}>
                   {this.state.departmentsToDisplay}
                 </Select>
                </td>
@@ -239,7 +251,7 @@ class EmployeeOfficialForm extends Component {
             <tr><td><label>Designation</label></td>
               <td>
                 <Select id="designationsCombo" value={this.state.designationId} onChange={this.designationChange}
-                  style={{ border: '1px solid' ,width:'200px' }}>
+                  style={{ border: '1px solid' ,width:'220px' }}>
                   {this.state.designationsToDisplay}
                 </Select>
                </td>

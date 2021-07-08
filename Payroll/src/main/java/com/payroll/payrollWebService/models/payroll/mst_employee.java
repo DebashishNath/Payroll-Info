@@ -33,6 +33,7 @@ public class mst_employee implements Serializable {
     private String contact_number;
     private String email;
 
+    private Date emp_doj;
     private String aadhar_no;
     private String pan_no;
     private String pf_no;
@@ -173,6 +174,14 @@ public class mst_employee implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getEmp_doj() {
+        return emp_doj;
+    }
+
+    public void setEmp_doj(Date emp_doj) {
+        this.emp_doj = emp_doj;
     }
 
     public String getAadhar_no() {
