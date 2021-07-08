@@ -217,7 +217,24 @@ class EmployeeLeaveForm extends PureComponent {
             document.getElementById("approvedByCombo").focus();
             return false;
         }
-       
+        if(document.getElementById("AppDate").value > document.getElementById("FromDate").value)
+        {
+            alert("Application Date cannot be greater than From Date");
+            document.getElementById("AppDate").focus();
+            return false;
+        }
+        if(document.getElementById("AppDate").value > document.getElementById("ToDate").value)
+        {
+            alert("Application Date cannot be greater than To Date");
+            document.getElementById("AppDate").focus();
+            return false;
+        }
+        if(document.getElementById("FromDate").value > document.getElementById("ToDate").value)
+        {
+            alert("From Date cannot be greater than To Date");
+            document.getElementById("FromDate").focus();
+            return false;
+        }
         return true;
     }
     async updateEmployeeLeave()
