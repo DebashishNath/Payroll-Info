@@ -21,7 +21,7 @@ class EmployeeForm extends Component {
     render()
     {
         const allTabs = ['/personal', '/official'];
-        const paperStyle={padding:10,height:'120vh',width:650,margin:"40px 100px"}
+        const paperStyle={padding:10,height:'120vh',width:650,margin:"40px 100px",border: '5px solid brown'}
 
         return (
             <Router>

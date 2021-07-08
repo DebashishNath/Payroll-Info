@@ -271,7 +271,7 @@ class EmployeePersonalForm extends Component {
 
   render()
   {
-    const paperStyle={padding:20,height:'105vh',width:600,margin:"10px auto"}
+    const paperStyle={padding:20,height:'105vh',width:600,margin:"10px auto",border: '5px solid green'}
     const btnStyle={margin:'8px 0'}
    
     return (
