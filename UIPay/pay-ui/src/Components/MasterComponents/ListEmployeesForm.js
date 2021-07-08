@@ -84,7 +84,7 @@ class ListEmployeesForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'80vh',width:800,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:20,height:'80vh',width:800,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
