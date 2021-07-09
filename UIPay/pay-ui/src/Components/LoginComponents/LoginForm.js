@@ -86,7 +86,7 @@ function LoginForm()
 {
   return (
     <Router>
-       <Route path="/MainMenuForm" exact component={MainMenuForm} />
+      <Route path="/MainMenuForm" exact component={MainMenuForm} />
       <Route path="/" exact component={LoginContent} />
     </Router>
   );
