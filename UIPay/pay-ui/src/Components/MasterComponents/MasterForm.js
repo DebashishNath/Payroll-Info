@@ -189,7 +189,7 @@ class MasterForm extends PureComponent
     }
 
     render() {
-        const paperStyle={padding:20,height:this.state.paperHeight,width:500,margin:"40px 100px",border: '5px solid brown', backgroundColor: '#3FEEE6'}
+        const paperStyle={padding:20,height:this.state.paperHeight,width:500,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
