@@ -48,10 +48,10 @@ class HolidayForm extends Component {
       });
     }
   
-    monthsComboChange(event) 
+    async monthsComboChange(event) 
     {
-        var monId=event.target.value;
-        this.showHolidaysMonthWise(monId);
+        await this.setState( {monthId:event.target.value});
+        this.showHolidaysMonthWise();
     }
     
     doUpdateHolidayRecord(){}
@@ -74,7 +74,7 @@ class HolidayForm extends Component {
         }
     }
 
-    async showHolidaysMonthWise(monId)
+    async showHolidaysMonthWise()
     {
         try
         {
@@ -87,7 +87,7 @@ class HolidayForm extends Component {
             };
             var holidayYear=document.getElementById("year").value;
            
-            var url='http://192.168.43.241:8086/api/holidays/' + monId + '/' + holidayYear;
+            var url='http://192.168.43.241:8086/api/holidays/' + this.state.monthId + '/' + holidayYear;
             const resp = await fetch(url,requestOptions);
             var data = await resp.json();
             
@@ -121,10 +121,10 @@ class HolidayForm extends Component {
                         </tr>);
                 }
                 this.setState({ 
-                    monthId:monId,
                     showHolidays:true,
                     paperHeight : '75vh',
-                    holidayRecords: initialDataToDisplay });   
+                    holidayRecords: initialDataToDisplay });  
+                
                 document.getElementById("year").focus();
             }
             else
@@ -138,12 +138,13 @@ class HolidayForm extends Component {
         } catch(err) { alert(err.message); }
     }
     
-    doEditHolidayRecord(id,code,holidayName,holidayDate)
+    async doEditHolidayRecord(id,code,holidayName,holidayDate)
     {
         document.getElementById("holidayCode").value=code;
         document.getElementById("holidayName").value=holidayName;
         var dtFormat = require('dateformat');
         document.getElementById("holidayDate").value=dtFormat(holidayDate,'yyyy-mm-dd');
+        await this.setState({holidayId:id});
     }
 
     render() {
