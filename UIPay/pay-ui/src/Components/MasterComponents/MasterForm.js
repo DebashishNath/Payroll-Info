@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Table, TextField , Button,Paper } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 
 class MasterForm extends PureComponent
 {
@@ -208,7 +209,8 @@ class MasterForm extends PureComponent
                     <tr><td><label>{this.props.LabelName}</label></td>
                         <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }}></TextField></td>
                     </tr>
-                    <tr><td></td><td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
+                    <tr><td></td><td><Button type='submit' color='primary' variant='contained' 
+                            startIcon={<SaveIcon />} style={btnStyle} 
                             onClick={() => { this.updateMasterRecord() }}>Update</Button>&nbsp;
                         <Button color='primary' variant='contained' style={btnStyle} 
                             onClick={() => { this.clearControls()}}>Reset</Button>
