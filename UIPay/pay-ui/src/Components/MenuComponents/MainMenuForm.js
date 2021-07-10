@@ -10,6 +10,7 @@ import CategoryForm from "../MasterComponents/CategoryForm";
 import DepartmentForm from "../MasterComponents/DepartmentForm";
 import DesignationForm from "../MasterComponents/DesignationForm";
 import EarnDedComponentsForm from "../MasterComponents/EarnDedComponentsForm";
+import HolidayForm from "../MasterComponents/HolidayForm";
 import ListEmployeesForm from '../MasterComponents/ListEmployeesForm';
 import EmployeeForm from '../MasterComponents/EmployeeForm';
 import EmployeeSalaryStructureForm from '../TransactionComponents/EmployeeSalaryStructureForm';
@@ -34,6 +35,7 @@ export default class MainMenuForm extends React.Component {
           { name: "category", label: "Category", route: '/category', onClick },
           { name: "department", label: "Department",route: '/department', onClick },
           { name: "designation", label: "Designation",route: '/designation', onClick },
+          { name: "holiday", label: "Holiday",route: '/holiday', onClick },
           { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents', onClick },
           { name: "employee", label: "Employee",route: '/list_employees', onClick }
         ] },
@@ -79,6 +81,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/category' exact component={CategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
               <Route path='/designation' exact component={DesignationForm} />
+              <Route path='/holiday' exact component={HolidayForm} />
               <Route path='/list_employees' exact component={ListEmployeesForm} />
               <Route path="/employee" exact component={EmployeeForm} />
               <Route path="/earndedcomponents" exact component={EarnDedComponentsForm}></Route>
