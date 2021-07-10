@@ -37,6 +37,7 @@ function LoginContent()
             pathname: '/MainMenuForm'
           });
           localStorage.setItem('userId',data.id);
+          localStorage.setItem('userName',data.username);
           localStorage.setItem('tokenValue',data.accessToken);
         }
         else

@@ -74,6 +74,8 @@ export default class MainMenuForm extends React.Component {
       
       return(
         <div style={{ backgroundImage: `url(${background})`}}>
+          <div><div align='center' style={{color :'black',background:'MediumSpringGreen'}}>
+                Welcome {localStorage.getItem('userName')}</div></div>
           <Grid container direction="row" spacing="1">
           <Router>
             <Sidebar items={items} />
