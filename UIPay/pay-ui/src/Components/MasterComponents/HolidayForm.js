@@ -17,7 +17,7 @@ class HolidayForm extends Component {
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.doEditHolidayRecord=this.doEditHolidayRecord.bind(this);
         this.doUpdateHolidayRecord=this.doUpdateHolidayRecord.bind(this);
-        this.clearControls=this.clearControls.bind(this);
+        this.doClearControls=this.doClearControls.bind(this);
     }
 
     componentDidMount()
@@ -54,24 +54,89 @@ class HolidayForm extends Component {
         this.showHolidaysMonthWise();
     }
     
-    doUpdateHolidayRecord(){}
-
-    clearControls(){}
-
     validateControls()
     {
         if(document.getElementById("year").value.trim().length === 0)
         {
-            alert("Enter Year for displaying holidays");
+            alert("Year cannot be blank");
             document.getElementById("year").focus();
             return false;
         }
         if(this.state.monthId === 0)
         {
-            alert("Select Month for displaying holidays");
+            alert("Select month for display of holiday");
             document.getElementById("monthsCombo").focus();
             return false;
         }
+        if(document.getElementById("holidayCode").value.trim().length === 0)
+        {
+            alert("Holday Code cannot be blank");
+            document.getElementById("holidayCode").focus();
+            return false;
+        }
+        if(document.getElementById("holidayName").value.trim().length === 0)
+        {
+            alert("Holday Name cannot be blank");
+            document.getElementById("holidayName").focus();
+            return false;
+        }
+        if(document.getElementById("holidayDate").value.trim().length === 0)
+        {
+            alert("Holday Date cannot be blank");
+            document.getElementById("holidayDate").focus();
+            return false;
+        }
+        return true;
+    }
+
+    async doUpdateHolidayRecord()
+    {
+        if(!this.validateControls())
+        {
+            return;
+        }
+        const requestOptions = {
+            crossDomain:true,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                        'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
+            body: JSON.stringify({
+                "holiday_id": this.state.holidayId,
+                "holiday_code": document.getElementById("holidayCode").value,
+                "holiday_name" : document.getElementById("holidayName").value,
+                "holiday_date" : document.getElementById("holidayDate").value
+              })
+        };
+        
+        var url='http://192.168.43.241:8086/api/update_holiday';
+        try 
+        {
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            
+            if (data.code === 0)
+            {
+                alert(data.message);
+                this.showHolidaysMonthWise();
+                if(this.state.holidayId === 0)
+                {
+                    this.doClearControls();
+                }
+            }
+            else
+            {
+              alert(data.message);
+            }
+        }catch(err) { alert(err.message); }
+    }
+
+    async doClearControls()
+    {
+        await this.setState({holidayId:0});
+        document.getElementById("holidayCode").value="";
+        document.getElementById("holidayName").value="";
+        document.getElementById("holidayDate").value="";
+        document.getElementById("holidayCode").focus();
     }
 
     async showHolidaysMonthWise()
@@ -103,11 +168,11 @@ class HolidayForm extends Component {
                     </tr>);
                 for (var i = 0; i < data.length; i++)
                 {
-                    let id=data[i].holiday_Id;
-                    let code=data[i].holiday_Code;
-                    let holidayName=data[i].holiday_Name;
-                    let holidayDate=data[i].holiday_Date;
-                    let formatHolidayDate=moment(data[i].holiday_Date).format('DD-MM-YYYY');
+                    let id=data[i].holiday_id;
+                    let code=data[i].holiday_code;
+                    let holidayName=data[i].holiday_name;
+                    let holidayDate=data[i].holiday_date;
+                    let formatHolidayDate=moment(data[i].holiday_date).format('DD-MM-YYYY');
 
                     initialDataToDisplay.push(
                         <tr key={id}>
@@ -124,9 +189,7 @@ class HolidayForm extends Component {
                     showHolidays:true,
                     paperHeight : '75vh',
                     holidayRecords: initialDataToDisplay });  
-                
-                document.getElementById("year").focus();
-            }
+             }
             else
             {
                 this.setState({ 
@@ -135,6 +198,7 @@ class HolidayForm extends Component {
                     holidayRecords: [] });   
                 alert('No records to display');
             }
+            document.getElementById("holidayCode").focus();
         } catch(err) { alert(err.message); }
     }
     
@@ -190,7 +254,7 @@ class HolidayForm extends Component {
                         <td><Button color="primary" variant="contained" 
                             onClick={() => { this.doUpdateHolidayRecord() }}>Update</Button>
                         &nbsp;&nbsp;<Button color="primary" variant="contained" 
-                            onClick={() => { this.clearControls() }}>Reset</Button></td>
+                            onClick={() => { this.doClearControls() }}>Reset</Button></td>
                     </tr>
                 </Table>
                 <br/>

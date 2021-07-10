@@ -32,7 +32,7 @@ public class HolidayController {
         return holidayService.findById(id);
     }
 
-    @PostMapping("/saveholiday")
+    @PostMapping("/update_holiday")
     public ResponseEntity<?> saveHoliday(@Valid @RequestBody mst_holiday holiday) {
         try
         {

@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useEffect}  from "react";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, 
   Typography,Link } from '@material-ui/core';
@@ -50,6 +50,10 @@ function LoginContent()
         alert(err.message);
       }
     }
+
+    useEffect(() => {
+      document.getElementById("uname").focus(); 
+    }, [])
 
     return (
     <Paper elevation={10} style={paperStyle}>
