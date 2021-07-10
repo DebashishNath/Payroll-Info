@@ -66,7 +66,7 @@ class ListEmployeesForm extends PureComponent {
                     <td>{gender}</td>
                     <td>{data[i]?.department?.department_name}</td>
                     <td>{data[i]?.designation?.designation_name}</td>
-                    <td><Button color="primary" variant="contained" onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
+                    <td><Button color="primary" variant="contained" size="small" onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
                     </tr>);
             }
             this.setState({

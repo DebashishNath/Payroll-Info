@@ -156,7 +156,7 @@ class MasterForm extends PureComponent
                         <td>{id}</td>
                         <td>{code}</td>
                         <td>{name}</td>
-                        <td><Button color="primary" variant="contained" 
+                        <td><Button color="primary" variant="contained" size="small"
                             onClick={() => { this.doEditMasterRecord(id,code,name) }}>Edit</Button></td>
                         </tr>);
                 }

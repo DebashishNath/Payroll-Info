@@ -120,7 +120,7 @@ class ListEmployeeLeaveForm extends PureComponent {
                     <td>{toDate.format('DD-MMM-YY')}</td>
                     <td>{noDays}</td>
                     <td>{data[i].is_approved}</td>
-                    <td><Button color="primary" variant="contained" onClick={() => { this.doEditOfEmpLeave(leaveApplicationId) }}>Edit</Button></td>
+                    <td><Button color="primary" variant="contained" size="small" onClick={() => { this.doEditOfEmpLeave(leaveApplicationId) }}>Edit</Button></td>
                     </tr>);
             }
             this.setState({

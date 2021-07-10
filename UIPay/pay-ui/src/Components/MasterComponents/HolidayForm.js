@@ -181,7 +181,7 @@ class HolidayForm extends Component {
                         <td>{code}</td>
                         <td>{holidayName}</td>
                         <td>{formatHolidayDate}</td>
-                        <td><Button color="primary" variant="contained"  
+                        <td><Button color="primary" variant="contained" size="small"
                             onClick={() => { this.doEditHolidayRecord(id,code,holidayName,holidayDate) }}>Edit</Button></td>
                         </tr>);
                 }

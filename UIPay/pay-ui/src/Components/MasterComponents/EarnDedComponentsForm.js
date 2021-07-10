@@ -161,7 +161,7 @@ class EarnDedComponentsForm extends PureComponent {
                     <td>{earnDedName}</td>
                     <td>{earnDedTypeName}</td>
                     <td>{earnDedPriority}</td>
-                    <td><Button color="primary" variant="contained" onClick={() => 
+                    <td><Button color="primary" variant="contained" size="small" onClick={() => 
                         { this.displayOfEarnDedComponent(earnDedId,earnDedCode,earnDedName,earnDedType,earnDedPriority) }}>Edit</Button></td>
                     </tr>);
             }
