@@ -1,8 +1,8 @@
 import React from 'react';
+import { Button} from '@material-ui/core';
 import HomeIcon from "@material-ui/icons/Home";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import ReportIcon from '@material-ui/icons/Report';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Sidebar from "./Sidebar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
@@ -20,11 +20,16 @@ import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationFor
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
-import LogoutForm from '../LogoutComponents/LogoutForm';
 import background from "../MenuComponents/PayrollBackground.jpg"
 
 export default class MainMenuForm extends React.Component {
-  
+
+  doLogout()
+  {
+    localStorage.clear();
+    window.location.href = '/';
+  }
+
   render(){
     
     function onClick(e, item) {}
@@ -60,22 +65,17 @@ export default class MainMenuForm extends React.Component {
             { name: "attendance", label: "Attendance",route: '/printattendance', onClick },
             { name: "payslip", label: "payslip",route: '/printpayslip', onClick }
           ]
-        },
-        "divider",
-        {
-          name: "logout",
-          label: "logout",
-          Icon: ExitToAppIcon,
-          items: [
-            { name: "logout", label: "Logout",route: '/logout', onClick }
-          ]
         }
       ];
       
       return(
         <div style={{ backgroundImage: `url(${background})`}}>
-          <div><div align='center' style={{color :'black',background:'MediumSpringGreen'}}>
-                Welcome {localStorage.getItem('userName')}</div></div>
+          <div align='right' style={{color :'black',background:'MediumSpringGreen'}}>
+                Welcome {localStorage.getItem('userName')} 
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Button color="primary" align='right'
+                  onClick={() => { this.doLogout() }}>Logout</Button>
+          </div>
           <Grid container direction="row" spacing="1">
           <Router>
             <Sidebar items={items} />
@@ -94,7 +94,6 @@ export default class MainMenuForm extends React.Component {
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
-              <Route path='/logout' exact component={LogoutForm}></Route>
             </switch>
           </Router>
           </Grid>
