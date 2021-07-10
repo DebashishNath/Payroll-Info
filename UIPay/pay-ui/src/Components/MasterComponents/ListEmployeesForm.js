@@ -104,7 +104,7 @@ class ListEmployeesForm extends PureComponent {
                 </Table>
             </div><br/>
             <div align='center'>
-                <label>No Of Records :{this.state.noOfRecords}</label>
+                <label style={{fontWeight: 'bold',color : 'brown'}}>No Of Records :{this.state.noOfRecords}</label>
             </div>
             </Paper>
         );
