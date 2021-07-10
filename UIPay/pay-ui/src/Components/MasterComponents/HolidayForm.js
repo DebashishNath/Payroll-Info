@@ -95,15 +95,19 @@ class HolidayForm extends Component {
             {
                 initialDataToDisplay.push(<tr>
                     <th>Slno</th>
-                    <th>Id</th><th>Code</th>
-                    <th>Name</th><th>Date</th><th></th>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th></th>
                     </tr>);
                 for (var i = 0; i < data.length; i++)
                 {
                     let id=data[i].holiday_Id;
                     let code=data[i].holiday_Code;
                     let holidayName=data[i].holiday_Name;
-                    let holidayDate=moment(data[i].holiday_Date).format('DD-MMM-YYYY');
+                    let holidayDate=data[i].holiday_Date;
+                    let formatHolidayDate=moment(data[i].holiday_Date).format('DD-MM-YYYY');
 
                     initialDataToDisplay.push(
                         <tr key={id}>
@@ -111,8 +115,8 @@ class HolidayForm extends Component {
                         <td>{id}</td>
                         <td>{code}</td>
                         <td>{holidayName}</td>
-                        <td>{holidayDate}</td>
-                        <td><Button color="primary" variant="contained" 
+                        <td>{formatHolidayDate}</td>
+                        <td><Button color="primary" variant="contained"  
                             onClick={() => { this.doEditHolidayRecord(id,code,holidayName,holidayDate) }}>Edit</Button></td>
                         </tr>);
                 }
@@ -136,7 +140,10 @@ class HolidayForm extends Component {
     
     doEditHolidayRecord(id,code,holidayName,holidayDate)
     {
-
+        document.getElementById("holidayCode").value=code;
+        document.getElementById("holidayName").value=holidayName;
+        var dtFormat = require('dateformat');
+        document.getElementById("holidayDate").value=dtFormat(holidayDate,'yyyy-mm-dd');
     }
 
     render() {
@@ -176,7 +183,7 @@ class HolidayForm extends Component {
                     <tr>
                     <td><label>Holiday Date</label></td>
                     <td>
-                        <TextField id="holidaydate" label="" type="date" defaultValue=""
+                        <TextField id="holidayDate" label="" type="date" defaultValue=""
                         InputLabelProps={{shrink: true,}} />
                     </td><td></td>
                         <td><Button color="primary" variant="contained" 
