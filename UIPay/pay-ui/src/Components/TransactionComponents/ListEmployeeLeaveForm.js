@@ -98,7 +98,7 @@ class ListEmployeeLeaveForm extends PureComponent {
           if(data!=null && data.length>0)
           {
             initialDataToDisplay.push(<tr>
-                 <th>Slno</th><th>Id</th><th>App. Date</th>
+                 <th>Slno</th><th style={{display:'none'}}>Id</th><th>App. Date</th>
                  <th>From Date</th><th>To Date</th><th>No Days</th>
                  <th>Approve(Y/N)</th>
                  <th></th></tr>);
@@ -114,7 +114,7 @@ class ListEmployeeLeaveForm extends PureComponent {
                 initialDataToDisplay.push(
                     <tr key={leaveApplicationId}>
                     <td>{i+1}</td>
-                    <td>{leaveApplicationId}</td>
+                    <td style={{display:'none'}}>{leaveApplicationId}</td>
                     <td>{moment(data[i].leave_application_date).format('DD-MMM-YY')}</td>
                     <td>{startDate.format('DD-MMM-YY')}</td>
                     <td>{toDate.format('DD-MMM-YY')}</td>

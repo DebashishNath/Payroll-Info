@@ -160,7 +160,7 @@ class HolidayForm extends Component {
             {
                 initialDataToDisplay.push(<tr>
                     <th>Slno</th>
-                    <th>Id</th>
+                    <th style={{display:'none'}}>Id</th>
                     <th>Code</th>
                     <th>Name</th>
                     <th>Date</th>
@@ -177,7 +177,7 @@ class HolidayForm extends Component {
                     initialDataToDisplay.push(
                         <tr key={id}>
                         <td>{i+1}</td>
-                        <td>{id}</td>
+                        <td style={{display:'none'}}>{id}</td>
                         <td>{code}</td>
                         <td>{holidayName}</td>
                         <td>{formatHolidayDate}</td>

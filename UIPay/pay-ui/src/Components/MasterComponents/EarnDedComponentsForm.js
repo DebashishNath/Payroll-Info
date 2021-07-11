@@ -139,7 +139,7 @@ class EarnDedComponentsForm extends PureComponent {
           if(data!=null && data.length>0)
           {
             initialDataToDisplay.push(<tr>
-                 <th>Slno</th><th>Id</th><th>Code</th>
+                 <th>Slno</th><th style={{display:'none'}}>Id</th><th>Code</th>
                  <th>Name</th><th>Type</th><th>Priority</th><th></th></tr>);
             for(var i=0;i<=data.length-1;i++)
             {
@@ -156,7 +156,7 @@ class EarnDedComponentsForm extends PureComponent {
                 initialDataToDisplay.push(
                     <tr key={earnDedId}>
                     <td>{i+1}</td>
-                    <td>{earnDedId}</td>
+                    <td style={{display:'none'}}>{earnDedId}</td>
                     <td>{earnDedCode}</td>
                     <td>{earnDedName}</td>
                     <td>{earnDedTypeName}</td>
