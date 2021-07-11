@@ -52,7 +52,7 @@ export default class MainMenuForm extends React.Component {
           items: [
             { name: "salarystructure", label: "Salary Structure",route: '/salarystructure', onClick },
             { name: "listempleave", label: "Leave",route: '/listempleave', onClick },
-            { name: "monthlyattendance", label: "Monthly Attendance",route: '/monthlyattendance', onClick },
+            { name: "generateattendance", label: "Generate Attendance",route: '/generateattendance', onClick },
             { name: "generatepayslip", label: "Generate Payslip",route: '/generatepayslip', onClick },
           ]
         },
@@ -90,7 +90,7 @@ export default class MainMenuForm extends React.Component {
               <Route path="/salarystructure" exact component={EmployeeSalaryStructureForm} />
               <Route path="/listempleave" exact component={ListEmployeeLeaveForm} />
               <Route path="/empleave" exact component={EmployeeLeaveForm} />
-              <Route path='/monthlyattendance' exact component={AttendanceGenerationForm}></Route>
+              <Route path='/generateattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
