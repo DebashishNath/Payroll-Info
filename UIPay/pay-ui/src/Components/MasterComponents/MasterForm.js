@@ -145,7 +145,7 @@ class MasterForm extends PureComponent
             if(data!=null && data.length>0)
             {
                 initialDataToDisplay.push(<tr>
-                    <th>Slno</th><th width="0%">Id</th><th>Code</th>
+                    <th>Slno</th><th>Id</th><th>Code</th>
                     <th width="300px">Name</th><th></th></tr>);
                 for(var i=0;i<=data.length-1;i++)
                 {

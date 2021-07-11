@@ -73,7 +73,7 @@ export default class MainMenuForm extends React.Component {
           <div align='right' style={{color :'black',background:'MediumSpringGreen'}}>
                 Welcome {localStorage.getItem('userName')} 
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <Button color="primary" align='right'
+                <Button color="secondary" align='right'
                   onClick={() => { this.doLogout() }}>Logout</Button>
           </div>
           <Grid container direction="row" spacing="1">

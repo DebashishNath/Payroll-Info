@@ -33,12 +33,13 @@ function LoginContent()
         var returnData=data.returnMessage?data.returnMessage.code:-1;
         if (returnData === 0)
         {
-          history.push({ 
-            pathname: '/MainMenuForm'
-          });
           localStorage.setItem('userId',data.id);
           localStorage.setItem('userName',data.username);
           localStorage.setItem('tokenValue',data.accessToken);
+
+          history.push({ 
+            pathname: '/MainMenuForm'
+          });
         }
         else
         {
