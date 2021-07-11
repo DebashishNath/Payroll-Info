@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Table, TextField , Button,Paper } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import EditIcon from '@material-ui/icons/Edit';
 
 class MasterForm extends PureComponent
 {
@@ -143,8 +145,8 @@ class MasterForm extends PureComponent
             if(data!=null && data.length>0)
             {
                 initialDataToDisplay.push(<tr>
-                    <th>Slno</th><th>Id</th><th>Code</th>
-                    <th>Name</th><th></th></tr>);
+                    <th>Slno</th><th width="0%">Id</th><th>Code</th>
+                    <th width="300px">Name</th><th></th></tr>);
                 for(var i=0;i<=data.length-1;i++)
                 {
                     let id=data[i].masterId;
@@ -157,7 +159,7 @@ class MasterForm extends PureComponent
                         <td>{id}</td>
                         <td>{code}</td>
                         <td>{name}</td>
-                        <td><Button color="primary" variant="contained" size="small"
+                        <td><Button color="primary" variant="contained" size="small" startIcon={<EditIcon/>}
                             onClick={() => { this.doEditMasterRecord(id,code,name) }}>Edit</Button></td>
                         </tr>);
                 }
@@ -190,7 +192,7 @@ class MasterForm extends PureComponent
     }
 
     render() {
-        const paperStyle={padding:20,height:this.state.paperHeight,width:500,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:20,height:this.state.paperHeight,width:500,margin:"20px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
@@ -210,9 +212,10 @@ class MasterForm extends PureComponent
                         <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }}></TextField></td>
                     </tr>
                     <tr><td></td><td><Button type='submit' color='primary' variant='contained' 
-                            startIcon={<SaveIcon />} style={btnStyle} 
-                            onClick={() => { this.updateMasterRecord() }}>Update</Button>&nbsp;
-                        <Button color='primary' variant='contained' style={btnStyle} 
+                            startIcon={<SaveIcon />} style={btnStyle} size='small'
+                            onClick={() => { this.updateMasterRecord() }}>Save</Button>&nbsp;
+                        <Button color='primary' variant='contained' style={btnStyle} size='small'
+                            startIcon={<ClearAllIcon />}
                             onClick={() => { this.clearControls()}}>Reset</Button>
                         </td>
                     </tr>
