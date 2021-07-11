@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,RadioGroup,FormControlLabel,
         Radio,Select,MenuItem } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 
 class EmployeePersonalForm extends Component {
   constructor(props) 
@@ -340,7 +341,7 @@ class EmployeePersonalForm extends Component {
             <br/>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
-                  onClick={() => { this.updateEmployeePersonal() }}>Save</Button></td>
+                  size='small' startIcon={<SaveIcon />} onClick={() => { this.updateEmployeePersonal() }}>Save</Button></td>
             </tr>
           </Table>
         </Paper>

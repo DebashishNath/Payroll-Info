@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 
 class ListEmployeesForm extends PureComponent {
     constructor(props) 
@@ -66,7 +68,8 @@ class ListEmployeesForm extends PureComponent {
                     <td>{gender}</td>
                     <td>{data[i]?.department?.department_name}</td>
                     <td>{data[i]?.designation?.designation_name}</td>
-                    <td><Button color="primary" variant="contained" size="small" onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
+                    <td><Button color="primary" variant="contained" size="small" 
+                        startIcon={<EditIcon />} onClick={() => { this.doEditOfEmployee(empId) }}>Edit</Button></td>
                     </tr>);
             }
             this.setState({
@@ -84,7 +87,7 @@ class ListEmployeesForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:20,height:'80vh',width:800,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:20,height:'80vh',width:800,margin:"20px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
@@ -95,8 +98,8 @@ class ListEmployeesForm extends PureComponent {
         return (
             <Paper style={paperStyle} variant="outlined">
             <div align='right'>
-                <Button color='primary' variant='contained' style={btnStyle} 
-                    onClick={() => { this.addNewEmployee()}}>Add New Employee</Button>
+                <Button color='primary' variant='contained' style={btnStyle} size='small'
+                    startIcon={<AddIcon />} onClick={() => { this.addNewEmployee()}}>Add New Employee</Button>
             </div>
             <div style={divStyle}>
                 <Table border='1'>
