@@ -145,7 +145,7 @@ class MasterForm extends PureComponent
             if(data!=null && data.length>0)
             {
                 initialDataToDisplay.push(<tr>
-                    <th>Slno</th><th>Id</th><th>Code</th>
+                    <th>Slno</th><th style={{ display:'none' }}>Id</th><th>Code</th>
                     <th width="300px">Name</th><th></th></tr>);
                 for(var i=0;i<=data.length-1;i++)
                 {
@@ -156,7 +156,7 @@ class MasterForm extends PureComponent
                     initialDataToDisplay.push(
                         <tr key={id}>
                         <td>{i+1}</td>
-                        <td>{id}</td>
+                        <td style={{ display:'none' }}>{id}</td>
                         <td>{code}</td>
                         <td>{name}</td>
                         <td><Button color="primary" variant="contained" size="small" startIcon={<EditIcon/>}
