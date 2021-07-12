@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
+import ProgressBar from "./progress-bar.component";
 
 class AttendanceGenerationForm extends Component {
   constructor(props) 
@@ -7,7 +8,9 @@ class AttendanceGenerationForm extends Component {
     super(props);
     this.state = {
       monthsToDisplay:[],
-      monthId:0
+      monthId:0,
+      disableButton:false,
+      completed:0
     }
     this.monthsComboChange = this.monthsComboChange.bind(this);
     this.generateAttendance = this.generateAttendance.bind(this);
@@ -71,6 +74,11 @@ class AttendanceGenerationForm extends Component {
     {
       return;
     }
+    setInterval(() => this.setState({completed : 
+      setInterval(Math.floor(Math.random() * 100) + 1)}), 2000);
+    document.getElementById("lblMsg").innerHTML="Please wait....Attendance Generation is going on";
+    document.getElementById("lblMsg").style.color = 'green';
+    this.setState({disableButton:true});
     const requestOptions = {
         crossDomain:true,
         method: 'POST',
@@ -96,6 +104,9 @@ class AttendanceGenerationForm extends Component {
       {
         alert(data.message);
       }
+      document.getElementById("lblMsg").innerHTML="";
+      this.setState({completed : 0});
+      this.setState({disableButton:false});
     }
     catch(err) {
       alert(err.message);
@@ -120,11 +131,24 @@ class AttendanceGenerationForm extends Component {
                     </Select>
                   </td>
                 </tr>
+                <br/>
                 <tr>
-                  <br/>
-                  <div><Button type='submit' color='primary' variant='contained'  
-                        onClick={() => { this.generateAttendance() }}>Generate Attendance</Button>
-                  </div>
+                 <td colSpan="2">
+                    <div><Button type='submit' color='primary' variant='contained' disabled={this.state.disableButton}
+                          onClick={() => { this.generateAttendance() }}>Generate Attendance</Button>
+                    </div>
+                  </td>
+                </tr>
+                <br/>
+                <tr>
+                  <td colSpan="2">
+                    <ProgressBar id="pBar" bgcolor={"#6a1b9a"} completed={this.state.completed} style={{display:'block'}} />
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan="2">
+                    <label id="lblMsg"></label>
+                  </td>
                 </tr>
               </Table>
             </Paper>

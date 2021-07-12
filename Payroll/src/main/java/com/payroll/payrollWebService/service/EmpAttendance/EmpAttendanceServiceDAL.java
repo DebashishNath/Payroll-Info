@@ -35,10 +35,13 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
         MessageResponse msp = new MessageResponse();
         try
         {
-            List<mst_employee> lstEmployees = (List<mst_employee>) empRep.findAll();
+            List<mst_employee> lstEmployees = ((List<mst_employee>) empRep.findAll())
+                    .stream().filter(c->!c.getEmp_first_name().equals("N/A"))
+                    .collect(Collectors.toList());
 
             if(lstEmployees.size()>0) {
                 for (int i = 0; i <= lstEmployees.size() - 1; i++) {
+                    System.out.println(lstEmployees.get(i).getEmp_first_name());
                     ExecuteAttendance(p_month,p_year,lstEmployees.get(i).getEmp_id());
                 }
                 msp.setCode(CodeConstants.SUCCESS.getID());
