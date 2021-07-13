@@ -8,7 +8,7 @@ import Collapse from "@material-ui/core/Collapse";
 import { Link } from "react-router-dom";
 
 function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = React.useState(false);
   const { label, items, Icon, onClick: onClickProp } = item;
 
   function toggleCollapse() {

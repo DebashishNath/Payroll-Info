@@ -3,3 +3,5 @@ npm install create-react-class --save
 npm install @boldreports/react-reporting-components --save
 
 https://demos.boldreports.com/javascript/report-designer/
+
+jdbc:mysql:User=root;Password=rooT678;Database=payrollinfo;Server=myServer;Port=3306;
