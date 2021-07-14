@@ -10,7 +10,8 @@ class AttendanceGenerationForm extends Component {
       monthsToDisplay:[],
       monthId:0,
       disableButton:false,
-      completed:0
+      completed:0,
+      showProgressBar:false
     }
     this.monthsComboChange = this.monthsComboChange.bind(this);
     this.generateAttendance = this.generateAttendance.bind(this);
@@ -74,11 +75,16 @@ class AttendanceGenerationForm extends Component {
     {
       return;
     }
+
+    this.setState({ showProgressBar:true,
+                    disableButton:true,
+                    completed:0 });
+    
     setInterval(() => this.setState({completed : 
       setInterval(Math.floor(Math.random() * 100) + 1)}), 2000);
     document.getElementById("lblMsg").innerHTML="Please wait....Attendance Generation is going on";
     document.getElementById("lblMsg").style.color = 'green';
-    this.setState({disableButton:true});
+    
     const requestOptions = {
         crossDomain:true,
         method: 'POST',
@@ -104,9 +110,10 @@ class AttendanceGenerationForm extends Component {
       {
         alert(data.message);
       }
+      this.setState({ showProgressBar:false,
+                      disableButton:false,
+                      completed:0 });
       document.getElementById("lblMsg").innerHTML="";
-      this.setState({completed : 0});
-      this.setState({disableButton:false});
     }
     catch(err) {
       alert(err.message);
@@ -140,11 +147,15 @@ class AttendanceGenerationForm extends Component {
                   </td>
                 </tr>
                 <br/>
-                <tr>
-                  <td colSpan="2">
-                    <ProgressBar id="pBar" bgcolor={"#6a1b9a"} completed={this.state.completed} style={{display:'block'}} />
-                  </td>
-                </tr>
+                { this.state.showProgressBar ?
+                  <div>
+                  <tr>
+                    <td colSpan="2">
+                      <ProgressBar id="pBar" bgcolor={"#6a1b9a"} completed={this.state.completed}/>
+                    </td>
+                  </tr>
+                  </div> :null
+                }
                 <tr>
                   <td colSpan="2">
                     <label id="lblMsg"></label>
