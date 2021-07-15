@@ -17,7 +17,7 @@ class AttendanceGenerationForm extends Component {
     this.generateAttendance = this.generateAttendance.bind(this);
   }
 
-  componentDidMount()
+  async componentDidMount()
   {
     this.PopulateMonths();
     document.getElementById("year").focus();
