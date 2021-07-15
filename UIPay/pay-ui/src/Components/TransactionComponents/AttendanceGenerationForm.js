@@ -147,15 +147,12 @@ class AttendanceGenerationForm extends Component {
                   </td>
                 </tr>
                 <br/>
+                <tr>
                 { this.state.showProgressBar ?
-                  <div>
-                  <tr>
-                    <td colSpan="2">
-                      <ProgressBar id="pBar" bgcolor={"#6a1b9a"} completed={this.state.completed}/>
-                    </td>
-                  </tr>
-                  </div> :null
-                }
+                  <td colSpan="2">
+                    <ProgressBar id="pBar" bgcolor={"#6a1b9a"} completed={this.state.completed}/>
+                  </td> :null }
+                </tr>
                 <tr>
                   <td colSpan="2">
                     <label id="lblMsg"></label>
