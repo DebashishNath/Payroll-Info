@@ -6,6 +6,7 @@ import com.payroll.payrollWebService.models.payroll.mst_earn_ded_components;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.repository.payroll.EarnDeductionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,7 +68,8 @@ class EarnDeductionDAL extends EarnDeductionImpl
 
     @Override
     public List<mst_earn_ded_components> findAll() {
-
+        /*return (List<mst_earn_ded_components>)earnDedRep.findAll(Sort.by("earn_ded_type").descending()
+                .and(Sort.by("earn_ded_priority")));*/
         return (List<mst_earn_ded_components>)earnDedRep.findAll();
     }
 
