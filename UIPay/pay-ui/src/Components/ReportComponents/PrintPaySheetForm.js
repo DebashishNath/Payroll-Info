@@ -96,14 +96,9 @@ class PrintPaysheetForm extends Component {
             {
                 for (var i = 0; i < data.length; i++)
                 {
-                    var obj = JSON.parse(data[i].pay_sheet_columns);
-                    alert(Object.keys(obj));
                     if (i === 0)
                     {
-                        initialDataToDisplay.push(<tr>
-                            <th>Slno</th>
-                            <th>Employee</th>
-                            </tr>);
+                        this.setHeaders(data,initialDataToDisplay);
                     }
                 }
                 this.setState({ 
@@ -122,6 +117,45 @@ class PrintPaysheetForm extends Component {
         } catch(err) { alert(err.message); }
     }
     
+    setHeaders(data,initialDataToDisplay)
+    {
+        var earnDedcols = JSON.parse(data[0].pay_sheet_columns);
+        var totEarnCols=earnDedcols[0].no_earn_cols;
+        var totDedCols=earnDedcols[0].no_ded_cols;
+        var diffCols=totEarnCols - totDedCols;
+        let heading=false;
+        for(var y=0; y<totEarnCols; y++)
+        {
+            if(heading===false)
+            {
+                initialDataToDisplay.push(<th>Slno</th>);
+                initialDataToDisplay.push(<th>Employee</th>);
+                heading=true;
+            }
+            if(earnDedcols[y].earn_ded_type === 'E')
+            {
+                initialDataToDisplay.push(<th>{earnDedcols[y].earn_ded_code}</th>);
+            }
+        }
+
+        heading=false;
+        for(y=0; y<totDedCols; y++)
+        {
+            if(earnDedcols[y].earn_ded_type === 'D')
+            {
+                if(heading===false)
+                {
+                    initialDataToDisplay.push(<tr></tr>);
+                    initialDataToDisplay.push(<th>&nbsp;</th>);
+                    initialDataToDisplay.push(<th>&nbsp;</th>);
+                    heading=true;
+                }
+                initialDataToDisplay.push(<th>{earnDedcols[y].earn_ded_code}</th>);
+            }
+        }
+        return initialDataToDisplay;
+    }
+
     render() {
         const paperStyle={padding:20,height:this.state.paperHeight,width:600,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
