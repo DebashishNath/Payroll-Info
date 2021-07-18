@@ -48,7 +48,7 @@ function LoginContent()
         }
       }
       catch(err) {
-        alert(err.message);
+        alert('Please contact system administrator to check the web server');
       }
     }
 

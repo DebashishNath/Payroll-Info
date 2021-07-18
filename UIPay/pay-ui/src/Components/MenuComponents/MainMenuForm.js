@@ -20,6 +20,7 @@ import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationFor
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
+import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
 import background from "../MenuComponents/PayrollBackground.jpg"
 
 export default class MainMenuForm extends React.Component {
@@ -63,7 +64,8 @@ export default class MainMenuForm extends React.Component {
           Icon: ReportIcon,
           items: [
             { name: "attendance", label: "Attendance",route: '/printattendance', onClick },
-            { name: "payslip", label: "payslip",route: '/printpayslip', onClick }
+            { name: "payslip", label: "Payslip",route: '/printpayslip', onClick },
+            { name: "paysheet", label: "Paysheet",route: '/printpaysheet', onClick }
           ]
         }
       ];
@@ -94,6 +96,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
+              <Route path='/printpaysheet' exact component={PrintPaysheetForm}></Route>
             </switch>
           </Router>
           </Grid>
