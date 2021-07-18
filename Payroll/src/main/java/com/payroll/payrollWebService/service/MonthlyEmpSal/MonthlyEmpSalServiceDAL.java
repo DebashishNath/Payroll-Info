@@ -4,21 +4,29 @@ import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.common.ErrorHandling;
 import com.payroll.payrollWebService.models.payroll.MonthlyEmpSalaryIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_details;
+import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_summary;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 
+import com.payroll.payrollWebService.repository.payroll.MonthlyEmpSalSummaryRepository;
 import com.payroll.payrollWebService.repository.payroll.MonthlyEmpSalaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
 
     @Autowired
     private MonthlyEmpSalaryRepository monthlyEmpSalRep;
+
+    @Autowired
+    private MonthlyEmpSalSummaryRepository monSalSummaryRep;
 
     @PersistenceContext
     private EntityManager em;
@@ -119,5 +127,13 @@ class MonthlyEmpSalServiceDAL extends MonthlyEmpSalServiceImpl{
         return (String)generateAttendance.getOutputParameterValue("p_return_message");
     }
 
+    @Override
+    public List<trn_monthly_emp_salary_summary> PrintPaysheetMonthly(Integer p_month, Integer p_year)
+    {
+       return ((List<trn_monthly_emp_salary_summary>)monSalSummaryRep.findAll()).stream()
+               .filter(c->c.getMonEmpSalSummaryIdentity().getMonth() == p_month.intValue()
+                       && c.getMonEmpSalSummaryIdentity().getYear() == p_year.intValue())
+               .collect(Collectors.toList());
+    }
 }
 

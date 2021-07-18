@@ -3,6 +3,7 @@ package com.payroll.payrollWebService.controllers.payroll;
 import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.payroll.MonthlyEmpSalaryIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_details;
+import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_summary;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.service.MonthlyEmpSal.MonthlyEmpSalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -62,6 +64,14 @@ public class MonthlyEmpSalController {
     {
         Date payDate=new SimpleDateFormat("yyyy-MM-dd").parse(salarydate);
         return empMonthlySalService.GeneratePaySlip(month,year,payDate);
+    }
+
+    @GetMapping("/paysheet/{month}/{year}")
+    public List<trn_monthly_emp_salary_summary> printPaysheetMonthly(@PathVariable(value = "month") Integer month,
+                                                                @PathVariable(value = "year") Integer year)
+            throws Exception
+    {
+        return empMonthlySalService.PrintPaysheetMonthly(month,year);
     }
 }
 

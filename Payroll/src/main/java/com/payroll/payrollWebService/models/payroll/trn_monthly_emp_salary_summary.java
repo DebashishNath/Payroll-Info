@@ -3,7 +3,7 @@ package com.payroll.payrollWebService.models.payroll;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+
 
 @Entity
 @Table(name="trn_monthly_emp_salary_summary")
@@ -22,6 +22,7 @@ public class trn_monthly_emp_salary_summary {
     private Double net_amount;
     private String pay_sheet_values;
     private String pay_sheet_columns;
+    private String emp_detail_values;
     private String remarks;
 
     @Transient
@@ -29,9 +30,10 @@ public class trn_monthly_emp_salary_summary {
 
     public trn_monthly_emp_salary_summary(){}
 
-    public trn_monthly_emp_salary_summary(MonthlyEmpSalSummaryIdentity monEmpSalSummaryIdentity,
-           mst_company company,Date salary_date,Double total_earn_amount,Double total_ded_amount,
-           Double net_amount,String pay_sheet_values,String pay_sheet_columns,String remarks)
+    public  trn_monthly_emp_salary_summary(MonthlyEmpSalSummaryIdentity monEmpSalSummaryIdentity,
+            mst_company company,Date salary_date,Double total_earn_amount,Double total_ded_amount,
+            Double net_amount,String pay_sheet_values,String pay_sheet_columns,String emp_detail_values,
+            String remarks)
     {
         this.monEmpSalSummaryIdentity =monEmpSalSummaryIdentity;
         this.company=company;
@@ -41,6 +43,7 @@ public class trn_monthly_emp_salary_summary {
         this.net_amount=net_amount;
         this.pay_sheet_values=pay_sheet_values;
         this.pay_sheet_columns=pay_sheet_columns;
+        this.emp_detail_values=emp_detail_values;
         this.remarks=remarks;
     }
 
@@ -114,6 +117,14 @@ public class trn_monthly_emp_salary_summary {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getEmp_detail_values() {
+        return emp_detail_values;
+    }
+
+    public void setEmp_detail_values(String emp_detail_values) {
+        this.emp_detail_values = emp_detail_values;
     }
 
     public MessageResponse getReturnMessage() {

@@ -2,7 +2,9 @@ package com.payroll.payrollWebService.service.MonthlyEmpSal;
 
 import com.payroll.payrollWebService.models.payroll.MonthlyEmpSalaryIdentity;
 import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_details;
+import com.payroll.payrollWebService.models.payroll.trn_monthly_emp_salary_summary;
 
+import java.util.List;
 import java.util.Optional;
 
 abstract class MonthlyEmpSalServiceImpl implements MonthlyEmpSalService {
@@ -20,5 +22,10 @@ abstract class MonthlyEmpSalServiceImpl implements MonthlyEmpSalService {
     @Override
     public Optional<trn_monthly_emp_salary_details> findById(MonthlyEmpSalaryIdentity monthlyEmpSalaryIdentity) {
         return new MonthlyEmpSalServiceDAL().findById(monthlyEmpSalaryIdentity);
+    }
+
+    @Override
+    public List<trn_monthly_emp_salary_summary> PrintPaysheetMonthly(Integer month, Integer year){
+        return new MonthlyEmpSalServiceDAL().PrintPaysheetMonthly(month,year);
     }
 }
