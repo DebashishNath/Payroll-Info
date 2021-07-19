@@ -16,33 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trn_emp_leave`
+-- Table structure for table `mst_location`
 --
 
-DROP TABLE IF EXISTS `trn_emp_leave`;
+DROP TABLE IF EXISTS `mst_location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trn_emp_leave` (
-  `emp_id` int NOT NULL,
-  `leave_type_code` varchar(2) NOT NULL,
-  `from_date` date NOT NULL,
-  `to_date` date NOT NULL,
-  `remarks` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`emp_id`,`leave_type_code`,`from_date`,`to_date`),
-  KEY `FK_trn_emp_leave_leave_type_code_idx` (`leave_type_code`),
-  CONSTRAINT `FK_trn_emp_leave_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `mst_employee` (`emp_id`),
-  CONSTRAINT `FK_trn_emp_leave_leave_type_code` FOREIGN KEY (`leave_type_code`) REFERENCES `mst_leave_type` (`leave_type_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_location` (
+  `location_id` int NOT NULL AUTO_INCREMENT,
+  `location_code` varchar(5) NOT NULL,
+  `location_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`location_id`),
+  UNIQUE KEY `location_code_UNIQUE` (`location_code`),
+  UNIQUE KEY `location_name_UNIQUE` (`location_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trn_emp_leave`
+-- Dumping data for table `mst_location`
 --
 
-LOCK TABLES `trn_emp_leave` WRITE;
-/*!40000 ALTER TABLE `trn_emp_leave` DISABLE KEYS */;
-INSERT INTO `trn_emp_leave` VALUES (1,'CL','2021-03-15','2021-03-16',NULL),(1,'CL','2021-03-29','2021-03-29',NULL),(1,'SL','2021-03-09','2021-03-12',NULL),(15,'CL','2021-03-23','2021-03-25',NULL),(15,'SL','2021-03-30','2021-04-07',NULL);
-/*!40000 ALTER TABLE `trn_emp_leave` ENABLE KEYS */;
+LOCK TABLES `mst_location` WRITE;
+/*!40000 ALTER TABLE `mst_location` DISABLE KEYS */;
+INSERT INTO `mst_location` VALUES (1,'LC1','Head Office'),(2,'LC2','Factory');
+/*!40000 ALTER TABLE `mst_location` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 12:04:30
+-- Dump completed on 2021-07-19 16:11:22

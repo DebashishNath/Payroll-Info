@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trn_user_roles`
+-- Table structure for table `mst_holiday`
 --
 
-DROP TABLE IF EXISTS `trn_user_roles`;
+DROP TABLE IF EXISTS `mst_holiday`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trn_user_roles` (
-  `user_id` bigint NOT NULL,
-  `role_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FK_user_roles_role_id` (`role_id`),
-  CONSTRAINT `FK_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `mst_roles` (`id`),
-  CONSTRAINT `FK_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `mst_users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_holiday` (
+  `holiday_id` int NOT NULL AUTO_INCREMENT,
+  `holiday_code` varchar(5) NOT NULL,
+  `holiday_name` varchar(20) NOT NULL,
+  `holiday_date` date NOT NULL,
+  PRIMARY KEY (`holiday_id`),
+  UNIQUE KEY `Holiday_Code_UNIQUE` (`holiday_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trn_user_roles`
+-- Dumping data for table `mst_holiday`
 --
 
-LOCK TABLES `trn_user_roles` WRITE;
-/*!40000 ALTER TABLE `trn_user_roles` DISABLE KEYS */;
-INSERT INTO `trn_user_roles` VALUES (169,1),(170,1),(171,1),(172,1),(169,2),(170,2),(171,2),(172,2);
-/*!40000 ALTER TABLE `trn_user_roles` ENABLE KEYS */;
+LOCK TABLES `mst_holiday` WRITE;
+/*!40000 ALTER TABLE `mst_holiday` DISABLE KEYS */;
+INSERT INTO `mst_holiday` VALUES (1,'H1','Saturday','2021-03-06'),(2,'H2','Sunday','2021-03-07'),(3,'H3','Saturday','2021-03-13'),(4,'H4','Sunday','2021-03-14'),(5,'H5','Saturday','2021-03-20'),(6,'H6','Sunday','2021-03-21'),(7,'H7','Bihar Diwas','2021-03-22'),(8,'H8','Saturday','2021-03-27'),(9,'H9','Sunday','2021-03-28'),(10,'A1','Saturday','2021-04-03'),(11,'A2','Sunday','2021-04-04'),(12,'A3','Saturday','2021-04-10'),(13,'A4','Sunday','2021-04-11'),(14,'A5','Saturday','2021-04-17'),(15,'A6','Sunday','2021-04-18');
+/*!40000 ALTER TABLE `mst_holiday` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 12:04:28
+-- Dump completed on 2021-07-19 16:11:23

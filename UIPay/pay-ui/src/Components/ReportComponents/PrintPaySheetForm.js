@@ -122,9 +122,10 @@ class PrintPaysheetForm extends Component {
         var earnDedcols = JSON.parse(data[0].pay_sheet_columns);
         var totEarnCols=earnDedcols[0].no_earn_cols;
         var totDedCols=earnDedcols[0].no_ded_cols;
+        var totCols=totEarnCols + totDedCols;
         var diffCols=totEarnCols - totDedCols;
         let heading=false;
-        for(var y=0; y<totEarnCols; y++)
+        for(var y=0; y<totCols; y++)
         {
             if(heading===false)
             {
@@ -137,9 +138,15 @@ class PrintPaysheetForm extends Component {
                 initialDataToDisplay.push(<th>{earnDedcols[y].earn_ded_code}</th>);
             }
         }
-
+        if(diffCols<0)
+        {
+            for(y=0;y<-diffCols;y++)
+            {
+                initialDataToDisplay.push(<th>&nbsp;</th>)
+            }
+        }
         heading=false;
-        for(y=0; y<totDedCols; y++)
+        for(y=0; y<totCols; y++)
         {
             if(earnDedcols[y].earn_ded_type === 'D')
             {
@@ -151,6 +158,13 @@ class PrintPaysheetForm extends Component {
                     heading=true;
                 }
                 initialDataToDisplay.push(<th>{earnDedcols[y].earn_ded_code}</th>);
+            }
+        }
+        if(diffCols>0)
+        {
+            for(y=0;y<diffCols;y++)
+            {
+                initialDataToDisplay.push(<th>&nbsp;</th>)
             }
         }
         return initialDataToDisplay;

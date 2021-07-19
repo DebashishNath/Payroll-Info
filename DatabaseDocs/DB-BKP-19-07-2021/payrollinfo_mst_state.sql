@@ -16,27 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_attendance_type`
+-- Table structure for table `mst_state`
 --
 
-DROP TABLE IF EXISTS `mst_attendance_type`;
+DROP TABLE IF EXISTS `mst_state`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_attendance_type` (
-  `attendance_type_code` varchar(1) NOT NULL,
-  `attendance_type_name` varchar(10) NOT NULL,
-  PRIMARY KEY (`attendance_type_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_state` (
+  `state_id` int NOT NULL AUTO_INCREMENT,
+  `state_code` varchar(5) NOT NULL,
+  `state_name` varchar(25) NOT NULL,
+  `country_id` int NOT NULL,
+  PRIMARY KEY (`state_id`),
+  UNIQUE KEY `state_code_UNIQUE` (`state_code`),
+  UNIQUE KEY `state_name_UNIQUE` (`state_name`),
+  KEY `mst_state_country_id_idx` (`country_id`),
+  CONSTRAINT `mst_state_country_id` FOREIGN KEY (`country_id`) REFERENCES `mst_country` (`country_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_attendance_type`
+-- Dumping data for table `mst_state`
 --
 
-LOCK TABLES `mst_attendance_type` WRITE;
-/*!40000 ALTER TABLE `mst_attendance_type` DISABLE KEYS */;
-INSERT INTO `mst_attendance_type` VALUES ('A','Absent'),('H','Holiday'),('L','Leave'),('P','Present');
-/*!40000 ALTER TABLE `mst_attendance_type` ENABLE KEYS */;
+LOCK TABLES `mst_state` WRITE;
+/*!40000 ALTER TABLE `mst_state` DISABLE KEYS */;
+INSERT INTO `mst_state` VALUES (1,'S001','West Bengal',1),(3,'S002','Bihar',1),(4,'S003','Madhya Pradesh',1),(6,'S004','Tamil Nadu',1),(7,'S005','Rajasthan',1),(9,'S006','Orissa',1),(10,'S007','Gujrat',1),(11,'S008','Chattisgarh',1);
+/*!40000 ALTER TABLE `mst_state` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 12:04:29
+-- Dump completed on 2021-07-19 16:11:21

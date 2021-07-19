@@ -16,30 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_category`
+-- Table structure for table `mst_leave_type`
 --
 
-DROP TABLE IF EXISTS `mst_category`;
+DROP TABLE IF EXISTS `mst_leave_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_category` (
-  `category_id` int NOT NULL AUTO_INCREMENT,
-  `category_code` varchar(5) NOT NULL,
-  `category_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_code_UNIQUE` (`category_code`),
-  UNIQUE KEY `category_name_UNIQUE` (`category_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_leave_type` (
+  `leave_type_code` varchar(2) NOT NULL,
+  `leave_type_name` varchar(15) NOT NULL,
+  PRIMARY KEY (`leave_type_code`),
+  UNIQUE KEY `leave_type_name_UNIQUE` (`leave_type_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_category`
+-- Dumping data for table `mst_leave_type`
 --
 
-LOCK TABLES `mst_category` WRITE;
-/*!40000 ALTER TABLE `mst_category` DISABLE KEYS */;
-INSERT INTO `mst_category` VALUES (1,'CT001','Permanent'),(2,'CT002','Temporary');
-/*!40000 ALTER TABLE `mst_category` ENABLE KEYS */;
+LOCK TABLES `mst_leave_type` WRITE;
+/*!40000 ALTER TABLE `mst_leave_type` DISABLE KEYS */;
+INSERT INTO `mst_leave_type` VALUES ('CL','Casual Leave'),('EL','Earn Leave'),('SL','Sick Leave');
+/*!40000 ALTER TABLE `mst_leave_type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 12:04:30
+-- Dump completed on 2021-07-19 16:11:24

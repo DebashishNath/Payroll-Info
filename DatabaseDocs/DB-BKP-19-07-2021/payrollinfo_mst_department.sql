@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_location`
+-- Table structure for table `mst_department`
 --
 
-DROP TABLE IF EXISTS `mst_location`;
+DROP TABLE IF EXISTS `mst_department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_location` (
-  `location_id` int NOT NULL AUTO_INCREMENT,
-  `location_code` varchar(5) NOT NULL,
-  `location_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`location_id`),
-  UNIQUE KEY `location_code_UNIQUE` (`location_code`),
-  UNIQUE KEY `location_name_UNIQUE` (`location_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_department` (
+  `department_id` int NOT NULL AUTO_INCREMENT,
+  `department_code` varchar(5) NOT NULL,
+  `department_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`department_id`),
+  UNIQUE KEY `department_code_UNIQUE` (`department_code`),
+  UNIQUE KEY `department_name_UNIQUE` (`department_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_location`
+-- Dumping data for table `mst_department`
 --
 
-LOCK TABLES `mst_location` WRITE;
-/*!40000 ALTER TABLE `mst_location` DISABLE KEYS */;
-INSERT INTO `mst_location` VALUES (1,'LC1','Head Office'),(2,'LC2','Factory');
-/*!40000 ALTER TABLE `mst_location` ENABLE KEYS */;
+LOCK TABLES `mst_department` WRITE;
+/*!40000 ALTER TABLE `mst_department` DISABLE KEYS */;
+INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts'),(4,'D004','dept-4'),(5,'D005','dept-5'),(7,'D006','dept-6'),(10,'D007','Dept-7'),(11,'D011','DEPT-11'),(12,'DT65','Dept-65'),(14,'D500','DP-500'),(15,'D-15','dEPT-15'),(16,'d-16','DEPT-16'),(17,'D-17','DEPT-17'),(18,'d-66','Dept-66'),(20,'DP-70','Dept-70'),(21,'D-80','Dept-80'),(24,'D-805','Dept-805'),(25,'D-25','Dept-25'),(26,'D-100','Dept-100'),(27,'D-101','Dept-101'),(30,'D-102','Dept-102'),(34,'D-200','DEPT-200'),(35,'D00','N/A');
+/*!40000 ALTER TABLE `mst_department` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 12:04:29
+-- Dump completed on 2021-07-19 16:11:22
