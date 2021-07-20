@@ -124,11 +124,15 @@ class PrintPaysheetForm extends Component {
     {
         var empDetailsValues=JSON.parse(data[pos].emp_detail_values);
         var empName=empDetailsValues[0].emp_name;
-        /*if(empDetailsValues[0].emp_code !=='E007')
+        /*if(empDetailsValues[0].emp_code !=='E001')
         {
             return;
         }*/
         var ps_values = JSON.parse(data[pos].pay_sheet_values);
+        var earnDedcols = JSON.parse(data[0].pay_sheet_columns);
+        var totEarnCols=earnDedcols[0].no_earn_cols;
+        var totDedCols=earnDedcols[0].no_ded_cols;
+        var diffCols=totEarnCols - totDedCols;
 
         initialDataToDisplay.push(<tr></tr>);
         initialDataToDisplay.push(<td>{pos+1}</td>);
@@ -151,12 +155,20 @@ class PrintPaysheetForm extends Component {
                     }
                 }
                 if(oneBlankSpace){
-                    initialDataToDisplay.push(<td></td>);
+                    initialDataToDisplay.push(<td>{0}</td>);
                     oneBlankSpace=false;
                 }
             }
         }
-        
+        if(diffCols<0)
+        {
+            for(y=0;y<-diffCols;y++)
+            {
+                initialDataToDisplay.push(<td>{0}</td>)
+            }
+        }
+        initialDataToDisplay.push(<td>{data[pos].total_earn_amount}</td>);
+
         if(this.state.dedColsInGrid.length>0 && ps_values.length>0)
         {
             initialDataToDisplay.push(<tr></tr>);
@@ -175,11 +187,19 @@ class PrintPaysheetForm extends Component {
                     }
                 }
                 if(oneBlankSpace){
-                    initialDataToDisplay.push(<td></td>);
+                    initialDataToDisplay.push(<td>{0}</td>);
                     oneBlankSpace=false;
                 }
             }
         }
+        if(diffCols>0)
+        {
+            for(y=0;y<diffCols;y++)
+            {
+                initialDataToDisplay.push(<td>{0}</td>)
+            }
+        }
+        initialDataToDisplay.push(<td>{data[pos].total_ded_amount}</td>);
     }
 
     async setHeaders(data,initialDataToDisplay)
@@ -215,7 +235,7 @@ class PrintPaysheetForm extends Component {
                 initialDataToDisplay.push(<th>&nbsp;</th>)
             }
         }
-
+        initialDataToDisplay.push(<th>Tot. Earn.</th>)
         heading=false;
         
         for(y=0; y<totCols; y++)
@@ -241,6 +261,8 @@ class PrintPaysheetForm extends Component {
                 initialDataToDisplay.push(<th>&nbsp;</th>)
             }
         }
+        initialDataToDisplay.push(<th>Tot. Ded.</th>)
+
         this.setState({
             earnColsInGrid:earnCols,
             dedColsInGrid:dedCols
@@ -252,7 +274,7 @@ class PrintPaysheetForm extends Component {
         const paperStyle={padding:20,height:this.state.paperHeight,width:700,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
-            height: '80vh',
+            height: '85vh',
             overflow: 'auto'
           };
 
