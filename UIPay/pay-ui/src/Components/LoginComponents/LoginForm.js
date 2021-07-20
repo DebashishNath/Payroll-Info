@@ -4,6 +4,7 @@ import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar,
   Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MainMenuForm from "../MenuComponents/MainMenuForm";
+import moment from 'moment';
 
 function LoginContent() 
 {
@@ -36,6 +37,8 @@ function LoginContent()
           localStorage.setItem('userId',data.id);
           localStorage.setItem('userName',data.username);
           localStorage.setItem('tokenValue',data.accessToken);
+          let todayDate=new Date();
+          localStorage.setItem('TodayDate',moment(todayDate).format('DD-MMM-YYYY'));
 
           history.push({ 
             pathname: '/MainMenuForm'
