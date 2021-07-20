@@ -190,23 +190,24 @@ class PrintPaySlipForm extends Component {
                     payData.push(<tr>
                         <td>{i+1}</td>
                         <td>{earnData[i][0]}</td>
-                        <td>{earnData[i][1]}</td>
+                        <td align='right'>{earnData[i][1]}</td>
                         <td>{dedData[i][0]}</td>
-                        <td>{dedData[i][1]}</td>
+                        <td align='right'>{dedData[i][1]}</td>
                         </tr>);
                 }
                 payData.push(<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>);
                 payData.push(<tr>
                     <td></td>
                     <td>Total Earn Amount</td>
-                    <td>{total_earn_amount}</td>
+                    <td align='right'>{total_earn_amount}</td>
                     <td>Total Ded Amount</td>
-                    <td>{total_ded_amount}</td>
+                    <td align='right'>{total_ded_amount}</td>
                     </tr>);
                 
                 payData.push(<tr>
                     <td></td><td></td><td></td>
-                    <td>Net Amount</td><td>{net_amount}</td>
+                    <td>Net Amount</td>
+                    <td align='right'>{net_amount}</td>
                     </tr>);
                 
                 this.setState({ 

@@ -149,13 +149,13 @@ class PrintPaysheetForm extends Component {
                 {
                     if(this.state.earnColsInGrid[x] === ps_values[y].earn_ded_id)
                     {
-                        initialDataToDisplay.push(<td>{ps_values[y].amount}</td>);
+                        initialDataToDisplay.push(<td align='right'>{ps_values[y].amount}</td>);
                         oneBlankSpace=false;
                         break;
                     }
                 }
                 if(oneBlankSpace){
-                    initialDataToDisplay.push(<td>{0}</td>);
+                    initialDataToDisplay.push(<td align='right'>{0}</td>);
                     oneBlankSpace=false;
                 }
             }
@@ -164,10 +164,10 @@ class PrintPaysheetForm extends Component {
         {
             for(y=0;y<-diffCols;y++)
             {
-                initialDataToDisplay.push(<td>{0}</td>)
+                initialDataToDisplay.push(<td align='right'>{0}</td>)
             }
         }
-        initialDataToDisplay.push(<td>{data[pos].total_earn_amount}</td>);
+        initialDataToDisplay.push(<td align='right'>{data[pos].total_earn_amount}</td>);
         initialDataToDisplay.push(<td>&nbsp;</td>)
 
         if(this.state.dedColsInGrid.length>0 && ps_values.length>0)
@@ -182,13 +182,13 @@ class PrintPaysheetForm extends Component {
                 {
                     if(this.state.dedColsInGrid[x] === ps_values[y].earn_ded_id)
                     {
-                        initialDataToDisplay.push(<td>{ps_values[y].amount}</td>);
+                        initialDataToDisplay.push(<td align='right'>{ps_values[y].amount}</td>);
                         oneBlankSpace=false;
                         break;
                     }
                 }
                 if(oneBlankSpace){
-                    initialDataToDisplay.push(<td>{0}</td>);
+                    initialDataToDisplay.push(<td align='right'>{0}</td>);
                     oneBlankSpace=false;
                 }
             }
@@ -197,16 +197,17 @@ class PrintPaysheetForm extends Component {
         {
             for(y=0;y<diffCols;y++)
             {
-                initialDataToDisplay.push(<td>{0}</td>)
+                initialDataToDisplay.push(<td align='right'>{0}</td>)
             }
         }
-        initialDataToDisplay.push(<td>{data[pos].total_ded_amount}</td>);
-        initialDataToDisplay.push(<td>{data[pos].net_amount}</td>)
+        initialDataToDisplay.push(<td align='right'>{data[pos].total_ded_amount}</td>);
+        initialDataToDisplay.push(<td align='right'>{data[pos].net_amount}</td>)
     }
 
     async setHeaders(data,initialDataToDisplay)
     {
         var earnDedcols = JSON.parse(data[0].pay_sheet_columns);
+        earnDedcols.sort(this.GetSortOrder("earn_ded_priority"))
         var totEarnCols=earnDedcols[0].no_earn_cols;
         var totDedCols=earnDedcols[0].no_ded_cols;
         var totCols=totEarnCols + totDedCols;
@@ -274,6 +275,17 @@ class PrintPaysheetForm extends Component {
         });
         return initialDataToDisplay;
     }
+
+    GetSortOrder(prop) {    
+        return function(a, b) {    
+            if (a[prop] > b[prop]) {    
+                return 1;    
+            } else if (a[prop] < b[prop]) {    
+                return -1;    
+            }    
+            return 0;    
+        }    
+    }    
 
     render() {
         const paperStyle={padding:20,height:this.state.paperHeight,width:700,margin:"40px 100px",border: '5px solid brown'}
