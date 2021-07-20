@@ -168,6 +168,7 @@ class PrintPaysheetForm extends Component {
             }
         }
         initialDataToDisplay.push(<td>{data[pos].total_earn_amount}</td>);
+        initialDataToDisplay.push(<td>&nbsp;</td>)
 
         if(this.state.dedColsInGrid.length>0 && ps_values.length>0)
         {
@@ -200,6 +201,7 @@ class PrintPaysheetForm extends Component {
             }
         }
         initialDataToDisplay.push(<td>{data[pos].total_ded_amount}</td>);
+        initialDataToDisplay.push(<td>{data[pos].net_amount}</td>)
     }
 
     async setHeaders(data,initialDataToDisplay)
@@ -236,6 +238,8 @@ class PrintPaysheetForm extends Component {
             }
         }
         initialDataToDisplay.push(<th>Tot. Earn.</th>)
+        initialDataToDisplay.push(<th>&nbsp;</th>)
+
         heading=false;
         
         for(y=0; y<totCols; y++)
@@ -262,6 +266,7 @@ class PrintPaysheetForm extends Component {
             }
         }
         initialDataToDisplay.push(<th>Tot. Ded.</th>)
+        initialDataToDisplay.push(<th>Net Amt.</th>)
 
         this.setState({
             earnColsInGrid:earnCols,
