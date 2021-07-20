@@ -74,6 +74,7 @@ export default class MainMenuForm extends React.Component {
         <div style={{ backgroundImage: `url(${background})`}}>
           <div align='right' style={{color :'black',background:'MediumSpringGreen'}}>
                 Welcome {localStorage.getItem('userName')} 
+                &nbsp;&nbsp;&nbsp;&nbsp; {localStorage.getItem('TodayDate')}
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <Button color="secondary" align='right'
                   onClick={() => { this.doLogout() }}>Logout</Button>
