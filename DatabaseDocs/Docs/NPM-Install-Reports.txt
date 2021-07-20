@@ -10,3 +10,6 @@ jdbc:mysql:User=root;Password=rooT678;Database=payrollinfo;Server=myServer;Port=
 
 Driver={MySQL ODBC 8.0 ANSI Driver};Server=localhost;Port=3306;Database=payrollinfo;
 User=root;Password=rooT678;Option=3;
+
+Dialog 
+https://www.youtube.com/watch?v=nrS1F5ddoxY
