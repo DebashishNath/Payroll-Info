@@ -199,6 +199,7 @@ proc_label:BEGIN
     DECLARE p_company_id INT;
     DECLARE p_no_earn_cols INT;
     DECLARE p_no_ded_cols INT;
+    DECLARE p_pay_sheet_columns VARCHAR(2096);
 	
     DECLARE exit handler for sqlexception
 	BEGIN
@@ -236,7 +237,7 @@ proc_label:BEGIN
     DELETE FROM trn_monthly_emp_salary_details
     WHERE month=p_month AND year=p_year;
     
-   INSERT INTO trn_monthly_emp_salary_details 
+	INSERT INTO trn_monthly_emp_salary_details 
     SELECT p_month,p_year,tess.emp_id,
 		   tess.earn_ded_id,tess.earn_ded_amount
     FROM trn_emp_salary_structure tess
@@ -273,6 +274,14 @@ proc_label:BEGIN
     ELSE tsd1.total_ded_amount END
     WHERE tsd1.month=p_month AND tsd1.year=p_year;
     
+	UPDATE trn_monthly_emp_salary_summary tsd1
+	SET tsd1.total_earn_amount=0
+    WHERE tsd1.total_earn_amount IS NULL;
+    
+	UPDATE trn_monthly_emp_salary_summary tsd1
+    SET tsd1.total_ded_amount=0
+    WHERE tsd1.total_ded_amount IS NULL;
+    
     SET p_no_earn_cols=(SELECT COUNT(*) AS no_earn_cols FROM mst_earn_ded_components
 						WHERE earn_ded_type='E');
 	SET p_no_ded_cols=(SELECT COUNT(*) AS no_earn_cols FROM mst_earn_ded_components
@@ -287,13 +296,16 @@ proc_label:BEGIN
 				  tsd1.month=tesd.month AND tsd1.year=tesd.year)
     WHERE tsd1.month=p_month AND tsd1.year=p_year;
     
-    UPDATE trn_monthly_emp_salary_summary tsd1
-    SET tsd1.pay_sheet_columns=(
-		SELECT JSON_ARRAYAGG(JSON_OBJECT('earn_ded_id', medc.earn_ded_id,'earn_ded_type',medc.earn_ded_type,
+    SET p_pay_sheet_columns=(SELECT JSON_ARRAYAGG(JSON_OBJECT('earn_ded_id', medc.earn_ded_id,
 			'earn_ded_code',medc.earn_ded_code,
+            'earn_ded_type',medc.earn_ded_type,
+			'earn_ded_priority',medc.earn_ded_priority,
             'no_earn_cols',p_no_earn_cols,
 			'no_ded_cols',p_no_ded_cols)) AS EarnDedComponents
-		FROM payrollinfo.mst_earn_ded_components medc)
+		FROM payrollinfo.mst_earn_ded_components medc);
+        
+    UPDATE trn_monthly_emp_salary_summary tsd1
+    SET tsd1.pay_sheet_columns=p_pay_sheet_columns
     WHERE tsd1.month=p_month AND tsd1.year=p_year;
 
 	UPDATE trn_monthly_emp_salary_summary tsd1
@@ -476,4 +488,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-19 16:11:24
+-- Dump completed on 2021-07-20 14:05:37
