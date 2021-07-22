@@ -29,7 +29,7 @@ CREATE TABLE `mst_department` (
   PRIMARY KEY (`department_id`),
   UNIQUE KEY `department_code_UNIQUE` (`department_code`),
   UNIQUE KEY `department_name_UNIQUE` (`department_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `mst_department` (
 
 LOCK TABLES `mst_department` WRITE;
 /*!40000 ALTER TABLE `mst_department` DISABLE KEYS */;
-INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts'),(4,'D004','dept-4'),(5,'D005','dept-5'),(7,'D006','dept-6'),(10,'D007','Dept-7'),(11,'D011','DEPT-11'),(12,'DT65','Dept-65'),(14,'D500','DP-500'),(15,'D-15','dEPT-15'),(16,'d-16','DEPT-16'),(17,'D-17','DEPT-17'),(18,'d-66','Dept-66'),(20,'DP-70','Dept-70'),(21,'D-80','Dept-80'),(24,'D-805','Dept-805'),(25,'D-25','Dept-25'),(26,'D-100','Dept-100'),(27,'D-101','Dept-101'),(30,'D-102','Dept-102'),(34,'D-200','DEPT-200'),(35,'D00','N/A');
+INSERT INTO `mst_department` VALUES (1,'D001','Software Development'),(2,'D002','Human Resorce'),(3,'D003','Accounts'),(4,'D004','dept-4'),(5,'D005','dept-5'),(7,'D006','dept-6'),(10,'D007','Dept-7'),(11,'D011','DEPT-11'),(12,'DT65','Dept-65'),(14,'D500','DP-500'),(15,'D-15','dEPT-15'),(16,'d-16','DEPT-16'),(17,'D-17','DEPT-17'),(18,'d-66','Dept-66'),(20,'DP-70','Dept-70'),(21,'D-80','Dept-80'),(24,'D-805','Dept-805'),(25,'D-25','Dept-25'),(26,'D-100','Dept-100'),(27,'D-101','Dept-101'),(30,'D-102','Dept-102'),(34,'D-200','DEPT-200'),(35,'D00','N/A'),(36,'D-300','DEPT-300'),(37,'D-400','DEPT-400'),(38,'D-500','Dept-500');
 /*!40000 ALTER TABLE `mst_department` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-19 16:11:22
+-- Dump completed on 2021-07-23  1:51:24

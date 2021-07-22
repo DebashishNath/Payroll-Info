@@ -28,10 +28,11 @@ CREATE TABLE `mst_earn_ded_components` (
   `earn_ded_name` varchar(25) NOT NULL,
   `earn_ded_type` varchar(1) NOT NULL,
   `earn_ded_priority` int NOT NULL,
+  `earn_ded_tagname` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`earn_ded_id`),
   UNIQUE KEY `earn_ded_code_UNIQUE` (`earn_ded_code`),
   UNIQUE KEY `earn_ded_name_UNIQUE` (`earn_ded_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `mst_earn_ded_components` (
 
 LOCK TABLES `mst_earn_ded_components` WRITE;
 /*!40000 ALTER TABLE `mst_earn_ded_components` DISABLE KEYS */;
-INSERT INTO `mst_earn_ded_components` VALUES (1,'BS','Basic Salary','E',1),(2,'DA','Dearness Allowance','E',2),(3,'HRA','House Rent Allowance','E',3),(4,'PF','Provident Fund','D',1),(5,'ESI','ESI','D',2),(6,'MA','Mobile Allowance','E',4),(8,'TC','Transport Charge','D',3),(9,'FA','Food Allowance','E',5),(10,'PTAX','Professional Tax','D',4);
+INSERT INTO `mst_earn_ded_components` VALUES (1,'BS','Basic Salary','E',1,'BasicSalary'),(2,'DA','Dearness Allowance','E',2,NULL),(3,'HRA','House Rent Allowance','E',3,NULL),(4,'PF','Provident Fund','D',1,NULL),(5,'ESI','ESI','D',2,'ESI'),(6,'MA','Mobile Allowance','E',5,NULL),(8,'TC','Transport Charge','D',3,NULL),(9,'FA','Food Allowance','E',6,NULL),(10,'PTAX','Professional Tax','D',4,'PTAX'),(11,'SA','Spl Allowance','E',4,NULL);
 /*!40000 ALTER TABLE `mst_earn_ded_components` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-19 16:11:23
+-- Dump completed on 2021-07-23  1:51:24

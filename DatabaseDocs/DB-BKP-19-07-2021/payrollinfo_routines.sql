@@ -420,6 +420,102 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ManagePTAXMonthly` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ManagePTAXMonthly`(p_month INT,p_year INT)
+BEGIN
+	DECLARE p_date DATE;
+    DECLARE pMonth VARCHAR(2);
+    DECLARE p_fin_year_id INT;
+    DECLARE p_tot_cnt INT;
+    DECLARE cnt INT;
+    DECLARE p_ptax_slab_id INT;
+    DECLARE p_start_range INT;
+    DECLARE p_end_range INT;
+    DECLARE p_ptax_rate_id INT;
+    DECLARE p_ptax_rate INT;
+    
+    IF p_month<=9 THEN
+    BEGIN
+		SET pMonth=CONCAT('0',p_month);
+    END;
+    ELSE
+		SET pMonth=p_month;
+    END IF;
+    SET p_date =CONCAT(CONCAT(CONCAT(CONCAT(p_year,'-'),p_month),'-'),'01');
+    
+    SET SQL_SAFE_UPDATES = 0;
+    
+    SET p_fin_year_id=(SELECT fin_year_id FROM payrollinfo.mst_fin_year 
+				WHERE p_date BETWEEN fin_year_start and fin_year_end);
+	
+	CREATE TEMPORARY TABLE temp_trn_ptax_slab
+    (
+		slab_id int NOT NULL AUTO_INCREMENT,
+        ptax_slab_id int NOT NULL,
+		ptax_start_range int NOT NULL,
+		ptax_end_range int NOT NULL,
+		ptax_rate int NOT NULL,
+        ptax_slab_desc VARCHAR(256) NOT NULL,
+        primary key (slab_id)
+	);
+    
+    INSERT INTO temp_trn_ptax_slab
+    SELECT 0,ptax_slab_id,ptax_start_range,ptax_end_range,ptax_rate,ptax_slab_desc
+    FROM trn_ptax_slab
+    WHERE fin_year_id=p_fin_year_id;
+    
+    SET p_tot_cnt=(SELECT COUNT(*) FROM temp_trn_ptax_slab);
+    
+    SET cnt=1;
+    DELETE FROM trn_ptax_monthly
+    WHERE month=p_month AND year=p_year;
+    
+    WHILE cnt<=p_tot_cnt DO
+		SET p_ptax_slab_id=(SELECT ptax_slab_id FROM temp_trn_ptax_slab
+							WHERE slab_id=cnt);
+		SET p_start_range=(SELECT ptax_start_range FROM temp_trn_ptax_slab
+							WHERE slab_id=cnt);
+		SET p_end_range=(SELECT ptax_end_range FROM temp_trn_ptax_slab
+							WHERE slab_id=cnt);
+		IF p_end_range=0 THEN
+			SET p_end_range=1000000;
+        END IF;
+		SET p_ptax_rate=(SELECT ptax_rate FROM temp_trn_ptax_slab
+							WHERE slab_id=cnt);
+                            
+		INSERT INTO trn_ptax_monthly				
+		SELECT p_month,p_year,p_ptax_slab_id,COUNT(tmesd.emp_id),
+        p_ptax_rate * COUNT(tmesd.emp_id)
+		FROM trn_monthly_emp_salary_details tmesd
+		INNER JOIN trn_monthly_emp_salary_summary tmess
+		ON tmess.month=tmesd.month AND tmess.year=tmesd.year
+		AND tmess.emp_id=tmesd.emp_id
+		INNER JOIN mst_earn_ded_components medc ON
+		tmesd.earn_ded_id=medc.earn_ded_id
+		WHERE tmess.month=p_month AND tmess.year=p_year
+		AND medc.earn_ded_tagname='PTAX'
+		AND tmess.net_amount>p_start_range 
+        AND tmess.net_amount<=p_end_range;
+        
+		SET cnt=cnt+1;
+    END WHILE;
+    DROP TEMPORARY TABLE temp_trn_ptax_slab;
+    SELECT * FROM trn_ptax_monthly;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `PrintSinglePaySlip` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -488,4 +584,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-20 14:05:37
+-- Dump completed on 2021-07-23  1:51:25
