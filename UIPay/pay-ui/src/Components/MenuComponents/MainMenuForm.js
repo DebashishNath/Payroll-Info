@@ -18,6 +18,7 @@ import ListEmployeeLeaveForm from '../TransactionComponents/ListEmployeeLeaveFor
 import EmployeeLeaveForm from '../TransactionComponents/EmployeeLeaveForm';
 import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationForm';
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
+import PrintPTAXMonthlyForm from '../ReportComponents/PrintPTAXMonthlyForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
 import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
@@ -63,6 +64,7 @@ export default class MainMenuForm extends React.Component {
           label: "Reports",
           Icon: ReportIcon,
           items: [
+            { name : "ptaxmonthly", label:"PTAX Monthly",route:'/ptaxmonthly',onClick},
             { name: "attendance", label: "Attendance",route: '/printattendance', onClick },
             { name: "payslip", label: "Payslip",route: '/printpayslip', onClick },
             { name: "paysheet", label: "Paysheet",route: '/printpaysheet', onClick }
@@ -95,6 +97,7 @@ export default class MainMenuForm extends React.Component {
               <Route path="/empleave" exact component={EmployeeLeaveForm} />
               <Route path='/generateattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
+              <Route path='/ptaxmonthly' exact component={PrintPTAXMonthlyForm}></Route>
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
               <Route path='/printpaysheet' exact component={PrintPaysheetForm}></Route>
