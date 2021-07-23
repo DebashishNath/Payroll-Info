@@ -1,11 +1,9 @@
 package com.payroll.payrollWebService.models.payroll;
 
+import com.payroll.payrollWebService.payload.response.MessageResponse;
 import lombok.Data;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="trn_ptax_monthly")
@@ -22,6 +20,8 @@ public class trn_ptax_monthly {
 
     private Long no_employees;
     private Long ptax_amount;
+    @Transient
+    private MessageResponse returnMessage;
 
     private trn_ptax_monthly(){}
 
@@ -55,5 +55,13 @@ public class trn_ptax_monthly {
 
     public void setPtax_amount(Long ptax_amount) {
         this.ptax_amount = ptax_amount;
+    }
+
+    public MessageResponse getReturnMessage() {
+        return returnMessage;
+    }
+
+    public void setReturnMessage(MessageResponse returnMessage) {
+        this.returnMessage = returnMessage;
     }
 }
