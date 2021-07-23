@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
 import moment from 'moment';
+import SaveIcon from '@material-ui/icons/Save';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import EditIcon from '@material-ui/icons/Edit';
 
 class HolidayForm extends Component {
     constructor(props) 
@@ -20,10 +23,10 @@ class HolidayForm extends Component {
         this.doClearControls=this.doClearControls.bind(this);
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
         this.populateMonths();
-        document.getElementById("year").focus();
+        await document.getElementById("year").focus();
     }
 
     populateMonths()
@@ -181,7 +184,7 @@ class HolidayForm extends Component {
                         <td>{code}</td>
                         <td>{holidayName}</td>
                         <td>{formatHolidayDate}</td>
-                        <td><Button color="primary" variant="contained" size="small"
+                        <td><Button color="primary" variant="contained" size="small" startIcon={<EditIcon/>}
                             onClick={() => { this.doEditHolidayRecord(id,code,holidayName,holidayDate) }}>Edit</Button></td>
                         </tr>);
                 }
@@ -251,9 +254,9 @@ class HolidayForm extends Component {
                         <TextField id="holidayDate" label="" type="date" defaultValue=""
                         InputLabelProps={{shrink: true,}} />
                     </td><td></td>
-                        <td><Button color="primary" variant="contained" 
-                            onClick={() => { this.doUpdateHolidayRecord() }}>Update</Button>
-                        &nbsp;&nbsp;<Button color="primary" variant="contained" 
+                        <td><Button color="primary" variant="contained" size="small" startIcon={<SaveIcon/>}
+                            onClick={() => { this.doUpdateHolidayRecord() }}>Save</Button>
+                        &nbsp;&nbsp;<Button color="primary" variant="contained" size="small" startIcon={<ClearAllIcon/>}
                             onClick={() => { this.doClearControls() }}>Reset</Button></td>
                     </tr>
                 </Table>

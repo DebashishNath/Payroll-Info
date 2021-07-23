@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,MenuItem,TextField } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import EditIcon from '@material-ui/icons/Edit';
 
 class EarnDedComponentsForm extends PureComponent {
     constructor(props) 
@@ -17,13 +20,14 @@ class EarnDedComponentsForm extends PureComponent {
         this.doClearControls=this.doClearControls.bind(this);
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
         let initialDataToDisplay = [];
         initialDataToDisplay.push(<MenuItem value={"E"}>{"Earning"}</MenuItem>)
         initialDataToDisplay.push(<MenuItem value={"D"}>{"Deduction"}</MenuItem>)
         this.setState({earnDedTypesToDisplay:initialDataToDisplay});
         this.displayEarnDeductions();
+        await document.getElementById("earnDedCode").focus();
     }
 
     doClearControls()
@@ -161,7 +165,7 @@ class EarnDedComponentsForm extends PureComponent {
                     <td>{earnDedName}</td>
                     <td>{earnDedTypeName}</td>
                     <td>{earnDedPriority}</td>
-                    <td><Button color="primary" variant="contained" size="small" onClick={() => 
+                    <td align='center'><Button color="primary" variant="contained" size="small" startIcon={<EditIcon/>} onClick={() => 
                         { this.displayOfEarnDedComponent(earnDedId,earnDedCode,earnDedName,earnDedType,earnDedPriority) }}>Edit</Button></td>
                     </tr>);
             }
@@ -208,8 +212,8 @@ class EarnDedComponentsForm extends PureComponent {
                         <tr>
                             <td>Priority</td>
                             <td><TextField id="earnDedPriority" variant='outlined' style ={{width: '30%'}}></TextField></td>
-                            <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEarnDedComponent() }}>Update</Button></td>
-                            <td><Button color="primary" variant="contained" onClick={() => { this.doClearControls() }}>Reset</Button></td>
+                            <td><Button color="primary" variant="contained" size="small" startIcon={<SaveIcon/>} onClick={() => { this.doUpdateEarnDedComponent() }}>Save</Button></td>
+                            <td><Button color="primary" variant="contained" size="small" startIcon={<ClearAllIcon/>} onClick={() => { this.doClearControls() }}>Reset</Button></td>
                         </tr>
                     </Table>
                 </div><br/>
