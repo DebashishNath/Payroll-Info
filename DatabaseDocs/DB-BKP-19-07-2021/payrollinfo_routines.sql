@@ -430,12 +430,46 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ManagePTAXMonthly`(p_month INT,p_year INT)
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ManagePTAXMonthly`(p_month INT,p_year INT,OUT p_return_message VARCHAR(500))
+proc_label:BEGIN
+	DECLARE p_cnt INT;
+	DECLARE p_return_code INT;
 	DECLARE p_date DATE;
     DECLARE pMonth VARCHAR(2);
     DECLARE p_fin_year_id INT;
-       
+	
+     DECLARE exit handler for sqlexception
+	BEGIN
+		GET DIAGNOSTICS CONDITION 1
+		p_return_code=RETURNED_SQLSTATE,p_return_message=MESSAGE_TEXT;
+        /*SET p_return_message=CONCAT('Payslip generation failed');*/
+		SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+		ROLLBACK;
+	END;
+		   
+	DECLARE exit handler for sqlwarning
+	BEGIN
+		GET DIAGNOSTICS CONDITION 1
+		p_return_code=RETURNED_SQLSTATE,p_return_message=MESSAGE_TEXT;
+        /*SET p_return_message=CONCAT('Payslip generation failed');*/
+        SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+		ROLLBACK;
+	END;
+    
+    START TRANSACTION;
+	SET SQL_SAFE_UPDATES = 0;
+    
+    SET p_cnt= (SELECT COUNT(EMP_ID) FROM trn_monthly_emp_salary_summary
+				WHERE month=p_month AND year=p_year) ;
+    IF p_cnt=0 THEN
+	BEGIN
+		SET p_return_code=-1;
+		SET p_return_message='PTAX cannot be generated for this month as payslip has not been generated';
+        SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+        LEAVE proc_label;
+	END;
+	END IF;
+    
     IF p_month<=9 THEN
     BEGIN
 		SET pMonth=CONCAT('0',p_month);
@@ -444,8 +478,6 @@ BEGIN
 		SET pMonth=p_month;
     END IF;
     SET p_date =CONCAT(CONCAT(CONCAT(CONCAT(p_year,'-'),p_month),'-'),'01');
-    
-    SET SQL_SAFE_UPDATES = 0;
     
     SET p_fin_year_id=(SELECT fin_year_id FROM payrollinfo.mst_fin_year 
 				WHERE p_date BETWEEN fin_year_start and fin_year_end);
@@ -470,10 +502,15 @@ BEGIN
 		) AS no_employees
 	FROM trn_ptax_slab tps) AS tpss;
     
-    SELECT 	month,year,ptax_slab_id,
+    SET p_return_code=0;
+    SET p_return_message=CONCAT('PTAX has been generated for ',DATE_FORMAT(p_date, "%M %Y"));
+    SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+    
+    /*SELECT 	month,year,ptax_slab_id,
 			no_employees,ptax_Amount 
     FROM trn_ptax_monthly
-    WHERE month=p_month AND year=p_year;
+    WHERE month=p_month AND year=p_year;*/
+    COMMIT;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -548,4 +585,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-23 11:25:36
+-- Dump completed on 2021-07-23 13:11:58
