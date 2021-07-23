@@ -20,12 +20,19 @@ public class trn_ptax_monthly {
 
     private Long no_employees;
     private Long ptax_amount;
+
+    @MapsId("ptax_slab_id")
+    @ManyToOne(optional = false)
+    @JoinColumns(value = {
+            @JoinColumn(name = "ptax_slab_id", referencedColumnName = "ptax_slab_id") })
+    private trn_ptax_slab ptaxSlab;
+
     @Transient
     private MessageResponse returnMessage;
 
-    private trn_ptax_monthly(){}
+    public trn_ptax_monthly(){}
 
-    private trn_ptax_monthly(PTaxMonthlyIdentity ptaxMonthlyIdentity,Long no_employees,
+    public trn_ptax_monthly(PTaxMonthlyIdentity ptaxMonthlyIdentity,Long no_employees,
                              Long ptax_amount)
     {
         this.ptaxMonthlyIdentity=ptaxMonthlyIdentity;
@@ -55,6 +62,14 @@ public class trn_ptax_monthly {
 
     public void setPtax_amount(Long ptax_amount) {
         this.ptax_amount = ptax_amount;
+    }
+
+    public trn_ptax_slab getPtaxSlab() {
+        return ptaxSlab;
+    }
+
+    public void setPtaxSlab(trn_ptax_slab ptaxSlab) {
+        this.ptaxSlab = ptaxSlab;
     }
 
     public MessageResponse getReturnMessage() {

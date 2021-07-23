@@ -8,6 +8,11 @@ import com.payroll.payrollWebService.repository.payroll.PTAXMonthlyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +22,9 @@ class PTAXMonthlyServiceDAL extends PTAXMonthlyServiceImpl {
 
     @Autowired
     private PTAXMonthlyRepository ptaxMonthlyRep;
+
+    @PersistenceContext
+    private EntityManager em;
 
     public PTAXMonthlyServiceDAL() {}
 
@@ -41,12 +49,33 @@ class PTAXMonthlyServiceDAL extends PTAXMonthlyServiceImpl {
     }
 
     @Override
-    public List<trn_ptax_monthly> findAll(Long month,Long year) {
+    public List<trn_ptax_monthly> findAll(Long month,Long year)
+    {
+        MessageResponse resp=new MessageResponse();
+        try
+        {
+            StoredProcedureQuery ptaxMonthly =
+                    em.createNamedStoredProcedureQuery("ManagePTAXMonthly")
+                            .registerStoredProcedureParameter("p_month", Integer.class, ParameterMode.IN)
+                            .setParameter("p_month", month.intValue())
+                            .registerStoredProcedureParameter("p_year", Integer.class, ParameterMode.IN)
+                            .setParameter("p_year", year.intValue())
+                            .registerStoredProcedureParameter("p_return_message", String.class, ParameterMode.OUT);
+            ptaxMonthly.execute();
+            String retMessage= (String)ptaxMonthly.getOutputParameterValue("p_return_message");
 
-        return ((List<trn_ptax_monthly>) ptaxMonthlyRep.findAll()).stream()
-                .filter(c->c.getPtaxMonthlyIdentity().getMonth()==month.intValue()
-                        && c.getPtaxMonthlyIdentity().getYear()==year.intValue())
-                .collect(Collectors.toList());
+            /*To Do */
+            List<trn_ptax_monthly> lstPTAXMonthly=new ArrayList<>();
+            trn_ptax_monthly objPTAXMonthly=new trn_ptax_monthly();
+
+            lstPTAXMonthly = ((List<trn_ptax_monthly>) ptaxMonthlyRep.findAll()).stream()
+                    .filter(c -> c.getPtaxMonthlyIdentity().getMonth() == month.intValue()
+                            && c.getPtaxMonthlyIdentity().getYear() == year.intValue())
+                    .collect(Collectors.toList());
+            return lstPTAXMonthly;
+        }catch(Exception ex){
+            return null;
+        }
     }
 
     @Override
