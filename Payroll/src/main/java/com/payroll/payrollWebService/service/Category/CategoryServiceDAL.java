@@ -85,7 +85,7 @@ class CategoryServiceDAL extends CategoryServiceImpl {
         }catch(Exception ex)
         {
             System.out.println(ex.getMessage());
-            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),"Failed to delete designation");
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),"Failed to delete category");
             return msgResp;
         }
     }
