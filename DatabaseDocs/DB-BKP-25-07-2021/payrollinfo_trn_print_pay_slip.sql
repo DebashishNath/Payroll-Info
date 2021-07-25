@@ -59,6 +59,7 @@ CREATE TABLE `trn_print_pay_slip` (
 
 LOCK TABLES `trn_print_pay_slip` WRITE;
 /*!40000 ALTER TABLE `trn_print_pay_slip` DISABLE KEYS */;
+INSERT INTO `trn_print_pay_slip` VALUES (171,1,'Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake','Kolkata','700091','033 2357 4308','hdes@gmail.com','TD001/95-97',2021,3,2,'E002','Nihar Ranjan Pramanik',1,'BS','Basic Salary','E',1,9000.00,'2021-03-01',17000.00,2500.00,14500.00,''),(171,1,'Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake','Kolkata','700091','033 2357 4308','hdes@gmail.com','TD001/95-97',2021,3,2,'E002','Nihar Ranjan Pramanik',2,'DA','Dearness Allowance','E',2,5000.00,'2021-03-01',17000.00,2500.00,14500.00,''),(171,1,'Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake','Kolkata','700091','033 2357 4308','hdes@gmail.com','TD001/95-97',2021,3,2,'E002','Nihar Ranjan Pramanik',3,'HRA','House Rent Allowance','E',3,3000.00,'2021-03-01',17000.00,2500.00,14500.00,''),(171,1,'Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake','Kolkata','700091','033 2357 4308','hdes@gmail.com','TD001/95-97',2021,3,2,'E002','Nihar Ranjan Pramanik',4,'PF','Provident Fund','D',1,800.00,'2021-03-01',17000.00,2500.00,14500.00,''),(171,1,'Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake','Kolkata','700091','033 2357 4308','hdes@gmail.com','TD001/95-97',2021,3,2,'E002','Nihar Ranjan Pramanik',5,'ESI','ESI','D',2,1500.00,'2021-03-01',17000.00,2500.00,14500.00,''),(171,1,'Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake','Kolkata','700091','033 2357 4308','hdes@gmail.com','TD001/95-97',2021,3,2,'E002','Nihar Ranjan Pramanik',10,'PTAX','Professional Tax','D',4,200.00,'2021-03-01',17000.00,2500.00,14500.00,'');
 /*!40000 ALTER TABLE `trn_print_pay_slip` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -71,4 +72,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 20:30:48
+-- Dump completed on 2021-07-25 17:56:37

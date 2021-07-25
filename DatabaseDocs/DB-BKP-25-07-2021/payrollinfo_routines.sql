@@ -74,6 +74,44 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `DisplayMasterData` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DisplayMasterData`(formName VARCHAR(20))
+BEGIN
+	IF(formName = 'Department') 
+    THEN
+		SELECT department_id AS masterId,department_code AS masterCode,department_name AS masterName
+        FROM mst_department
+        WHERE trim(department_name)!='N/A';
+	END IF;
+    
+    IF(formName = 'Category') 
+	THEN
+		SELECT category_id AS masterId,category_code AS masterCode,category_name AS masterName
+        FROM mst_category
+        WHERE trim(category_name)!='N/A';
+    END IF;
+    
+    IF(formName = 'Designation') 
+	THEN
+		SELECT designation_id AS masterId,designation_code AS masterCode,designation_name AS masterName
+        FROM mst_designation
+        WHERE trim(designation_name)!='N/A';
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `GenerateMonthlyAttendance` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -159,6 +197,9 @@ proc_label:BEGIN
 	DECLARE p_cnt INT;
 	DECLARE p_return_code INT;
     DECLARE p_company_id INT;
+    DECLARE p_no_earn_cols INT;
+    DECLARE p_no_ded_cols INT;
+    DECLARE p_pay_sheet_columns VARCHAR(2096);
 	
     DECLARE exit handler for sqlexception
 	BEGIN
@@ -196,7 +237,7 @@ proc_label:BEGIN
     DELETE FROM trn_monthly_emp_salary_details
     WHERE month=p_month AND year=p_year;
     
-   INSERT INTO trn_monthly_emp_salary_details 
+	INSERT INTO trn_monthly_emp_salary_details 
     SELECT p_month,p_year,tess.emp_id,
 		   tess.earn_ded_id,tess.earn_ded_amount
     FROM trn_emp_salary_structure tess
@@ -208,8 +249,10 @@ proc_label:BEGIN
     set p_company_id=(SELECT company_id FROM payrollinfo.mst_company limit 1);
     
     INSERT INTO trn_monthly_emp_salary_summary
+    (month,year,emp_id,company_id,salary_date,total_earn_amount,
+    total_ded_amount,net_amount,pay_sheet_values,pay_sheet_columns,remarks)
     SELECT tsd.month,tsd.year,tsd.emp_id,p_company_id,p_salary_date,
-	SUM(tsd.earn_ded_amount),0,0,''
+	SUM(tsd.earn_ded_amount),0,0,'','',''
 	FROM trn_monthly_emp_salary_details tsd
 	INNER JOIN mst_earn_ded_components mc
 	ON tsd.earn_ded_id=mc.earn_ded_id and mc.earn_ded_type='E'
@@ -228,11 +271,254 @@ proc_label:BEGIN
 	group by tsd.month,tsd.year,tsd.emp_id),
     tsd1.net_amount=tsd1.total_earn_amount - 
     CASE WHEN tsd1.total_ded_amount IS NULL THEN 0
-    ELSE tsd1.total_ded_amount END;
+    ELSE tsd1.total_ded_amount END
+    WHERE tsd1.month=p_month AND tsd1.year=p_year;
     
+	UPDATE trn_monthly_emp_salary_summary tsd1
+	SET tsd1.total_earn_amount=0
+    WHERE tsd1.total_earn_amount IS NULL;
+    
+	UPDATE trn_monthly_emp_salary_summary tsd1
+    SET tsd1.total_ded_amount=0
+    WHERE tsd1.total_ded_amount IS NULL;
+    
+    SET p_no_earn_cols=(SELECT COUNT(*) AS no_earn_cols FROM mst_earn_ded_components
+						WHERE earn_ded_type='E');
+	SET p_no_ded_cols=(SELECT COUNT(*) AS no_earn_cols FROM mst_earn_ded_components
+						WHERE earn_ded_type='D');
+    
+    UPDATE trn_monthly_emp_salary_summary tsd1
+    SET tsd1.pay_sheet_values=(SELECT 
+			JSON_ARRAYAGG(JSON_OBJECT('earn_ded_id', tesd.earn_ded_id,
+				'amount', tesd.earn_ded_amount )) AS Emp_Salary
+			from payrollinfo.trn_monthly_emp_salary_details tesd
+            WHERE tsd1.emp_id=tesd.emp_id AND
+				  tsd1.month=tesd.month AND tsd1.year=tesd.year)
+    WHERE tsd1.month=p_month AND tsd1.year=p_year;
+    
+    SET p_pay_sheet_columns=(SELECT JSON_ARRAYAGG(JSON_OBJECT('earn_ded_id', medc.earn_ded_id,
+			'earn_ded_code',medc.earn_ded_code,
+            'earn_ded_type',medc.earn_ded_type,
+			'earn_ded_priority',medc.earn_ded_priority,
+            'no_earn_cols',p_no_earn_cols,
+			'no_ded_cols',p_no_ded_cols)) AS EarnDedComponents
+		FROM payrollinfo.mst_earn_ded_components medc);
+        
+    UPDATE trn_monthly_emp_salary_summary tsd1
+    SET tsd1.pay_sheet_columns=p_pay_sheet_columns
+    WHERE tsd1.month=p_month AND tsd1.year=p_year;
+
+	UPDATE trn_monthly_emp_salary_summary tsd1
+    SET tsd1.emp_detail_values=(
+		SELECT JSON_ARRAYAGG(JSON_OBJECT(
+			'emp_code',me.emp_code,
+            'emp_name',	CONCAT(me.emp_first_name,
+            CASE WHEN LENGTH(me.emp_middle_name)=0 THEN 
+            CONCAT(' ',me.emp_last_name)
+            ELSE 
+            CONCAT(CONCAT(CONCAT(' ',me.emp_middle_name),' '),me.emp_last_name)
+            END))) AS EmpDetails
+		FROM payrollinfo.mst_employee me
+        WHERE tsd1.emp_id=me.emp_id)
+    WHERE tsd1.month=p_month AND tsd1.year=p_year;
+
     SET p_return_code=0;
     SET p_return_message=CONCAT('Payslip has been generated for ',DATE_FORMAT(p_salary_date, "%M %Y"));
     SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+    COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetHolidayMonthWise` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetHolidayMonthWise`(p_month Int,p_year Int)
+BEGIN
+	SELECT 	Holiday_Id,
+			Holiday_Code,
+            Holiday_Name,
+            Holiday_Date
+    FROM payrollinfo.mst_holiday
+	WHERE month(holiday_date)=p_month 
+    and year(holiday_date)=p_year;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ManageMasterData` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ManageMasterData`(formName VARCHAR(20),masterId INT,masterCode VARCHAR(5),masterName VARCHAR(25))
+BEGIN
+	IF(formName = 'Department') 
+		AND NOT EXISTS (SELECT 1 FROM mst_department WHERE department_id=masterId)
+        THEN
+		BEGIN
+			INSERT INTO mst_department(department_code,department_name)
+			VALUES(masterCode,masterName);
+		END;
+	ELSE
+		BEGIN
+			UPDATE mst_department
+            SET department_code=masterCode,department_name=masterName
+            WHERE department_id=masterId;
+        END;
+    END IF;
+    
+    IF(formName = 'Category') 
+		AND NOT EXISTS (SELECT 1 FROM mst_category WHERE category_id=masterId)
+        THEN
+		BEGIN
+			INSERT INTO mst_category(category_code,category_name)
+			VALUES(masterCode,masterName);
+		END;
+	ELSE
+		BEGIN
+			UPDATE mst_category
+            SET category_code=masterCode,category_name=masterName
+            WHERE category_id=masterId;
+        END;
+    END IF;
+    
+    IF(formName = 'Designation') 
+		AND NOT EXISTS (SELECT 1 FROM mst_designation WHERE designation_id=masterId)
+        THEN
+		BEGIN
+			INSERT INTO mst_designation(designation_code,designation_name)
+			VALUES(masterCode,masterName);
+		END;
+	ELSE
+		BEGIN
+			UPDATE mst_designation
+            SET designation_code=masterCode,
+				designation_name=masterName
+            WHERE designation_id=masterId;
+        END;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ManagePTAXMonthly` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ManagePTAXMonthly`(p_month INT,p_year INT,OUT p_return_message VARCHAR(500))
+proc_label:BEGIN
+	DECLARE p_cnt INT;
+	DECLARE p_return_code INT;
+	DECLARE p_date DATE;
+    DECLARE pMonth VARCHAR(2);
+    DECLARE p_fin_year_id INT;
+	
+    DECLARE exit handler for sqlexception
+	BEGIN
+		GET DIAGNOSTICS CONDITION 1
+		p_return_code=RETURNED_SQLSTATE,p_return_message=MESSAGE_TEXT;
+        /*SET p_return_message=CONCAT('Payslip generation failed');*/
+		SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+		ROLLBACK;
+	END;
+		   
+	DECLARE exit handler for sqlwarning
+	BEGIN
+		GET DIAGNOSTICS CONDITION 1
+		p_return_code=RETURNED_SQLSTATE,p_return_message=MESSAGE_TEXT;
+        /*SET p_return_message=CONCAT('Payslip generation failed');*/
+        SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+		ROLLBACK;
+	END;
+    
+    START TRANSACTION;
+	SET SQL_SAFE_UPDATES = 0;
+    
+    SET p_cnt= (SELECT COUNT(EMP_ID) FROM trn_monthly_emp_salary_summary
+				WHERE month=p_month AND year=p_year) ;
+    IF p_cnt=0 THEN
+	BEGIN
+		SET p_return_code=-1;
+		SET p_return_message='PTAX cannot be generated for this month as payslip has not been generated';
+        SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+        LEAVE proc_label;
+	END;
+	END IF;
+    
+    IF p_month<=9 THEN
+    BEGIN
+		SET pMonth=CONCAT('0',p_month);
+    END;
+    ELSE
+		SET pMonth=p_month;
+    END IF;
+    SET p_date =CONCAT(CONCAT(CONCAT(CONCAT(p_year,'-'),p_month),'-'),'01');
+    
+    SET p_fin_year_id=(SELECT fin_year_id FROM payrollinfo.mst_fin_year 
+				WHERE p_date BETWEEN fin_year_start and fin_year_end);
+	
+    IF p_fin_year_id IS NULL THEN
+	BEGIN
+		SET p_return_code=-1;
+		SET p_return_message='PTAX cannot be generated for this month as \nPTAX slab has not been constructed for this financial year';
+        SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+        LEAVE proc_label;
+	END;
+	END IF;
+    
+	DELETE FROM trn_ptax_monthly
+    WHERE month=p_month AND year=p_year;
+	
+    INSERT INTO trn_ptax_monthly
+    SELECT 	tpss.month,tpss.year,tpss.ptax_slab_id,
+		tpss.no_employees,tpss.ptax_rate * tpss.no_employees AS ptax_Amount
+	FROM
+	(SELECT p_month as month,p_year as year,tps.ptax_slab_id,tps.ptax_rate,
+		(SELECT COUNT(tmesd.emp_id) 
+			FROM trn_monthly_emp_salary_details tmesd
+			INNER JOIN mst_earn_ded_components medc
+			ON tmesd.earn_ded_id=medc.earn_ded_id
+			INNER JOIN trn_monthly_emp_salary_summary tmess
+			ON tmesd.month=tmess.month AND tmesd.year=tmess.year AND tmesd.emp_id=tmess.emp_id
+			WHERE tmesd.month=p_month AND tmesd.year=p_year AND tps.fin_year_id=p_fin_year_id
+            AND medc.earn_ded_tagname='PTAX'
+			AND tmess.net_amount>tps.ptax_start_range AND tmess.net_amount<=tps.ptax_end_range
+		) AS no_employees
+	FROM trn_ptax_slab tps) AS tpss;
+    
+    SET p_return_code=0;
+    SET p_return_message=CONCAT('PTAX has been generated for ',DATE_FORMAT(p_date, "%M %Y"));
+    SET p_return_message=CONCAT(CONCAT(p_return_code,'-'),p_return_message);
+    
+    /*SELECT month,year,ptax_slab_id,
+		no_employees,ptax_Amount 
+    FROM trn_ptax_monthly
+    WHERE month=p_month AND year=p_year;*/
     COMMIT;
 END ;;
 DELIMITER ;
@@ -308,4 +594,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 20:30:50
+-- Dump completed on 2021-07-25 17:56:40

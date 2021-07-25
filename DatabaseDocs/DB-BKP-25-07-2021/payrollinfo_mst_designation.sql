@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_country`
+-- Table structure for table `mst_designation`
 --
 
-DROP TABLE IF EXISTS `mst_country`;
+DROP TABLE IF EXISTS `mst_designation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_country` (
-  `country_id` int NOT NULL AUTO_INCREMENT,
-  `country_code` varchar(5) NOT NULL,
-  `country_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`country_id`),
-  UNIQUE KEY `country_code_UNIQUE` (`country_code`),
-  UNIQUE KEY `country_name_UNIQUE` (`country_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_designation` (
+  `designation_id` int NOT NULL AUTO_INCREMENT,
+  `designation_code` varchar(5) NOT NULL,
+  `designation_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`designation_id`),
+  UNIQUE KEY `UK_DESIG_CODE` (`designation_code`),
+  UNIQUE KEY `UK_DESIG_NAME` (`designation_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_country`
+-- Dumping data for table `mst_designation`
 --
 
-LOCK TABLES `mst_country` WRITE;
-/*!40000 ALTER TABLE `mst_country` DISABLE KEYS */;
-INSERT INTO `mst_country` VALUES (1,'C001','India'),(2,'C002','Bangladesh');
-/*!40000 ALTER TABLE `mst_country` ENABLE KEYS */;
+LOCK TABLES `mst_designation` WRITE;
+/*!40000 ALTER TABLE `mst_designation` DISABLE KEYS */;
+INSERT INTO `mst_designation` VALUES (1,'D001','Software Engineer'),(2,'D002','Senior Software Engineer'),(3,'D003','Team Lead'),(4,'D004','Project Manager'),(6,'D005','HR Manager'),(8,'D006','Accounts Manager'),(9,'D007','Data Entry Operator'),(18,'D008','Production Manager'),(19,'D009','Desig-09'),(20,'D010','DESIG-10'),(21,'D011','DESIG-11'),(22,'D012','DESIG-12'),(23,'D013','DESIG-13'),(24,'D014','Desig-14'),(25,'DG0','N/A');
+/*!40000 ALTER TABLE `mst_designation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 20:30:47
+-- Dump completed on 2021-07-25 17:56:40

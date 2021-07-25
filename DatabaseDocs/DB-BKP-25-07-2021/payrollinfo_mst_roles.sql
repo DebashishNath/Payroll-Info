@@ -16,38 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_company`
+-- Table structure for table `mst_roles`
 --
 
-DROP TABLE IF EXISTS `mst_company`;
+DROP TABLE IF EXISTS `mst_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_company` (
-  `company_id` int NOT NULL,
-  `company_code` varchar(5) NOT NULL,
-  `company_name` varchar(25) NOT NULL,
-  `company_address1` varchar(50) NOT NULL,
-  `company_address2` varchar(50) DEFAULT NULL,
-  `company_location_id` int NOT NULL,
-  `company_district_id` int NOT NULL,
-  `company_pin` int NOT NULL,
-  `company_contact_number` varchar(50) NOT NULL,
-  `company_email` varchar(50) NOT NULL,
-  `company_tan_no` varchar(50) NOT NULL,
-  PRIMARY KEY (`company_id`),
-  UNIQUE KEY `company_code_UNIQUE` (`company_code`),
-  UNIQUE KEY `company_name_UNIQUE` (`company_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_roles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_company`
+-- Dumping data for table `mst_roles`
 --
 
-LOCK TABLES `mst_company` WRITE;
-/*!40000 ALTER TABLE `mst_company` DISABLE KEYS */;
-INSERT INTO `mst_company` VALUES (1,'D1','Descon Liited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake',1,1,700091,'033 2357 4308','hdes@gmail.com','TD001/95-97');
-/*!40000 ALTER TABLE `mst_company` ENABLE KEYS */;
+LOCK TABLES `mst_roles` WRITE;
+/*!40000 ALTER TABLE `mst_roles` DISABLE KEYS */;
+INSERT INTO `mst_roles` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_USER');
+/*!40000 ALTER TABLE `mst_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 20:30:48
+-- Dump completed on 2021-07-25 17:56:37

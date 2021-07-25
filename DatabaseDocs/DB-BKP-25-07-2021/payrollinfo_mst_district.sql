@@ -16,30 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trn_user_roles`
+-- Table structure for table `mst_district`
 --
 
-DROP TABLE IF EXISTS `trn_user_roles`;
+DROP TABLE IF EXISTS `mst_district`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trn_user_roles` (
-  `user_id` bigint NOT NULL,
-  `role_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FK_user_roles_role_id` (`role_id`),
-  CONSTRAINT `FK_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `mst_roles` (`id`),
-  CONSTRAINT `FK_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `mst_users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_district` (
+  `district_id` int NOT NULL AUTO_INCREMENT,
+  `district_code` varchar(5) NOT NULL,
+  `district_name` varchar(25) NOT NULL,
+  `state_id` int NOT NULL,
+  PRIMARY KEY (`district_id`,`district_code`),
+  UNIQUE KEY `district_code_UNIQUE` (`district_code`),
+  UNIQUE KEY `district_name_UNIQUE` (`district_name`),
+  KEY `mst_district_state_id_idx` (`state_id`),
+  CONSTRAINT `mst_district_state_id` FOREIGN KEY (`state_id`) REFERENCES `mst_state` (`state_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trn_user_roles`
+-- Dumping data for table `mst_district`
 --
 
-LOCK TABLES `trn_user_roles` WRITE;
-/*!40000 ALTER TABLE `trn_user_roles` DISABLE KEYS */;
-INSERT INTO `trn_user_roles` VALUES (169,1),(170,1),(171,1),(172,1),(169,2),(170,2),(171,2),(172,2);
-/*!40000 ALTER TABLE `trn_user_roles` ENABLE KEYS */;
+LOCK TABLES `mst_district` WRITE;
+/*!40000 ALTER TABLE `mst_district` DISABLE KEYS */;
+INSERT INTO `mst_district` VALUES (1,'DC001','Kolkata',1),(3,'DC002','Howrah',1),(6,'DC003','Purba Medinipur',1),(8,'DC004','Paschim Medinipur',1),(11,'DC005','Bhagalpur',3),(12,'DC006','Banka',3),(13,'DC007','Aurangabad',3),(14,'DC008','Ajmer',7),(15,'DC009','Alwar',7);
+/*!40000 ALTER TABLE `mst_district` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 20:30:47
+-- Dump completed on 2021-07-25 17:56:40
