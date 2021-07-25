@@ -22,6 +22,7 @@ import PrintPTAXMonthlyForm from '../ReportComponents/PrintPTAXMonthlyForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
 import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
+import TestForm from '../ReportComponents/TestForm';
 import background from "../MenuComponents/PayrollBackground.jpg"
 
 export default class MainMenuForm extends React.Component {
@@ -67,7 +68,8 @@ export default class MainMenuForm extends React.Component {
             { name : "ptaxmonthly", label:"PTAX Monthly",route:'/ptaxmonthly',onClick},
             { name: "attendance", label: "Attendance",route: '/printattendance', onClick },
             { name: "payslip", label: "Payslip",route: '/printpayslip', onClick },
-            { name: "paysheet", label: "Paysheet",route: '/printpaysheet', onClick }
+            { name: "paysheet", label: "Paysheet",route: '/printpaysheet', onClick },
+            { name: "test", label: "Test",route: '/test', onClick }
           ]
         }
       ];
@@ -101,6 +103,7 @@ export default class MainMenuForm extends React.Component {
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
               <Route path='/printpaysheet' exact component={PrintPaysheetForm}></Route>
+              <Route path='/test' exact component={TestForm}></Route>
             </switch>
           </Router>
           </Grid>
