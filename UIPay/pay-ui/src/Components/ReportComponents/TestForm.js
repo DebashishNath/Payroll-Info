@@ -1,13 +1,21 @@
 import React from 'react'
 import { Button,Paper,Table,TextField,label } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 class TestForm extends React.Component {
     constructor(props) 
     {
         super(props);
+        this.state = 
+        {
+            onClose : true
+        }
+        
         this.doEditRecord=this.doEditRecord.bind(this);
+        this.closeForm=this.closeForm.bind(this);
     }
-    
+    closeForm(){}
     validateControls()
     {
         if(document.getElementById("code").value.trim().length === 0)
@@ -35,10 +43,26 @@ class TestForm extends React.Component {
     }
     render() { 
         const paperStyle={padding:20,height:200,width:300,margin:"40px 100px",border: '2px solid brown'}
+        const closeButton= 
+        { 
+            position: 'absolute',
+            //right: theme.spacing(1),
+            //top: theme.spacing(1),
+            color: 'grey',
+        };
+
         return(
             <Paper style={paperStyle} variant="outlined">
+           
             <div>
                 <Table>
+                    <tr>
+                    <td colSpan='2'><div align='right'>
+                        <IconButton aria-label="close" style={closeButton} onClick={() => { this.closeForm() }}>
+                        <CloseIcon />
+                        </IconButton>
+                    </div></td>
+                    </tr>
                     <tr><td><label>Code</label></td>
                         <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }}></TextField></td>
                     </tr>
@@ -49,7 +73,7 @@ class TestForm extends React.Component {
                     <br/>
                     <tr>
                         <td></td>
-                        <td><Button color='primary' variant='contained' onClick={() => { this.doEditRecord() }} >Add</Button></td>
+                        <td><Button color='primary' variant='contained' onClick={() => { this.doEditRecord() }}>Add</Button></td>
                     </tr>
                 </Table>
             </div>
