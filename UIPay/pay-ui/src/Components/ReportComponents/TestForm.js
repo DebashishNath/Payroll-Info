@@ -40,7 +40,7 @@ class TestForm extends React.Component {
             <div>
                 <Table>
                     <tr><td><label>Code</label></td>
-                        <td><TextField id="code" variant='outlined' required inputProps={{ maxLength: 5 }}></TextField></td>
+                        <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }}></TextField></td>
                     </tr>
                     <br/>
                     <tr><td><label>Name</label></td>
