@@ -14,7 +14,8 @@ const styles = (theme) => ({
     margin: 0,
     padding: theme.spacing(2),
     backgroundColor:'#ecf7fc',
-    width:'250px'
+    width:'250px',
+    height:'20px'
   },
   closeButton: {
     position: 'absolute',
@@ -64,11 +65,11 @@ export default function MessageBoxForm({children,title}) {
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           {title}
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent dividers style={{height:'50px'}}>
           {children}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={handleClose} color="primary" style={{height:'20px'}}>
             Ok
           </Button>
         </DialogActions>
