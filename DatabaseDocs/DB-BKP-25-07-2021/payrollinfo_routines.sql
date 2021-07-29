@@ -505,8 +505,9 @@ proc_label:BEGIN
 			ON tmesd.earn_ded_id=medc.earn_ded_id
 			INNER JOIN trn_monthly_emp_salary_summary tmess
 			ON tmesd.month=tmess.month AND tmesd.year=tmess.year AND tmesd.emp_id=tmess.emp_id
+            INNER JOIN mst_earn_ded_tag medt ON medc.earn_ded_tag_id=medt.earn_ded_tag_id
 			WHERE tmesd.month=p_month AND tmesd.year=p_year AND tps.fin_year_id=p_fin_year_id
-            AND medc.earn_ded_tagname='PTAX'
+            AND medt.earn_ded_tag_name='PTAX'
 			AND tmess.net_amount>tps.ptax_start_range AND tmess.net_amount<=tps.ptax_end_range
 		) AS no_employees
 	FROM trn_ptax_slab tps) AS tpss;
@@ -594,4 +595,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-25 17:56:40
+-- Dump completed on 2021-07-30  1:02:02

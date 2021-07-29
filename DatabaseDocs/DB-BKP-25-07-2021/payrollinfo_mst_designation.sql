@@ -29,7 +29,7 @@ CREATE TABLE `mst_designation` (
   PRIMARY KEY (`designation_id`),
   UNIQUE KEY `UK_DESIG_CODE` (`designation_code`),
   UNIQUE KEY `UK_DESIG_NAME` (`designation_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `mst_designation` (
 
 LOCK TABLES `mst_designation` WRITE;
 /*!40000 ALTER TABLE `mst_designation` DISABLE KEYS */;
-INSERT INTO `mst_designation` VALUES (1,'D001','Software Engineer'),(2,'D002','Senior Software Engineer'),(3,'D003','Team Lead'),(4,'D004','Project Manager'),(6,'D005','HR Manager'),(8,'D006','Accounts Manager'),(9,'D007','Data Entry Operator'),(18,'D008','Production Manager'),(19,'D009','Desig-09'),(20,'D010','DESIG-10'),(21,'D011','DESIG-11'),(22,'D012','DESIG-12'),(23,'D013','DESIG-13'),(24,'D014','Desig-14'),(25,'DG0','N/A');
+INSERT INTO `mst_designation` VALUES (1,'D001','Software Engineer'),(2,'D002','Senior Software Engineer'),(3,'D003','Team Lead'),(4,'D004','Project Manager'),(6,'D005','HR Manager'),(8,'D006','Accounts Manager'),(9,'D007','Data Entry Operator'),(18,'D008','Production Manager'),(19,'D009','Desig-09'),(20,'D010','DESIG-10'),(21,'D011','DESIG-11'),(22,'D012','DESIG-12'),(23,'D013','DESIG-13'),(24,'D014','Desig-14'),(25,'DG0','N/A'),(26,'D015','Desig-15'),(29,'D016','Desig-16');
 /*!40000 ALTER TABLE `mst_designation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-25 17:56:40
+-- Dump completed on 2021-07-30  1:02:01
