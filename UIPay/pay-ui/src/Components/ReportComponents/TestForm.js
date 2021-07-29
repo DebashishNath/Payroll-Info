@@ -16,28 +16,32 @@ class TestForm extends React.Component {
         this.doEditRecord=this.doEditRecord.bind(this);
     }
     
+    componentDidMount()
+    {
+        document.getElementById("code").focus();
+    }
+
     async validateControls()
     {
         if(document.getElementById("code").value.trim().length === 0)
         {
-            //alert("Code cannot be blank");
+            document.getElementById("code").focus();
             await this.setState({
                 showMessageBox:true,
                 title:'Error Information',
                 displayMessage:'Code cannot be blank'
             });
-            document.getElementById("code").focus();
+            
             return false;
         }
         if(document.getElementById("name").value.trim().length === 0)
         {
-            //alert("Name cannot be blank");
+            document.getElementById("name").focus();
             await this.setState({
                 showMessageBox:true,
                 title:'Error Information',
                 displayMessage:'Name cannot be blank'
             });
-            document.getElementById("name").focus();
             return false;
         }
         return true;
@@ -50,9 +54,9 @@ class TestForm extends React.Component {
             title:'',
             displayMessage:''
         });
-        var validateFields=await this.validateControls();
+        //var validateFields=await this.validateControls();
         
-        if(validateFields)
+        if(await this.validateControls())
         {
             await this.setState({
                 showMessageBox:true,
