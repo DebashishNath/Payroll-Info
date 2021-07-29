@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Button} from '@material-ui/core';
 import HomeIcon from "@material-ui/icons/Home";
 import ReceiptIcon from "@material-ui/icons/Receipt";
@@ -23,9 +23,8 @@ import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
 import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
 import TestForm from '../ReportComponents/TestForm';
-import background from "../MenuComponents/PayrollBackground.jpg"
 
-export default class MainMenuForm extends React.Component {
+export default class MainMenuForm extends Component {
 
   doLogout()
   {
@@ -75,12 +74,12 @@ export default class MainMenuForm extends React.Component {
       ];
       
       return(
-        <div style={{ backgroundImage: `url(${background})`}}>
-          <div align='right' style={{color :'black',background:'MediumSpringGreen'}}>
+        <div style={{ backgroundColor:'#ecf7fc' }}>
+          <div align='right' style={{color :'white',background:'#3b5998'}}>
                 Welcome {localStorage.getItem('userName')} 
                 &nbsp;&nbsp;&nbsp;&nbsp; {localStorage.getItem('TodayDate')}
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <Button color="secondary" align='right'
+                <Button align='right' style={{color: '#FFFFFF'}}
                   onClick={() => { this.doLogout() }}>Logout</Button>
           </div>
           <Grid container direction="row" spacing="1">
