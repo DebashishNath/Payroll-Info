@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button,Paper,Table,TextField,label } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class TestForm extends React.Component {
     constructor(props) 
@@ -9,60 +8,72 @@ class TestForm extends React.Component {
         super(props);
         this.state = 
         {
-            onClose : true
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         
         this.doEditRecord=this.doEditRecord.bind(this);
-        this.closeForm=this.closeForm.bind(this);
     }
-    closeForm(){}
-    validateControls()
+    
+    async validateControls()
     {
         if(document.getElementById("code").value.trim().length === 0)
         {
-            alert("Code cannot be blank");
+            //alert("Code cannot be blank");
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Code cannot be blank'
+            });
             document.getElementById("code").focus();
             return false;
         }
         if(document.getElementById("name").value.trim().length === 0)
         {
-            alert("Name cannot be blank");
+            //alert("Name cannot be blank");
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Name cannot be blank'
+            });
             document.getElementById("name").focus();
             return false;
         }
         return true;
     }
 
-    doEditRecord()
+    async doEditRecord()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+        var validateFields=await this.validateControls();
+        
+        if(validateFields)
         {
-            return;
+            await this.setState({
+                showMessageBox:true,
+                title:'Save Information',
+                displayMessage:'Record(s) Saved Successfully'
+            });
         }
-        alert("Record(s) Saved");
     }
     render() { 
         const paperStyle={padding:20,height:200,width:300,margin:"40px 100px",border: '2px solid brown'}
-        const closeButton= 
-        { 
-            position: 'absolute',
-            //right: theme.spacing(1),
-            //top: theme.spacing(1),
-            color: 'grey',
-        };
-
         return(
             <Paper style={paperStyle} variant="outlined">
-           
             <div>
+                {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                            {this.state.displayMessage}
+                        </MessageBoxForm>
+                    </div> 
+                : null }
                 <Table>
-                    <tr>
-                    <td colSpan='2'><div align='right'>
-                        <IconButton aria-label="close" style={closeButton} onClick={() => { this.closeForm() }}>
-                        <CloseIcon />
-                        </IconButton>
-                    </div></td>
-                    </tr>
                     <tr><td><label>Code</label></td>
                         <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }}></TextField></td>
                     </tr>
@@ -73,7 +84,7 @@ class TestForm extends React.Component {
                     <br/>
                     <tr>
                         <td></td>
-                        <td><Button color='primary' variant='contained' onClick={() => { this.doEditRecord() }}>Add</Button></td>
+                        <td><Button color='primary' variant='contained' onClick={() => { this.doEditRecord() }}>Save</Button></td>
                     </tr>
                 </Table>
             </div>
