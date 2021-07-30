@@ -51,8 +51,8 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
           style={{ paddingLeft: depth * depthStep }}
           className="sidebar-item-content"
         >
-          {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text"><Link to={item.route} style={{ color: '#3b5998',textDecoration: 'none',fontWeight: 'bold' }}>{label}</Link></div>
+          {Icon && <Icon className="sidebar-item-icon" fontSize="small" style={{ color: '#87ceeb' }} />}
+          <div className="sidebar-item-text"><Link to={item.route} style={{ color: '#800080',textDecoration: 'none',fontWeight: 'bold' }}>{label}</Link></div>
         </div>
         {expandIcon}
       </ListItem>

@@ -74,8 +74,8 @@ export default class MainMenuForm extends Component {
       ];
       
       return(
-        <div style={{ backgroundColor:'#ecf7fc' }}>
-          <div align='right' style={{color :'white',background:'#3b5998'}}>
+        <div style={{ backgroundColor:'white' }}>
+          <div align='right' style={{color :'white',background:'#800080'}}>
                 Welcome {localStorage.getItem('userName')} 
                 &nbsp;&nbsp;&nbsp;&nbsp; {localStorage.getItem('TodayDate')}
                 &nbsp;&nbsp;&nbsp;&nbsp;
