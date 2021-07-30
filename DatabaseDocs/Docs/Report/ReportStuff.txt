@@ -1,0 +1,12 @@
+Stimulsoft Report
+-------------------
+https://www.youtube.com/watch?v=9thALoOsTkM
+npm install stimulsoft.reports.js
+
+Bold Report
+---------------
+npm install @boldreports/react-reporting-components --save --dev
+
+https://demos.boldreports.com/javascript/report-designer/
+
+https://help.boldreports.com/embedded-reporting/react-reporting/report-designer/add-web-report-designer-to-a-react-application/

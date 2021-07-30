@@ -53,5 +53,8 @@ https://www.youtube.com/watch?v=dyL99ACQfsM&list=PL7pEw9n3GkoWkHCQsfBh77UP4nc8lv
 https://stackoverflow.com/questions/41638688/material-uis-tabs-integration-with-react-router-4
 
 ----------------------------------------------------------------------------------------------------------
-
 https://material-ui.com/customization/components/
+---------------------------------------------------------------------------------------
+Dialog 
+https://www.youtube.com/watch?v=nrS1F5ddoxY
+-----------------------------------------------------------------------------------------

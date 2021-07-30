@@ -1,10 +1,5 @@
 npm install create-react-app -g
 npm install create-react-class --save
-npm install @boldreports/react-reporting-components --save --dev
-
-https://demos.boldreports.com/javascript/report-designer/
-
-https://help.boldreports.com/embedded-reporting/react-reporting/report-designer/add-web-report-designer-to-a-react-application/
 
 jdbc:mysql:User=root;Password=rooT678;Database=payrollinfo;Server=myServer;Port=3306;
 
