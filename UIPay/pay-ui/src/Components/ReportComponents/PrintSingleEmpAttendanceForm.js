@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
 import moment from 'moment';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class PrintSingleEmpAttendanceForm extends Component {
     constructor(props) 
@@ -10,11 +11,13 @@ class PrintSingleEmpAttendanceForm extends Component {
             monthsToDisplay:[],
             employeesToDisplay:[],
             attendanceData:[],
-            displayMessage:'',
             monthId:0,
             employeeId:0,
             showAttendance: false,
-            paperHeight:'20vh'
+            paperHeight:'20vh',
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
@@ -81,7 +84,14 @@ class PrintSingleEmpAttendanceForm extends Component {
                 }
                 this.setState({ employeesToDisplay: initialDataToDisplay });
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
+        }
     }
 
     employeesComboChange(event) 
@@ -91,24 +101,36 @@ class PrintSingleEmpAttendanceForm extends Component {
         });
     }
 
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("year").value.trim().length === 0)
         {
-            alert("Enter Year for attendance");
             document.getElementById("year").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Enter Year for attendance'
+            });
             return false;
         }
         if(this.state.monthId === 0)
         {
-            alert("Select Month for attendance");
             document.getElementById("monthsCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select Month for attendance'
+            });
             return false;
         }
         if(this.state.employeeId === 0)
         {
-            alert("Select Employee for attendance");
             document.getElementById("employeesCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select Employee for attendance'
+            });
             return false;
         }
         return true;
@@ -116,7 +138,13 @@ class PrintSingleEmpAttendanceForm extends Component {
 
     async printSingleEmpAttendance()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage: ''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -124,7 +152,6 @@ class PrintSingleEmpAttendanceForm extends Component {
         let initialDataToDisplay=[];
         try
         {
-            this.setState({ displayMessage :'' });
             this.setState({ attendanceData :[] });   
 
             const requestOptions = 
@@ -172,13 +199,22 @@ class PrintSingleEmpAttendanceForm extends Component {
                 }
             else
             {
-                this.setState({ 
+                await this.setState({ 
                     paperHeight:'20vh',
                     showAttendance:false,
-                    attendanceData: [] });   
-                alert('No records to display');
+                    attendanceData: [],
+                    showMessageBox:true,
+                    title:'Information',
+                    displayMessage: 'No records to display' });   
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({ 
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });  
+        }
     }
     
     render() {
@@ -192,6 +228,12 @@ class PrintSingleEmpAttendanceForm extends Component {
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
+                {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                </div> : null}
                 <Table>
                     <tr>
                     <td>
