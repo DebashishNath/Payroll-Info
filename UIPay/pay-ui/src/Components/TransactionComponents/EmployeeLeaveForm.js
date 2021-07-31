@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,TextField,MenuItem } from '@material-ui/core';
 import moment from 'moment';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class EmployeeLeaveForm extends PureComponent {
     constructor(props) 
@@ -13,7 +14,10 @@ class EmployeeLeaveForm extends PureComponent {
             approveByToDisplay:[],
             leaveTypeCode:"",
             leaveTypesToDisplay:[],
-            checked:false
+            checked:false,
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         };
         this.setChecked=this.setChecked.bind(this);
         this.updateEmployeeLeave=this.updateEmployeeLeave.bind(this);
@@ -146,7 +150,11 @@ class EmployeeLeaveForm extends PureComponent {
             }
         }
         catch(err) {
-        alert(err.message);
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
         }
     }
 
@@ -167,79 +175,129 @@ class EmployeeLeaveForm extends PureComponent {
         document.getElementById("ApplicationNo").focus();
     }
 
-    validateControls()
+    async validateControls()
     {
         if((this.state.empId ===0) || 
             (document.getElementById("EmpCode").innerHTML.trim().length === 0))
         {
-            alert("No Employee have been selected for updating leave");
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'No Employee have been selected for updating leave'
+            });
             return false;
         }
         if(document.getElementById("ApplicationNo").value.trim().length === 0)
         {
-            alert("Application No cannot be blank");
             document.getElementById("ApplicationNo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Application No cannot be blank'
+            });
             return false;
         }
         if(document.getElementById("AppDate").value.trim().length === 0)
         {
-            alert("Application Date should be in DD-MM-YYYY");
             document.getElementById("AppDate").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Application Date should be in DD-MM-YYYY'
+            });
             return false;
         }
         if(this.state.leaveTypeCode ==="")
         {
-            alert("Select Leave Type");
             document.getElementById("leaveTypesCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select Leave Type'
+            });
             return false;
         }
         if(document.getElementById("FromDate").value.trim().length === 0)
         {
-            alert("From Date should be in DD-MM-YYYY");
             document.getElementById("FromDate").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'From Date should be in DD-MM-YYYY'
+            });
             return false;
         }
         if(document.getElementById("ToDate").value.trim().length === 0)
         {
-            alert("To Date should be in DD-MM-YYYY");
             document.getElementById("ToDate").focus();
-            return false;
-        }
-        if(document.getElementById("ApplicationDetails").value.trim().length === 0)
-        {
-            alert("Application Details cannot be blank");
-            document.getElementById("ApplicationDetails").focus();
-            return false;
-        }
-        if(this.state.checked && this.state.approveById ===0)
-        {
-            alert("Select the approved By");
-            document.getElementById("approvedByCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'To Date should be in DD-MM-YYYY'
+            });
             return false;
         }
         if(document.getElementById("AppDate").value > document.getElementById("FromDate").value)
         {
-            alert("Application Date cannot be greater than From Date");
             document.getElementById("AppDate").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Application Date cannot be greater than From Date'
+            });
             return false;
         }
         if(document.getElementById("AppDate").value > document.getElementById("ToDate").value)
         {
-            alert("Application Date cannot be greater than To Date");
             document.getElementById("AppDate").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Application Date cannot be greater than To Date'
+            });
             return false;
         }
         if(document.getElementById("FromDate").value > document.getElementById("ToDate").value)
         {
-            alert("From Date cannot be greater than To Date");
             document.getElementById("FromDate").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'From Date cannot be greater than To Date'
+            });
+            return false;
+        }
+        if(document.getElementById("ApplicationDetails").value.trim().length === 0)
+        {
+            document.getElementById("ApplicationDetails").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Application Details cannot be blank'
+            });
+            return false;
+        }
+        if(this.state.checked && this.state.approveById ===0)
+        {
+            document.getElementById("approvedByCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select the approved By'
+            });
             return false;
         }
         return true;
     }
     async updateEmployeeLeave()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -284,14 +342,28 @@ class EmployeeLeaveForm extends PureComponent {
             var data = await response.json();
             if (data.code === 0)
             {
-                alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Save Information',
+                    displayMessage: data.message
+                });
             }
             else
             {
-                alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Error Information',
+                    displayMessage: data.message
+                });
             }
         } catch(err) 
-        { alert(err.message); }
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
+        }
     }
     
     approvedByComboChange(event)
@@ -321,6 +393,12 @@ class EmployeeLeaveForm extends PureComponent {
         return(
             <div>
                 <Paper style={paperStyle} variant="outlined">
+                {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                    </div> : null}
                 <Table>
                     <tr><td><label>Code</label></td>
                         <td><label id ="EmpCode"></label></td>
