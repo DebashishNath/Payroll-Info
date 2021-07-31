@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,RadioGroup,FormControlLabel,
         Radio,Select,MenuItem } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class EmployeePersonalForm extends Component {
   constructor(props) 
@@ -12,7 +13,10 @@ class EmployeePersonalForm extends Component {
       districtsToDisplay:[],
       stateId:0,
       districtId:0,
-      gender:"M"
+      gender:"M",
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
     }
     this.updateEmployeePersonal = this.updateEmployeePersonal.bind(this);
     this.statesComboChange = this.statesComboChange.bind(this);
@@ -111,8 +115,13 @@ class EmployeePersonalForm extends Component {
         }
       }
     }
-    catch(err) {
-      alert(err.message);
+    catch(err) 
+    {
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:err.message
+      });
     }
   }
 
@@ -146,66 +155,106 @@ class EmployeePersonalForm extends Component {
     });
   }
 
-  validateControls()
+  async validateControls()
   {
     if(document.getElementById("employeeCode").value.trim().length === 0)
     {
-        alert("Employee code cannot be blank");
         document.getElementById("employeeCode").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Employee code cannot be blank'
+        });
         return false;
     }
     if(document.getElementById("firstName").value.trim().length === 0)
     {
-        alert("First name cannot be blank");
         document.getElementById("firstName").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'First name cannot be blank'
+        });
         return false;
     }
     if(document.getElementById("lastName").value.trim().length === 0)
     {
-        alert("Last name cannot be blank");
         document.getElementById("lastName").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Last name cannot be blank'
+        });
         return false;
     }
     if(document.getElementById("dob").value.trim().length === 0)
     {
-        alert("Date of birth should be in DD-MM-YYYY");
         document.getElementById("dob").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Date of birth should be in DD-MM-YYYY'
+        });
         return false;
     }
     if(document.getElementById("address1").value.trim().length === 0)
     {
-        alert("Address1 cannot be blank");
         document.getElementById("address1").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Address1 cannot be blank'
+        });
         return false;
     }
     if(this.state.stateId === 0)
     {
-        alert("State cannot be blank");
         document.getElementById("statesCombo").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'State cannot be blank'
+        });
         return false;
     }
     if(this.state.districtId === 0)
     {
-        alert("District cannot be blank");
         document.getElementById("districtsCombo").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'District cannot be blank'
+        });
         return false;
     }
     if(document.getElementById("pin").value.trim().length === 0)
     {
-        alert("Pin cannot be blank");
         document.getElementById("pin").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Pin cannot be blank'
+        });
         return false;
     }
     if(document.getElementById("contactNumber").value.trim().length === 0)
     {
-        alert("Contact Numbers cannot be blank");
         document.getElementById("contactNumber").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Contact Numbers cannot be blank'
+        });
         return false;
     }
     if(document.getElementById("email").value.trim().length === 0)
     {
-        alert("Email Ids cannot be blank");
         document.getElementById("email").focus();
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:'Email Ids cannot be blank'
+        });
         return false;
     }
     return true;
@@ -213,7 +262,13 @@ class EmployeePersonalForm extends Component {
 
   async updateEmployeePersonal() 
   {
-    if(!this.validateControls())
+    await this.setState({
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
+    });
+
+    if(!await this.validateControls())
     {
       return;
     }
@@ -259,15 +314,29 @@ class EmployeePersonalForm extends Component {
       var data = await response.json();
       if (data.code === 0)
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:true,
+          title:'Save Information',
+          displayMessage:data.message
+        });
         localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
       }
       else
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:data.message
+        });
       }
     } catch(err) 
-    { alert(err.message); }
+    { 
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:err.message
+      });
+    }
   }
 
   render()
@@ -277,6 +346,12 @@ class EmployeePersonalForm extends Component {
    
     return (
       <div>
+        {this.state.showMessageBox ?
+        <div>
+            <MessageBoxForm title={this.state.title}>
+            {this.state.displayMessage}
+            </MessageBoxForm>
+        </div> : null}
         <Paper style={paperStyle} variant="outlined">
           <Table>
             <tr>
