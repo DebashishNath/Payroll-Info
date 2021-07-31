@@ -4,6 +4,7 @@ import moment from 'moment';
 import SaveIcon from '@material-ui/icons/Save';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import EditIcon from '@material-ui/icons/Edit';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class HolidayForm extends Component {
     constructor(props) 
@@ -15,7 +16,10 @@ class HolidayForm extends Component {
             holidayRecords:[],
             monthId:0,
             holidayId:0,
-            paperHeight:'30vh'
+            paperHeight:'30vh',
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.doEditHolidayRecord=this.doEditHolidayRecord.bind(this);
@@ -57,36 +61,56 @@ class HolidayForm extends Component {
         this.showHolidaysMonthWise();
     }
     
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("year").value.trim().length === 0)
         {
-            alert("Year cannot be blank");
             document.getElementById("year").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Year cannot be blank'
+            });
             return false;
         }
         if(this.state.monthId === 0)
         {
-            alert("Select month for display of holiday");
             document.getElementById("monthsCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Select month for display of holiday'
+            });
             return false;
         }
         if(document.getElementById("holidayCode").value.trim().length === 0)
         {
-            alert("Holday Code cannot be blank");
             document.getElementById("holidayCode").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Holday Code cannot be blank'
+            });
             return false;
         }
         if(document.getElementById("holidayName").value.trim().length === 0)
         {
-            alert("Holday Name cannot be blank");
             document.getElementById("holidayName").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Holday Name cannot be blank'
+            });
             return false;
         }
         if(document.getElementById("holidayDate").value.trim().length === 0)
         {
-            alert("Holday Date cannot be blank");
             document.getElementById("holidayDate").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Holday Date cannot be blank'
+            });
             return false;
         }
         return true;
@@ -94,7 +118,13 @@ class HolidayForm extends Component {
 
     async doUpdateHolidayRecord()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -119,7 +149,11 @@ class HolidayForm extends Component {
             
             if (data.code === 0)
             {
-                alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Save Information',
+                    displayMessage:data.message
+                });
                 this.showHolidaysMonthWise();
                 if(this.state.holidayId === 0)
                 {
@@ -128,9 +162,20 @@ class HolidayForm extends Component {
             }
             else
             {
-              alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Error Information',
+                    displayMessage:data.message
+                });
             }
-        }catch(err) { alert(err.message); }
+        }catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:err.message
+            });
+        }
     }
 
     async doClearControls()
@@ -195,14 +240,24 @@ class HolidayForm extends Component {
              }
             else
             {
-                this.setState({ 
+                await this.setState({
                     showHolidays:false,
                     paperHeight : '30vh',
-                    holidayRecords: [] });   
-                alert('No records to display');
+                    holidayRecords: [],
+                    showMessageBox:true,
+                    title:'Error Information',
+                    displayMessage:'No records to display'
+                });
             }
             document.getElementById("holidayCode").focus();
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:err.message
+            });
+        }
     }
     
     async doEditHolidayRecord(id,code,holidayName,holidayDate)
@@ -224,6 +279,12 @@ class HolidayForm extends Component {
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
+                {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                    </div> : null}
                 <Table>
                     <tr>
                     <td><label>Year</label></td>
