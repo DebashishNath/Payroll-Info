@@ -3,6 +3,7 @@ import { Table, Button,Paper,Select,MenuItem,TextField } from '@material-ui/core
 import SaveIcon from '@material-ui/icons/Save';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import EditIcon from '@material-ui/icons/Edit';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class EarnDedComponentsForm extends PureComponent {
     constructor(props) 
@@ -12,7 +13,10 @@ class EarnDedComponentsForm extends PureComponent {
             earnDedTypesToDisplay:[],
             earnDedComponentsToDisplay:[],
             earnDedId:0,
-            earnDedType:""
+            earnDedType:"",
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.doUpdateEarnDedComponent=this.doUpdateEarnDedComponent.bind(this);
         this.earnDedTypeComboChange=this.earnDedTypeComboChange.bind(this);
@@ -49,37 +53,59 @@ class EarnDedComponentsForm extends PureComponent {
         document.getElementById("earnDedPriority").value=earnDedPriority;
     }
 
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("earnDedCode").value.trim().length === 0)
         {
-            alert("Enter earn deduction code");
             document.getElementById("earnDedCode").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Earn Deduction code cannot be blank'
+            });
             return false;
         }
         if(document.getElementById("earnDedName").value.trim().length === 0)
         {
-            alert("Enter earn deduction name");
             document.getElementById("earnDedName").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Earn Deduction name cannot be blank'
+            });
             return false;
         }
         if(this.state.earnDedType === "" )
         {
-            alert("Select earn deduction type");
             document.getElementById("earnDedTypeCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Select Earn Deduction type'
+            });
             return false;
         }
         if(document.getElementById("earnDedPriority").value.trim().length ===0)
         {
-            alert("Enter earn deduction priority");
             document.getElementById("earnDedPriority").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Priority cannot be blank'
+            });
             return false;
         }
         return true;
     }
     async doUpdateEarnDedComponent()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -105,7 +131,12 @@ class EarnDedComponentsForm extends PureComponent {
             
             if (data.code === 0)
             {
-                alert(data.message);
+                //alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Save Information',
+                    displayMessage: data.message
+                });
                 this.displayEarnDeductions();
                 if(this.state.earnDedId === 0)
                 {
@@ -114,9 +145,21 @@ class EarnDedComponentsForm extends PureComponent {
             }
             else
             {
-              alert(data.message);
+              //alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Error Information',
+                    displayMessage: data.message
+                });
             }
-        }catch(err) { alert(err.message); }
+        }catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            }); 
+        }
     }
 
     earnDedTypeComboChange(event)
@@ -168,15 +211,24 @@ class EarnDedComponentsForm extends PureComponent {
                     <td align='center'><Button color="primary" variant="contained" size="small" startIcon={<EditIcon/>} onClick={() => 
                         { this.displayOfEarnDedComponent(earnDedId,earnDedCode,earnDedName,earnDedType,earnDedPriority) }}>Edit</Button></td>
                     </tr>);
+                }
             }
-           }
-          else
-          {
-            initialDataToDisplay.push("No Earning and Deduction Data");
-          }
-          this.setState({ earnDedComponentsToDisplay: initialDataToDisplay });
-        } catch(err) {
-            alert(err.message);
+            else
+            {
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Information',
+                    displayMessage: 'No Earn and Deduction data to display'
+                });
+            }
+            this.setState({ earnDedComponentsToDisplay: initialDataToDisplay });
+        }   catch(err) 
+        {
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
         }
     }
 
@@ -190,6 +242,12 @@ class EarnDedComponentsForm extends PureComponent {
           };
         return (
             <Paper style={paperStyle} variant="outlined">
+                {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                </div> : null}
                 <div>
                     <Table>
                         <tr>
