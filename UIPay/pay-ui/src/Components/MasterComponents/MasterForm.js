@@ -26,9 +26,9 @@ class MasterForm extends PureComponent
         this.doEditMasterRecord=this.doEditMasterRecord.bind(this);
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
-        document.getElementById("code").focus(); 
+        await document.getElementById("code").focus(); 
         this.ListMasterRecords();
     }
 

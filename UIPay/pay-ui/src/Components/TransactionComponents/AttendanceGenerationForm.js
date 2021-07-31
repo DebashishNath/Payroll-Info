@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
 import ProgressBar from "./progress-bar.component";
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class AttendanceGenerationForm extends Component {
   constructor(props) 
@@ -11,7 +12,10 @@ class AttendanceGenerationForm extends Component {
       monthId:0,
       disableButton:false,
       completed:0,
-      showProgressBar:false
+      showProgressBar:false,
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
     }
     this.monthsComboChange = this.monthsComboChange.bind(this);
     this.generateAttendance = this.generateAttendance.bind(this);
@@ -52,18 +56,26 @@ class AttendanceGenerationForm extends Component {
     });
   }
 
-  validateControls()
+  async validateControls()
   {
     if(document.getElementById("year").value.trim().length === 0)
     {
-      alert("Enter Year for attendance generation");
       document.getElementById("year").focus();
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:'Enter Year for attendance generation'
+      });
       return false;
     }
     if(this.state.monthId === 0)
     {
-      alert("Select Month for attendance generation");
       document.getElementById("monthsCombo").focus();
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:'Select Month for attendance generation'
+      });
       return false;
     }
     return true;
@@ -71,7 +83,13 @@ class AttendanceGenerationForm extends Component {
 
   async generateAttendance() 
   {
-    if(!this.validateControls())
+    await this.setState({
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
+    });
+
+    if(!await this.validateControls())
     {
       return;
     }
@@ -104,19 +122,33 @@ class AttendanceGenerationForm extends Component {
       
       if (data.code === 0)
       {
-        alert(data.message);
+        await this.setState({
+            showMessageBox:true,
+            title:'Save Information',
+            displayMessage: data.message
+        });
       }
       else
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:false,
+          title:'Error Information',
+          displayMessage: data.message
+        });
       }
       this.setState({ showProgressBar:false,
-                      disableButton:false,
-                      completed:0 });
+        disableButton:false,
+        completed:0 });
+      
       document.getElementById("lblMsg").innerHTML="";
     }
-    catch(err) {
-      alert(err.message);
+    catch(err) 
+    {
+      await this.setState({
+        showMessageBox:false,
+        title:'Error Information',
+        displayMessage: err.message
+      });
     }
   }
 
@@ -125,6 +157,12 @@ class AttendanceGenerationForm extends Component {
       
       return (
         <div>
+            {this.state.showMessageBox ?
+              <div>
+                  <MessageBoxForm title={this.state.title}>
+                  {this.state.displayMessage}
+                  </MessageBoxForm>
+              </div> : null}
             <Paper style={paperStyle} variant="outlined">
               <Table>
                 <tr>
