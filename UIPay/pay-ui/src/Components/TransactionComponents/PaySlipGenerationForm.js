@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class PaySlipGenerationForm extends Component {
   constructor(props) 
@@ -7,16 +8,19 @@ class PaySlipGenerationForm extends Component {
     super(props);
     this.state = {
       monthsToDisplay:[],
-      monthId:0
+      monthId:0,
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
     }
     this.monthsComboChange = this.monthsComboChange.bind(this);
     this.generatePaySlip = this.generatePaySlip.bind(this);
   }
 
-  componentDidMount()
+  async componentDidMount()
   {
     this.PopulateMonths();
-    document.getElementById("year").focus();
+    await document.getElementById("year").focus();
   }
 
   PopulateMonths()
@@ -48,18 +52,26 @@ class PaySlipGenerationForm extends Component {
     });
   }
 
-  validateControls()
+  async validateControls()
   {
     if(document.getElementById("year").value.trim().length === 0)
     {
-      alert("Enter Year for Pay Slip generation");
       document.getElementById("year").focus();
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:'Enter Year for Pay Slip generation'
+      });
       return false;
     }
     if(this.state.monthId === 0)
     {
-      alert("Select Month for Pay Slip generation");
       document.getElementById("monthsCombo").focus();
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:'Select Month for Pay Slip generation'
+      });
       return false;
     }
     return true;
@@ -67,7 +79,13 @@ class PaySlipGenerationForm extends Component {
 
   async generatePaySlip() 
   {
-    if(!this.validateControls())
+    await this.setState({
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
+    });
+
+    if(!await this.validateControls())
     {
       return;
     }
@@ -98,15 +116,28 @@ class PaySlipGenerationForm extends Component {
       
       if (data.code === 0)
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:true,
+          title:'Save Information',
+          displayMessage: data.message
+        });
       }
       else
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage: data.message
+        });
       }
     }
-    catch(err) {
-      alert(err.message);
+    catch(err) 
+    {
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage: err.message
+      });  
     }
   }
 
@@ -116,6 +147,12 @@ class PaySlipGenerationForm extends Component {
       return (
         <div>
             <Paper style={paperStyle} variant="outlined">
+              {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                    </div> : null}
               <Table>
                 <tr>
                   <td>
