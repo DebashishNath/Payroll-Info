@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class PrintPaysheetForm extends Component {
     constructor(props) 
@@ -12,7 +13,10 @@ class PrintPaysheetForm extends Component {
             dedColsInGrid:[],
             monthId:0,
             showPaysheet: false,
-            paperHeight:'10vh'
+            paperHeight:'10vh',
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.printPaysheet=this.printPaysheet.bind(this);
@@ -20,7 +24,7 @@ class PrintPaysheetForm extends Component {
 
     async componentDidMount(){
         this.populateMonths();
-        document.getElementById("year").focus();
+        await document.getElementById("year").focus();
     }
 
     populateMonths()
@@ -52,18 +56,26 @@ class PrintPaysheetForm extends Component {
       });
     }
     
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("year").value.trim().length === 0)
         {
-            alert("Enter Year for Paysheet");
             document.getElementById("year").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Enter Year for Paysheet'
+            });
             return false;
         }
         if(this.state.monthId === 0)
         {
-            alert("Select Month for Paysheet");
             document.getElementById("monthsCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Select Month for Paysheet'
+            });
             return false;
         }
         return true;
@@ -71,7 +83,13 @@ class PrintPaysheetForm extends Component {
 
     async printPaysheet()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -111,13 +129,23 @@ class PrintPaysheetForm extends Component {
                 }
             else
             {
-                this.setState({ 
+                await this.setState({ 
                     paperHeight:'10vh',
                     showPaysheet:false,
-                    paysheetToDisplay: [] });   
-                alert('No records to display');
+                    paysheetToDisplay: [],
+                    showMessageBox:true,
+                    title:'Information',
+                    displayMessage:'No records to display'
+                }); 
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        {
+            await this.setState({ 
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:err.message
+            });  
+        }
     }
     
     async setRecords(data,pos,initialDataToDisplay)
@@ -298,6 +326,12 @@ class PrintPaysheetForm extends Component {
         return (
         <div>
             <Paper style={paperStyle} variant="outlined">
+                {this.state.showMessageBox ?
+                <div>
+                    <MessageBoxForm title={this.state.title}>
+                    {this.state.displayMessage}
+                    </MessageBoxForm>
+                </div> : null}
                 <Table>
                     <tr>
                         <td>
