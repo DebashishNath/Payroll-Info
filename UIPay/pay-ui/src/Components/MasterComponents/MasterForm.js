@@ -3,6 +3,7 @@ import { Table, TextField , Button,Paper } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import EditIcon from '@material-ui/icons/Edit';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class MasterForm extends PureComponent
 {
@@ -14,7 +15,10 @@ class MasterForm extends PureComponent
             id: 0,
             ListRecords:[],
             showMasterRecords: false,
-            paperHeight:'20vh'
+            paperHeight:'20vh',
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.updateMasterRecord=this.updateMasterRecord.bind(this);
         this.clearControls=this.clearControls.bind(this);
@@ -36,18 +40,26 @@ class MasterForm extends PureComponent
         document.getElementById("code").focus();
     }
 
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("code").value.trim().length === 0)
         {
-            alert(this.props.LabelCode + " cannot be blank");
             document.getElementById("code").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:this.props.LabelCode + " cannot be blank"
+            });
             return false;
         }
         if(document.getElementById("name").value.trim().length === 0)
         {
-            alert(this.props.LabelName + " cannot be blank");
             document.getElementById("name").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:this.props.LabelName + " cannot be blank"
+            });
             return false;
         }
         return true;
@@ -55,7 +67,13 @@ class MasterForm extends PureComponent
 
     async updateMasterRecord() 
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -110,16 +128,28 @@ class MasterForm extends PureComponent
         
         if (data.code === 0)
         {
-            alert(data.message);
+            await this.setState({
+                showMessageBox:true,
+                title:'Save Information',
+                displayMessage: data.message
+            });
             this.ListMasterRecords();
         }
         else
         {
-            alert(data.message);
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: data.message
+            });
         }
       }
       catch(err) { 
-        alert(err.message);
+        await this.setState({
+            showMessageBox:true,
+            title:'Error Information',
+            displayMessage: err.message
+        });
       }
     }
 
@@ -179,7 +209,11 @@ class MasterForm extends PureComponent
             
         }catch(err) 
         {
-            alert(err.message);
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
         }
     }
 
@@ -204,6 +238,12 @@ class MasterForm extends PureComponent
         return (
             <Paper style={paperStyle} variant="outlined">
                 <div>
+                    {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                    </div> : null}
                     <Table>
                     <tr><td><label>{this.props.LabelCode}</label></td>
                         <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }}></TextField></td>
