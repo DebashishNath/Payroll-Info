@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem } from '@material-ui/core';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class EmployeeOfficialForm extends Component {
 
@@ -12,7 +13,10 @@ class EmployeeOfficialForm extends Component {
       designationsToDisplay:[],
       categoryId:0,
       departmentId:0,
-      designationId:0
+      designationId:0,
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
     }
     this.updateEmployeeOfficial=this.updateEmployeeOfficial.bind(this);
     this.categoryChange = this.categoryChange.bind(this);
@@ -119,8 +123,13 @@ class EmployeeOfficialForm extends Component {
         }
       }
     }
-    catch(err) {
-      alert(err.message);
+    catch(err) 
+    {
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:err.message
+      });
     }
   }
 
@@ -147,6 +156,12 @@ class EmployeeOfficialForm extends Component {
 
   async updateEmployeeOfficial()
   {
+    await this.setState({
+      showMessageBox:false,
+      title:'',
+      displayMessage:''
+    });
+
     let categoryId=null;
     if(this.state.categoryId>0)
     {
@@ -192,14 +207,28 @@ class EmployeeOfficialForm extends Component {
      
       if (data.code === 0)
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:true,
+          title:'Save Information',
+          displayMessage:data.message
+        });
       }
       else
       {
-        alert(data.message);
+        await this.setState({
+          showMessageBox:true,
+          title:'Error Information',
+          displayMessage:data.message
+        });
       }
     } catch(err) 
-    { alert(err.message); }
+    { 
+      await this.setState({
+        showMessageBox:true,
+        title:'Error Information',
+        displayMessage:err.message
+      });
+    }
   }
 
   render()
@@ -209,6 +238,12 @@ class EmployeeOfficialForm extends Component {
    
     return (
       <div>
+        {this.state.showMessageBox ?
+        <div>
+            <MessageBoxForm title={this.state.title}>
+            {this.state.displayMessage}
+            </MessageBoxForm>
+        </div> : null}
         <Paper style={paperStyle} variant="outlined">
           <Table>
             <tr><td><label>Employee Name</label></td>
