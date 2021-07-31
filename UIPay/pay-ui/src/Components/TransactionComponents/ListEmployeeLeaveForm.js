@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,MenuItem } from '@material-ui/core';
 import moment from 'moment';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class ListEmployeeLeaveForm extends PureComponent {
     constructor(props) 
@@ -9,7 +10,10 @@ class ListEmployeeLeaveForm extends PureComponent {
         this.state = {
             employeesToDisplay:[],
             empLeavesToDisplay:[],
-            employeeId : 0
+            employeeId : 0,
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.addEmpLeave=this.addEmpLeave.bind(this);
         this.doEditOfEmpLeave=this.doEditOfEmpLeave.bind(this);
@@ -20,11 +24,16 @@ class ListEmployeeLeaveForm extends PureComponent {
         this.DisplayAllEmployees();
     }
 
-    addEmpLeave()
+    async addEmpLeave()
     {
         if(this.state.employeeId === 0)
         {
-            alert('Select employee to add new leave record')
+            document.getElementById("employeesCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:'Select employee to add new leave record'
+            });
             return;
         }
         localStorage.setItem('LeaveApplicationId',0);
@@ -73,15 +82,23 @@ class ListEmployeeLeaveForm extends PureComponent {
                 }
                 this.setState({ employeesToDisplay: initialDataToDisplay });
             }
-        } catch(err) {
-            alert(err.message);
+        } catch(err) 
+        {
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:err.message
+            });
         }
     }
 
     async DisplayAllEmpLeaves(empId)
     {
         let initialDataToDisplay = [];
-        this.setState({
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:'',
             empLeavesToDisplay: []                
           });
         const requestOptions = {
@@ -93,48 +110,56 @@ class ListEmployeeLeaveForm extends PureComponent {
         var url='http://192.168.43.241:8086/api/leave_of_single_emp/' + empId;
         try 
         {
-          const response = await fetch(url,requestOptions);
-          var data = await response.json();
-          if(data!=null && data.length>0)
-          {
-            initialDataToDisplay.push(<tr>
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
+            if(data!=null && data.length>0)
+            {
+                initialDataToDisplay.push(<tr>
                  <th>Slno</th><th style={{display:'none'}}>Id</th><th>App. Date</th>
                  <th>From Date</th><th>To Date</th><th>No Days</th>
                  <th>Approve(Y/N)</th>
                  <th></th></tr>);
-            for(var i=0;i<=data.length-1;i++)
-            {
-                let leaveApplicationId=data[i].leave_application_id;
-                let startDate = moment(data[i].from_date);
-                let toDate = moment(data[i].to_date);
-                let diff = toDate.diff(startDate);
-                let diffDuration = moment.duration(diff);
-                let noDays=diffDuration.days() + 1;
+                for(var i=0;i<=data.length-1;i++)
+                {
+                    let leaveApplicationId=data[i].leave_application_id;
+                    let startDate = moment(data[i].from_date);
+                    let toDate = moment(data[i].to_date);
+                    let diff = toDate.diff(startDate);
+                    let diffDuration = moment.duration(diff);
+                    let noDays=diffDuration.days() + 1;
 
-                initialDataToDisplay.push(
-                    <tr key={leaveApplicationId}>
-                    <td>{i+1}</td>
-                    <td style={{display:'none'}}>{leaveApplicationId}</td>
-                    <td>{moment(data[i].leave_application_date).format('DD-MMM-YY')}</td>
-                    <td>{startDate.format('DD-MMM-YY')}</td>
-                    <td>{toDate.format('DD-MMM-YY')}</td>
-                    <td>{noDays}</td>
-                    <td>{data[i].is_approved}</td>
-                    <td><Button color="primary" variant="contained" size="small" onClick={() => { this.doEditOfEmpLeave(leaveApplicationId) }}>Edit</Button></td>
-                    </tr>);
+                    initialDataToDisplay.push(
+                        <tr key={leaveApplicationId}>
+                        <td>{i+1}</td>
+                        <td style={{display:'none'}}>{leaveApplicationId}</td>
+                        <td>{moment(data[i].leave_application_date).format('DD-MMM-YY')}</td>
+                        <td>{startDate.format('DD-MMM-YY')}</td>
+                        <td>{toDate.format('DD-MMM-YY')}</td>
+                        <td>{noDays}</td>
+                        <td>{data[i].is_approved}</td>
+                        <td><Button color="primary" variant="contained" size="small" onClick={() => { this.doEditOfEmpLeave(leaveApplicationId) }}>Edit</Button></td>
+                        </tr>);
+                }
+                this.setState({
+                    empLeavesToDisplay: initialDataToDisplay                
+                });
             }
-            this.setState({
-                empLeavesToDisplay: initialDataToDisplay                
-              });
-          }
-          else{
-             alert("No Leaves taken");
-             this.setState({
-                empLeavesToDisplay: []                
-              });
-          }
-        } catch(err) {
-            alert(err.message);
+            else
+            {
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Leave Information',
+                    displayMessage:'No Leaves taken',
+                    empLeavesToDisplay: []
+                });
+            }
+        } catch(err) 
+        {
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage:err.message
+            });
         }
     }
 
@@ -150,6 +175,12 @@ class ListEmployeeLeaveForm extends PureComponent {
 
         return (
             <Paper style={paperStyle} variant="outlined">
+            {this.state.showMessageBox ?
+            <div>
+                <MessageBoxForm title={this.state.title}>
+                {this.state.displayMessage}
+                </MessageBoxForm>
+            </div> : null}
             <div>
                 <Table>
                     <tr>
