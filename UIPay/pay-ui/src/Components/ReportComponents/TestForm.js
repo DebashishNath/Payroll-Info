@@ -54,8 +54,7 @@ class TestForm extends React.Component {
             title:'',
             displayMessage:''
         });
-        //var validateFields=await this.validateControls();
-        
+                
         if(await this.validateControls())
         {
             await this.setState({

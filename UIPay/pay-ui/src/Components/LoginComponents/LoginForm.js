@@ -1,13 +1,18 @@
-import React, { useEffect}  from "react";
+import React, { useEffect,useState}  from "react";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import { Paper, Grid, TextField, Button, FormControlLabel, Checkbox,Avatar, 
   Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MainMenuForm from "../MenuComponents/MainMenuForm";
 import moment from 'moment';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 function LoginContent() 
 {
+    const [showMessageBox, setShowMessageBox] = useState(false);
+    const [title, setTitle] = useState('');
+    const [displayMessage, setDisplayMessage] = useState('');
+           
     const paperStyle={padding:20,height:'60vh',width:280,margin:"60px auto"}
     const avatarStyle={backgroundColor:'green'} 
     const btnStyle={margin:'8px 0'}
@@ -16,6 +21,10 @@ function LoginContent()
 
     async function doLogin() {
       
+      await setShowMessageBox(false);
+      await setTitle('');
+      await setDisplayMessage('');
+
       const requestOptions = {
         crossDomain:true,
         method: 'POST',
@@ -46,12 +55,15 @@ function LoginContent()
         }
         else
         {
-          document.getElementById('invalidmsg').innerHTML = data.returnMessage.message;
-          document.getElementById('invalidmsg').style="color:red"
+          await setShowMessageBox(true);
+          await setTitle('Error Information');
+          await setDisplayMessage(data.returnMessage.message);
         }
       }
       catch(err) {
-        alert('Please contact system administrator to check the web server');
+        await setShowMessageBox(true);
+        await setTitle('Error Information');
+        await setDisplayMessage('Please contact system administrator to check the web server');
       }
     }
 
@@ -64,7 +76,12 @@ function LoginContent()
         <Grid align="center">
           <Avatar style={avatarStyle}><LockOutlinedIcon/></Avatar>
           <h2>Sign In</h2>
-          <div><label id = "invalidmsg"></label></div>
+          {showMessageBox ?
+          <div>
+            <MessageBoxForm title={title}>
+              {displayMessage}
+            </MessageBoxForm>
+          </div> : null}
         </Grid>
         <TextField id="uname" label='Username' placeholder='Enter Username' variant='outlined' fullWidth required></TextField>
         <br /><br />
