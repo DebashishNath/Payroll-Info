@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class PrintPaySlipForm extends Component {
     constructor(props) 
@@ -9,11 +10,13 @@ class PrintPaySlipForm extends Component {
             monthsToDisplay:[],
             employeesToDisplay:[],
             paySlipData:[],
-            displayMessage:'',
             monthId:0,
             employeeId:0,
             showPaySlip: false,
-            paperHeight:'20vh'
+            paperHeight:'20vh',
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
@@ -80,7 +83,14 @@ class PrintPaySlipForm extends Component {
                 }
                 this.setState({ employeesToDisplay: initialDataToDisplay });
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
+        }
     }
 
     employeesComboChange(event) 
@@ -90,24 +100,36 @@ class PrintPaySlipForm extends Component {
         });
     }
 
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("year").value.trim().length === 0)
         {
-            alert("Enter Year for Pay Slip printing");
             document.getElementById("year").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Enter Year for Pay Slip printing'
+            });
             return false;
         }
         if(this.state.monthId === 0)
         {
-            alert("Select Month for Pay Slip printing");
             document.getElementById("monthsCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select Month for Pay Slip printing'
+            });
             return false;
         }
         if(this.state.employeeId === 0)
         {
-            alert("Select Employee for Pay Slip printing");
             document.getElementById("employeesCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select Employee for Pay Slip printing'
+            });
             return false;
         }
         return true;
@@ -115,15 +137,21 @@ class PrintPaySlipForm extends Component {
 
     async printPaySlip()
     {
-        if(!this.validateControls()) 
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage: ''
+        });
+
+        if(!await this.validateControls()) 
         {
             return;
         }
+
         try
         {
             let earnData = [],dedData = [],payData=[];
             let i = 0,total_earn_amount=0,total_ded_amount=0,net_amount=0;
-            this.setState({ displayMessage :'' });
             this.setState({ paySlipData: [] });   
 
             const requestOptions = {
@@ -221,10 +249,20 @@ class PrintPaySlipForm extends Component {
                 this.setState({ 
                     showPaySlip:false,
                     paperHeight : '20vh',
-                    paySlipData: [] });   
-                alert('No records to display');
+                    paySlipData: [] ,
+                    showMessageBox:true,
+                    title:'Information',
+                    displayMessage: 'No records to display'
+                });
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });
+        }
     }
     
     render() {
@@ -236,6 +274,12 @@ class PrintPaySlipForm extends Component {
           };
         return (
         <div>
+            {this.state.showMessageBox ?
+                <div>
+                    <MessageBoxForm title={this.state.title}>
+                    {this.state.displayMessage}
+                    </MessageBoxForm>
+                </div> : null}
             <Paper style={paperStyle} variant="outlined">
                 <Table>
                     <tr>
