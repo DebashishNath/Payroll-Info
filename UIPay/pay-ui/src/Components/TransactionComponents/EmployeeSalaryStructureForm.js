@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,MenuItem,TextField } from '@material-ui/core';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class EmployeeSalaryStructureForm extends PureComponent {
     constructor(props) 
@@ -11,7 +12,10 @@ class EmployeeSalaryStructureForm extends PureComponent {
             employeeStructId:0,
             earnDedComponentsToDisplay:[],
             earnDedId:0,
-            showEmpSalStruct:false
+            showEmpSalStruct:false,
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.employeesComboChange=this.employeesComboChange.bind(this);
         this.earnDedComponentsComboChange=this.earnDedComponentsComboChange.bind(this);
@@ -34,24 +38,36 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.setState({ earnDedId : earnDedId });
     }
 
-    validateControls()
+    async validateControls()
     {
       if(this.state.employeeStructId === 0)
       {
-        alert("Select employee for creating salary structure");
         document.getElementById("employeesCombo").focus();
+        await this.setState({
+            showMessageBox:true,
+            title:'Error Information',
+            displayMessage:'Select employee for creating salary structure'
+        });
         return false;
       }
       if(this.state.earnDedId === 0)
       {
-        alert("Select earn deduction component for creating salary structure");
         document.getElementById("earnDedCombo").focus();
+        await this.setState({
+            showMessageBox:true,
+            title:'Error Information',
+            displayMessage:'Select earn deduction component for creating salary structure'
+        });
         return false;
       }
       if(document.getElementById("earnDedAmount").value.trim().length === 0)
       {
-        alert("Enter earn deduction amount for creating salary structure");
         document.getElementById("earnDedAmount").focus();
+        await this.setState({
+            showMessageBox:true,
+            title:'Error Information',
+            displayMessage:'Enter earn deduction amount for creating salary structure'
+        });
         return false;
       }
       return true;
@@ -59,7 +75,13 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     async doUpdateEmpComponent()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -84,14 +106,29 @@ class EmployeeSalaryStructureForm extends PureComponent {
             
             if (data.code === 0)
             {
-                alert(data.message);
+                await this.setState({
+                    showMessageBox:true,
+                    title:'Save Information',
+                    displayMessage:data.message
+                });
                 this.displayEmpEarnDeduction( this.state.employeeStructId)
             }
             else
             {
-                alert(data.message);
+                await this.setState({
+                    showMessageBox:false,
+                    title:'Error Information',
+                    displayMessage:data.message
+                });
             }
-        }catch(err) { alert(err.message); }
+        }catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:false,
+                title:'Error Information',
+                displayMessage:err.message
+            });
+        }
     }
 
     async populateCombos(comboName,url) 
@@ -131,7 +168,14 @@ class EmployeeSalaryStructureForm extends PureComponent {
                 this.setState({ earnDedComponentsToDisplay: initialDataToDisplay });
             }
           }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:false,
+                title:'Error Information',
+                displayMessage:err.message
+            });
+        }
     }
 
     employeesComboChange(event)
@@ -206,7 +250,14 @@ class EmployeeSalaryStructureForm extends PureComponent {
                 this.setState({ showEmpSalStruct : false });
                 this.setState({ earnDedToDisplay: [] });
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({
+                showMessageBox:false,
+                title:'Error Information',
+                displayMessage:err.message
+            });
+        }
     }
 
     clearControls()
@@ -230,6 +281,12 @@ class EmployeeSalaryStructureForm extends PureComponent {
           };
         return (
             <Paper style={paperStyle} variant="outlined">
+                    {this.state.showMessageBox ?
+                    <div>
+                        <MessageBoxForm title={this.state.title}>
+                        {this.state.displayMessage}
+                        </MessageBoxForm>
+                    </div> : null}
                 <div>
                     <Table>
                         <tr>
