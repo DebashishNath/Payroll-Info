@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class PrintPTAXMonthlyForm extends Component {
     constructor(props) 
@@ -10,7 +11,10 @@ class PrintPTAXMonthlyForm extends Component {
             ptaxToDisplay:[],
             monthId:0,
             showPTax: false,
-            paperHeight:'10vh'
+            paperHeight:'10vh',
+            showMessageBox:false,
+            title:'',
+            displayMessage:''
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.printPTAX=this.printPTAX.bind(this);
@@ -50,18 +54,26 @@ class PrintPTAXMonthlyForm extends Component {
       });
     }
     
-    validateControls()
+    async validateControls()
     {
         if(document.getElementById("year").value.trim().length === 0)
         {
-            alert("Enter Year for PTAX");
             document.getElementById("year").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Enter Year for PTAX'
+            });
             return false;
         }
         if(this.state.monthId === 0)
         {
-            alert("Select Month for PTAX");
             document.getElementById("monthsCombo").focus();
+            await this.setState({
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: 'Select Month for PTAX'
+            });
             return false;
         }
         return true;
@@ -69,7 +81,13 @@ class PrintPTAXMonthlyForm extends Component {
 
     async printPTAX()
     {
-        if(!this.validateControls())
+        await this.setState({
+            showMessageBox:false,
+            title:'',
+            displayMessage: ''
+        });
+
+        if(!await this.validateControls())
         {
             return;
         }
@@ -117,13 +135,23 @@ class PrintPTAXMonthlyForm extends Component {
                 }
             else
             {
-                this.setState({ 
+                await this.setState({ 
                     paperHeight:'10vh',
                     showPTax:false,
-                    ptaxToDisplay: [] });   
-                alert('No records to display');
+                    ptaxToDisplay: [],
+                    showMessageBox:true,
+                    title:'Information',
+                    displayMessage: 'No records to display' 
+                });   
             }
-        } catch(err) { alert(err.message); }
+        } catch(err) 
+        { 
+            await this.setState({ 
+                showMessageBox:true,
+                title:'Error Information',
+                displayMessage: err.message
+            });   
+        }
     }
     
     render() {
@@ -136,6 +164,12 @@ class PrintPTAXMonthlyForm extends Component {
 
         return (
         <div>
+            {this.state.showMessageBox ?
+            <div>
+                <MessageBoxForm title={this.state.title}>
+                {this.state.displayMessage}
+                </MessageBoxForm>
+            </div> : null}
             <Paper style={paperStyle} variant="outlined">
                 <Table>
                     <tr>
