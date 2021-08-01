@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,MenuItem } from '@material-ui/core';
 import moment from 'moment';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class ListEmployeeLeaveForm extends PureComponent {
     constructor(props) 
@@ -68,7 +69,7 @@ class ListEmployeeLeaveForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/employees';
+        var url= HelperMethods.GetServerIP() + 'api/employees';
         try 
         {
             const response = await fetch(url,requestOptions);
@@ -107,7 +108,7 @@ class ListEmployeeLeaveForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/leave_of_single_emp/' + empId;
+        var url= HelperMethods.GetServerIP() + 'api/leave_of_single_emp/' + empId;
         try 
         {
             const response = await fetch(url,requestOptions);

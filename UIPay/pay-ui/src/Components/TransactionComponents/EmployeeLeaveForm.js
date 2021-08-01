@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,TextField,MenuItem } from '@material-ui/core';
 import moment from 'moment';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class EmployeeLeaveForm extends PureComponent {
     constructor(props) 
@@ -28,9 +29,9 @@ class EmployeeLeaveForm extends PureComponent {
 
     componentDidMount()
     {
-        var url='http://192.168.43.241:8086/api/leave_types';
+        var url= HelperMethods.GetServerIP() + 'api/leave_types';
         this.populateCombos('LeaveType',url);
-        url='http://192.168.43.241:8086/api/employees';
+        url= HelperMethods.GetServerIP() + 'api/employees';
         this.populateCombos('Employee',url);
         var application_id= localStorage.getItem('LeaveApplicationId');
         if(application_id > 0)
@@ -53,7 +54,7 @@ class EmployeeLeaveForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/employee/' + employeeId;
+        var url= HelperMethods.GetServerIP() + 'api/employee/' + employeeId;
         const response = await fetch(url,requestOptions);
         var data = await response.json();
         
@@ -73,7 +74,7 @@ class EmployeeLeaveForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/emp_leave/' + applicationId;
+        var url= HelperMethods.GetServerIP() + 'api/emp_leave/' + applicationId;
         const response = await fetch(url,requestOptions);
         var data = await response.json();
         if(data!=null)
@@ -334,7 +335,7 @@ class EmployeeLeaveForm extends PureComponent {
                 "remarks" : document.getElementById("Remarks").value.trim() })
             };
     
-        let url='http://192.168.43.241:8086/api/save_emp_leave';
+        let url= HelperMethods.GetServerIP() + 'api/save_emp_leave';
         
         try 
         {
