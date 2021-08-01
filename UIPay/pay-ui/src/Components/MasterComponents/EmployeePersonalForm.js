@@ -3,6 +3,7 @@ import { Table, TextField , Button,Paper,RadioGroup,FormControlLabel,
         Radio,Select,MenuItem } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class EmployeePersonalForm extends Component {
   constructor(props) 
@@ -26,7 +27,7 @@ class EmployeePersonalForm extends Component {
 
   componentDidMount(){
     document.getElementById("employeeCode").focus();
-    var url='http://192.168.43.241:8086/api/states';
+    var url= HelperMethods.GetServerIP() + 'api/states';
     
     this.populateCombos('State',url)
     let empId= localStorage.getItem('employeeId');
@@ -48,7 +49,7 @@ class EmployeePersonalForm extends Component {
         headers: { 'Content-Type': 'application/json',
                     'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
       };
-      var url='http://192.168.43.241:8086/api/employee/' + empId;
+      var url= HelperMethods.GetServerIP() + 'api/employee/' + empId;
       const response = await fetch(url,requestOptions);
       var data = await response.json();
       if(data!=null)
@@ -137,7 +138,7 @@ class EmployeePersonalForm extends Component {
       districtsToDisplay: []
     });
     
-    var url='http://192.168.43.241:8086/api/districts/' + empStateId;
+    var url= HelperMethods.GetServerIP() + 'api/districts/' + empStateId;
     this.populateCombos('District',url)
     this.setState({stateId:empStateId});
   }
@@ -301,11 +302,11 @@ class EmployeePersonalForm extends Component {
     let url='';
     if (document.getElementById("lblEmpId").value === '0')
     {
-      url='http://192.168.43.241:8086/api/newemployee';
+      url= HelperMethods.GetServerIP() + 'api/newemployee';
     }
     else
     {
-      url='http://192.168.43.241:8086/api/modifyemployee';
+      url=HelperMethods.GetServerIP() + 'api/modifyemployee';
     }
     
     try 

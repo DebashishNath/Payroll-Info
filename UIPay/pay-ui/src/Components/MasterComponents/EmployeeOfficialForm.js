@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem } from '@material-ui/core';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class EmployeeOfficialForm extends Component {
 
@@ -25,13 +26,13 @@ class EmployeeOfficialForm extends Component {
   }
 
   componentDidMount(){
-    var url='http://192.168.43.241:8086/api/catagories';
+    var url= HelperMethods.GetServerIP() + 'api/catagories';
     this.populateCombos('Category',url);
 
-    url='http://192.168.43.241:8086/api/departments';
+    url= HelperMethods.GetServerIP() + 'api/departments';
     this.populateCombos('Department',url);
 
-    url='http://192.168.43.241:8086/api/designations';
+    url= HelperMethods.GetServerIP() + 'api/designations';
     this.populateCombos('Designation',url);
 
     let empId= localStorage.getItem('employeeId');
@@ -49,7 +50,7 @@ class EmployeeOfficialForm extends Component {
       headers: { 'Content-Type': 'application/json',
                   'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
     };
-    var url='http://192.168.43.241:8086/api/employee/' + empId;
+    var url= HelperMethods.GetServerIP() + 'api/employee/' + empId;
     const response = await fetch(url,requestOptions);
     var data = await response.json();
     if(data!=null)
@@ -198,7 +199,7 @@ class EmployeeOfficialForm extends Component {
 	    })
     };
 
-    var url='http://192.168.43.241:8086/api/updateemployeeofficial';
+    var url= HelperMethods.GetServerIP() + 'api/updateemployeeofficial';
     
     try 
     {
