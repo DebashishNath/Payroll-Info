@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class PaySlipGenerationForm extends Component {
   constructor(props) 
@@ -108,7 +109,7 @@ class PaySlipGenerationForm extends Component {
     {
       payDate=payYear + '-' +  payMonth + '-01' ;
     }
-    var url='http://192.168.43.241:8086/api/payslip/' + payMonth + '/' + payYear + '/' + payDate
+    var url= HelperMethods.GetServerIP() + 'api/payslip/' + payMonth + '/' + payYear + '/' + payDate
     try 
     {
       const response = await fetch(url,requestOptions);
