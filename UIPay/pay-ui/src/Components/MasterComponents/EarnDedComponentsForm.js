@@ -4,6 +4,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import EditIcon from '@material-ui/icons/Edit';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class EarnDedComponentsForm extends PureComponent {
     constructor(props) 
@@ -123,7 +124,7 @@ class EarnDedComponentsForm extends PureComponent {
               })
         };
         
-        var url='http://192.168.43.241:8086/api/update_earn_deduction';
+        var url= HelperMethods.GetServerIP() + 'api/update_earn_deduction';
         try 
         {
             const response = await fetch(url,requestOptions);
@@ -131,7 +132,6 @@ class EarnDedComponentsForm extends PureComponent {
             
             if (data.code === 0)
             {
-                //alert(data.message);
                 await this.setState({
                     showMessageBox:true,
                     title:'Save Information',
@@ -145,7 +145,6 @@ class EarnDedComponentsForm extends PureComponent {
             }
             else
             {
-              //alert(data.message);
                 await this.setState({
                     showMessageBox:true,
                     title:'Error Information',
@@ -177,7 +176,7 @@ class EarnDedComponentsForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/earn_deductions';
+        var url= HelperMethods.GetServerIP() + 'api/earn_deductions';
         try 
         {
           const response = await fetch(url,requestOptions);
