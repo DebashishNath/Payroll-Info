@@ -16,32 +16,36 @@ class TestForm extends React.Component {
         this.doEditRecord=this.doEditRecord.bind(this);
     }
     
-    componentDidMount()
+    async componentDidMount()
     {
-        document.getElementById("code").focus();
+        await document.getElementById("code").focus();
+    }
+
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
     }
 
     async validateControls()
     {
+        await this.showMessage(false,'','','');
+
         if(document.getElementById("code").value.trim().length === 0)
         {
-            document.getElementById("code").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Code cannot be blank'
-            });
-            
+            await this.showMessage(true,'Error Information','Code cannot be blank','code');
             return false;
         }
         if(document.getElementById("name").value.trim().length === 0)
         {
-            document.getElementById("name").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Name cannot be blank'
-            });
+            await this.showMessage(true,'Error Information','Name cannot be blank','name');
             return false;
         }
         return true;
@@ -49,19 +53,12 @@ class TestForm extends React.Component {
 
     async doEditRecord()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage:''
-        });
-                
+        //Implementation of helper methods
+        //document.getElementById("name").value=HelperMethods.printSum(6,7);
+
         if(await this.validateControls())
         {
-            await this.setState({
-                showMessageBox:true,
-                title:'Save Information',
-                displayMessage:'Record(s) Saved Successfully'
-            });
+            await this.showMessage(true,'Save Information','Record(s) Saved Successfully','');
         }
     }
     render() { 

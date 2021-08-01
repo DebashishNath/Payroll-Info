@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MasterForm from './MasterForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class DepartmentForm extends Component 
 {
@@ -11,8 +12,8 @@ class DepartmentForm extends Component
             FormName    :'Department',
             LabelCode   :'Department Code',
             LabelName   :'Department Name',
-            SaveDeptUrl :'http://192.168.43.241:8086/api/savedepartment',
-            ListDeptUrl :'http://192.168.43.241:8086/api/masterdatas/Department'
+            SaveDeptUrl : HelperMethods.GetServerIP() + 'api/savedepartment',
+            ListDeptUrl : HelperMethods.GetServerIP() + 'api/masterdatas/Department'
         }
     }
     render(){

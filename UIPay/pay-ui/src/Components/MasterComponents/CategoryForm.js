@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MasterForm from './MasterForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class CategoryForm extends Component 
 {
@@ -11,8 +12,8 @@ class CategoryForm extends Component
           FormName        :'Category',
           LabelCode       :'Category Code',
           LabelName       :'Category Name',
-          SaveCategoryUrl :'http://192.168.43.241:8086/api/savecategory',
-          ListCategoryUrl :'http://192.168.43.241:8086/api/masterdatas/Category'
+          SaveCategoryUrl : HelperMethods.GetServerIP() + 'api/savecategory',
+          ListCategoryUrl : HelperMethods.GetServerIP() +'api/masterdatas/Category'
       }
   }
   render(){

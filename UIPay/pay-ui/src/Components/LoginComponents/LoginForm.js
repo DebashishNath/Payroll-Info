@@ -6,6 +6,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MainMenuForm from "../MenuComponents/MainMenuForm";
 import moment from 'moment';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 function LoginContent() 
 {
@@ -35,7 +36,7 @@ function LoginContent()
           })
       };
     
-      var url='http://192.168.43.241:8086/api/auth/signin';
+      var url=HelperMethods.GetServerIP() + 'api/auth/signin';
       try 
       {
         const response = await fetch(url,requestOptions);

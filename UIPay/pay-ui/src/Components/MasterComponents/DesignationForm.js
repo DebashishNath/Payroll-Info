@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MasterForm from './MasterForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class DesignationForm extends Component 
 {
@@ -11,8 +12,8 @@ class DesignationForm extends Component
           FormName              :'Designation',
           LabelCode             :'Designation Code',
           LabelName             :'Designation Name',
-          SaveDesignationUrl    :'http://192.168.43.241:8086/api/savedesignation',
-          ListDesignationUrl    :'http://192.168.43.241:8086/api/masterdatas/Designation'
+          SaveDesignationUrl    : HelperMethods.GetServerIP() + 'api/savedesignation',
+          ListDesignationUrl    : HelperMethods.GetServerIP() + 'api/masterdatas/Designation'
       }
   }
   render(){
