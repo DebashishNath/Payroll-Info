@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
 import ProgressBar from "./progress-bar.component";
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class AttendanceGenerationForm extends Component {
   constructor(props) 
@@ -113,7 +114,7 @@ class AttendanceGenerationForm extends Component {
     var payMonth=this.state.monthId;
     var payYear=document.getElementById("year").value;
     
-    var url='http://192.168.43.241:8086/api/empattendance/' + payMonth + '/' + payYear 
+    var url= HelperMethods.GetServerIP() + 'api/empattendance/' + payMonth + '/' + payYear 
     
     try 
     {
