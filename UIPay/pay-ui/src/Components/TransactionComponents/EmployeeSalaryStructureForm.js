@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Table, Button,Paper,Select,MenuItem,TextField } from '@material-ui/core';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class EmployeeSalaryStructureForm extends PureComponent {
     constructor(props) 
@@ -26,9 +27,9 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     componentDidMount()
     {
-        var url='http://192.168.43.241:8086/api/employees'
+        var url= HelperMethods.GetServerIP() + 'api/employees'
         this.populateCombos('Employee',url);
-        url='http://192.168.43.241:8086/api/earn_deductions'
+        url= HelperMethods.GetServerIP() + 'api/earn_deductions'
         this.populateCombos('EarnDedComponent',url);
     }
 
@@ -98,7 +99,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
               })
         };
         
-        var url='http://192.168.43.241:8086/api/updateEmpSalStruct';
+        var url= HelperMethods.GetServerIP() + 'api/updateEmpSalStruct';
         try 
         {
             const response = await fetch(url,requestOptions);
@@ -206,7 +207,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/empsalstruct_findbyempid/' + empId;
+        var url= HelperMethods.GetServerIP() + 'api/empsalstruct_findbyempid/' + empId;
         try 
         {
             const response = await fetch(url,requestOptions);
