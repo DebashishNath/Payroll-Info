@@ -5,6 +5,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import EditIcon from '@material-ui/icons/Edit';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class HolidayForm extends Component {
     constructor(props) 
@@ -141,7 +142,7 @@ class HolidayForm extends Component {
               })
         };
         
-        var url='http://192.168.43.241:8086/api/update_holiday';
+        var url=HelperMethods.GetServerIP() + 'api/update_holiday';
         try 
         {
             const response = await fetch(url,requestOptions);
@@ -200,7 +201,7 @@ class HolidayForm extends Component {
             };
             var holidayYear=document.getElementById("year").value;
            
-            var url='http://192.168.43.241:8086/api/holidays/' + this.state.monthId + '/' + holidayYear;
+            var url=HelperMethods.GetServerIP() + 'api/holidays/' + this.state.monthId + '/' + holidayYear;
             const resp = await fetch(url,requestOptions);
             var data = await resp.json();
             
