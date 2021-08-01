@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
 import moment from 'moment';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class PrintSingleEmpAttendanceForm extends Component {
     constructor(props) 
@@ -26,7 +27,7 @@ class PrintSingleEmpAttendanceForm extends Component {
 
     componentDidMount(){
         this.populateMonths();
-        var url='http://192.168.43.241:8086/api/employees';
+        var url= HelperMethods.GetServerIP() +  'api/employees';
         this.populateCombos(url)
         document.getElementById("year").focus();
     }
@@ -166,7 +167,7 @@ class PrintSingleEmpAttendanceForm extends Component {
             var monthId=this.state.monthId;
             var year=document.getElementById("year").value;
             
-            var url='http://192.168.43.241:8086/api/get_single_emp_attendance/'  + monthId + '/' + year + '/' + empId;
+            var url= HelperMethods.GetServerIP() + 'api/get_single_emp_attendance/'  + monthId + '/' + year + '/' + empId;
             
             const resp = await fetch(url,requestOptions);
             var data = await resp.json();

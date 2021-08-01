@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextField, Table, Select , MenuItem, Button,Paper } from '@material-ui/core';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class PrintPTAXMonthlyForm extends Component {
     constructor(props) 
@@ -106,7 +107,7 @@ class PrintPTAXMonthlyForm extends Component {
             var monthId=this.state.monthId;
             var year=document.getElementById("year").value;
             
-            var url='http://192.168.43.241:8086/api/ptaxmonthly/'  + monthId + '/' + year;
+            var url= HelperMethods.GetServerIP() + 'api/ptaxmonthly/'  + monthId + '/' + year;
             
             const resp = await fetch(url,requestOptions);
             var data = await resp.json();
