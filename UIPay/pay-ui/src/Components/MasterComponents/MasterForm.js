@@ -40,26 +40,31 @@ class MasterForm extends PureComponent
         document.getElementById("code").focus();
     }
 
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async validateControls()
     {
+        await this.showMessage(false,'','','');
+
         if(document.getElementById("code").value.trim().length === 0)
         {
-            document.getElementById("code").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:this.props.LabelCode + " cannot be blank"
-            });
+            await this.showMessage(true,'Error Information', this.props.LabelCode + ' cannot be blank','code');
             return false;
         }
         if(document.getElementById("name").value.trim().length === 0)
         {
-            document.getElementById("name").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:this.props.LabelName + " cannot be blank"
-            });
+            await this.showMessage(true,'Error Information', this.props.LabelName + ' cannot be blank','name');
             return false;
         }
         return true;
@@ -67,12 +72,6 @@ class MasterForm extends PureComponent
 
     async updateMasterRecord() 
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage:''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -120,37 +119,27 @@ class MasterForm extends PureComponent
             body: masterParams
         };
       
-      var url=this.props.UpdateMasterUrl;
-      try 
-      {
-        const response = await fetch(url,requestOptions);
-        var data = await response.json();
+        var url=this.props.UpdateMasterUrl;
+        try 
+        {
+            const response = await fetch(url,requestOptions);
+            var data = await response.json();
         
-        if (data.code === 0)
-        {
-            await this.setState({
-                showMessageBox:true,
-                title:'Save Information',
-                displayMessage: data.message
-            });
-            this.ListMasterRecords();
+            if (data.code === 0)
+            {
+                await this.showMessage(true,'Save Information',data.message,'code');
+                this.clearControls();
+                this.ListMasterRecords();
+            }
+            else
+            {
+                await this.showMessage(true,'Error Information',data.message,'');
+            }
         }
-        else
-        {
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: data.message
-            });
+        catch(err)
+        { 
+            await this.showMessage(true,'Error Information',err.message,'');
         }
-      }
-      catch(err) { 
-        await this.setState({
-            showMessageBox:true,
-            title:'Error Information',
-            displayMessage: err.message
-        });
-      }
     }
 
     async ListMasterRecords()
@@ -209,11 +198,7 @@ class MasterForm extends PureComponent
             
         }catch(err) 
         {
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });
+            await this.showMessage(true,'Error Information',err.message,'');
         }
     }
 
