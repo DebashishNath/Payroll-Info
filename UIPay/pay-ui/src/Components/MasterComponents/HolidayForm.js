@@ -58,6 +58,12 @@ class HolidayForm extends Component {
   
     async monthsComboChange(event) 
     {
+        await this.showMessage(false,'','','');
+        if(document.getElementById("year").value.trim().length === 0)
+        {
+            await this.showMessage(true,'Error Information','Year cannot be blank','year');
+            return;
+        }
         await this.setState( {monthId:event.target.value});
         this.showHolidaysMonthWise();
     }
@@ -134,8 +140,8 @@ class HolidayForm extends Component {
             
             if (data.code === 0)
             {
-                await this.showMessage(true,'Save Information',data.message,'');
                 this.showHolidaysMonthWise();
+                await this.showMessage(true,'Save Information',data.message,'holidayCode');
                 if(this.state.holidayId === 0)
                 {
                     this.doClearControls();
@@ -162,6 +168,7 @@ class HolidayForm extends Component {
 
     async showHolidaysMonthWise()
     {
+        await this.showMessage(false,'','','');
         try
         {
             var initialDataToDisplay=[];
@@ -216,11 +223,9 @@ class HolidayForm extends Component {
                 await this.setState({
                     showHolidays:false,
                     paperHeight : '30vh',
-                    holidayRecords: [],
-                    showMessageBox:true,
-                    title:'Information',
-                    displayMessage:'No records to display'
+                    holidayRecords: []
                 });
+                await this.showMessage(true,'Information','No records to display','');
             }
             document.getElementById("holidayCode").focus();
         } catch(err) 
