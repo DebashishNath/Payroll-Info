@@ -86,8 +86,6 @@ class HolidayForm extends Component {
         }
         if(this.state.monthId === 0)
         {
-                displayMessage:'Select month for display of holiday'
-            });
             await this.showMessage(true,'Error Information','Select month for display of holiday','monthsCombo');
             return false;
         }
