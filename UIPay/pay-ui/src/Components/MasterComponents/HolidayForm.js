@@ -62,56 +62,48 @@ class HolidayForm extends Component {
         this.showHolidaysMonthWise();
     }
     
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async validateControls()
     {
+        await this.showMessage(false,'','','');
+
         if(document.getElementById("year").value.trim().length === 0)
         {
-            document.getElementById("year").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Year cannot be blank'
-            });
+            await this.showMessage(true,'Error Information','Year cannot be blank','year');
             return false;
         }
         if(this.state.monthId === 0)
         {
-            document.getElementById("monthsCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
                 displayMessage:'Select month for display of holiday'
             });
+            await this.showMessage(true,'Error Information','Select month for display of holiday','monthsCombo');
             return false;
         }
         if(document.getElementById("holidayCode").value.trim().length === 0)
         {
-            document.getElementById("holidayCode").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Holday Code cannot be blank'
-            });
+            await this.showMessage(true,'Error Information','Holday Code cannot be blank','holidayCode');
             return false;
         }
         if(document.getElementById("holidayName").value.trim().length === 0)
         {
-            document.getElementById("holidayName").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Holday Name cannot be blank'
-            });
+            await this.showMessage(true,'Error Information','Holday Name cannot be blank','holidayName');
             return false;
         }
         if(document.getElementById("holidayDate").value.trim().length === 0)
         {
-            document.getElementById("holidayDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Holday Date cannot be blank'
-            });
+            await this.showMessage(true,'Error Information','Holday Date cannot be blank','holidayDate');
             return false;
         }
         return true;
@@ -119,12 +111,6 @@ class HolidayForm extends Component {
 
     async doUpdateHolidayRecord()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage:''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -142,7 +128,7 @@ class HolidayForm extends Component {
               })
         };
         
-        var url=HelperMethods.GetServerIP() + 'api/update_holiday';
+        var url= HelperMethods.GetServerIP() + 'api/update_holiday';
         try 
         {
             const response = await fetch(url,requestOptions);
@@ -150,11 +136,7 @@ class HolidayForm extends Component {
             
             if (data.code === 0)
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Save Information',
-                    displayMessage:data.message
-                });
+                await this.showMessage(true,'Save Information',data.message,'');
                 this.showHolidaysMonthWise();
                 if(this.state.holidayId === 0)
                 {
@@ -163,19 +145,11 @@ class HolidayForm extends Component {
             }
             else
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Error Information',
-                    displayMessage:data.message
-                });
+                await this.showMessage(true,'Error Information',data.message,'');
             }
         }catch(err) 
         { 
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:err.message
-            });
+            await this.showMessage(true,'Error Information',err.message,'');
         }
     }
 
@@ -253,11 +227,7 @@ class HolidayForm extends Component {
             document.getElementById("holidayCode").focus();
         } catch(err) 
         { 
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:err.message
-            });
+            await this.showMessage(true,'Error Information',err.message,'');
         }
     }
     
