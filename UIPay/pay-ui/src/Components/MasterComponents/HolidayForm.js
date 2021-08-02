@@ -218,7 +218,7 @@ class HolidayForm extends Component {
                     paperHeight : '30vh',
                     holidayRecords: [],
                     showMessageBox:true,
-                    title:'Error Information',
+                    title:'Information',
                     displayMessage:'No records to display'
                 });
             }
