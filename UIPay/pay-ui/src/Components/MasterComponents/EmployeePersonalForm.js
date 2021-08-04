@@ -118,11 +118,7 @@ class EmployeePersonalForm extends Component {
     }
     catch(err) 
     {
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:err.message
-      });
+      await this.showMessage(true,'Error Information',err.message,'');
     }
   }
 
