@@ -57,26 +57,31 @@ class AttendanceGenerationForm extends Component {
     });
   }
 
+  async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+  {
+    if(controlName.trim().length > 0)
+    {
+        document.getElementById(controlName).focus();
+    }
+    await this.setState({
+        showMessageBox:isShowMsgBox,
+        title: messageBoxtitle,
+        displayMessage: dispMessage
+    });
+  }
+
   async validateControls()
   {
+    await this.showMessage(false,'', '','');
+
     if(document.getElementById("year").value.trim().length === 0)
     {
-      document.getElementById("year").focus();
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:'Enter Year for attendance generation'
-      });
+      await this.showMessage(true,'Error Information', 'Enter Year for attendance generation','year');
       return false;
     }
     if(this.state.monthId === 0)
     {
-      document.getElementById("monthsCombo").focus();
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:'Select Month for attendance generation'
-      });
+      await this.showMessage(true,'Error Information', 'Select Month for attendance generation','monthsCombo');
       return false;
     }
     return true;
@@ -84,23 +89,20 @@ class AttendanceGenerationForm extends Component {
 
   async generateAttendance() 
   {
-    await this.setState({
-      showMessageBox:false,
-      title:'',
-      displayMessage:''
-    });
-
     if(!await this.validateControls())
     {
       return;
     }
 
-    this.setState({ showProgressBar:true,
+    await this.setState({ showProgressBar:true,
                     disableButton:true,
                     completed:0 });
-    
-    setInterval(() => this.setState({completed : 
+    alert(this.state.completed);
+    if (this.state.completed<=100)
+    {
+      setInterval(() => this.setState({completed : 
       setInterval(Math.floor(Math.random() * 100) + 1)}), 2000);
+    }
     document.getElementById("lblMsg").innerHTML="Please wait....Attendance Generation is going on";
     document.getElementById("lblMsg").style.color = 'green';
     
@@ -123,20 +125,13 @@ class AttendanceGenerationForm extends Component {
       
       if (data.code === 0)
       {
-        await this.setState({
-            showMessageBox:true,
-            title:'Save Information',
-            displayMessage: data.message
-        });
+        await this.showMessage(true,'Save Information', data.message,'');
       }
       else
       {
-        await this.setState({
-          showMessageBox:false,
-          title:'Error Information',
-          displayMessage: data.message
-        });
+        await this.showMessage(true,'Error Information', data.message,'');
       }
+      
       this.setState({ showProgressBar:false,
         disableButton:false,
         completed:0 });
@@ -145,11 +140,7 @@ class AttendanceGenerationForm extends Component {
     }
     catch(err) 
     {
-      await this.setState({
-        showMessageBox:false,
-        title:'Error Information',
-        displayMessage: err.message
-      });
+      await this.showMessage(true,'Error Information', err.message,'');
     }
   }
 
