@@ -72,6 +72,19 @@ class EmployeeOfficialForm extends Component {
     }
   }
 
+  async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+  {
+      if(controlName.trim().length > 0)
+      {
+          document.getElementById(controlName).focus();
+      }
+      await this.setState({
+          showMessageBox:isShowMsgBox,
+          title: messageBoxtitle,
+          displayMessage: dispMessage
+      });
+  }
+
   async populateCombos(comboName,url) 
   {
     try
@@ -126,11 +139,7 @@ class EmployeeOfficialForm extends Component {
     }
     catch(err) 
     {
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:err.message
-      });
+      await this.showMessage(true,'Error Information', err.message,'');
     }
   }
 
@@ -157,11 +166,7 @@ class EmployeeOfficialForm extends Component {
 
   async updateEmployeeOfficial()
   {
-    await this.setState({
-      showMessageBox:false,
-      title:'',
-      displayMessage:''
-    });
+    await this.showMessage(false,'', '','');
 
     let categoryId=null;
     if(this.state.categoryId>0)
@@ -208,27 +213,15 @@ class EmployeeOfficialForm extends Component {
      
       if (data.code === 0)
       {
-        await this.setState({
-          showMessageBox:true,
-          title:'Save Information',
-          displayMessage:data.message
-        });
+        await this.showMessage(true,'Save Information', data.message,'');
       }
       else
       {
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:data.message
-        });
+        await this.showMessage(true,'Error Information', data.message,'');
       }
     } catch(err) 
     { 
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:err.message
-      });
+      await this.showMessage(true,'Error Information', err.message,'');
     }
   }
 
