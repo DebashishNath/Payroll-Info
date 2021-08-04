@@ -156,119 +156,78 @@ class EmployeePersonalForm extends Component {
     });
   }
 
+  async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+  {
+      if(controlName.trim().length > 0)
+      {
+          document.getElementById(controlName).focus();
+      }
+      await this.setState({
+          showMessageBox:isShowMsgBox,
+          title: messageBoxtitle,
+          displayMessage: dispMessage
+      });
+  }
+
   async validateControls()
   {
+    await this.showMessage(false,'','','');
+
     if(document.getElementById("employeeCode").value.trim().length === 0)
     {
-        document.getElementById("employeeCode").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Employee code cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Employee code cannot be blank','employeeCode');
+      return false;
     }
     if(document.getElementById("firstName").value.trim().length === 0)
     {
-        document.getElementById("firstName").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'First name cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'First name cannot be blank','firstName');
+      return false;
     }
     if(document.getElementById("lastName").value.trim().length === 0)
     {
-        document.getElementById("lastName").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Last name cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Last name cannot be blank','lastName');
+      return false;
     }
     if(document.getElementById("dob").value.trim().length === 0)
     {
-        document.getElementById("dob").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Date of birth should be in DD-MM-YYYY'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Date of birth should be in DD-MM-YYYY','dob');
+      return false;
     }
     if(document.getElementById("address1").value.trim().length === 0)
     {
-        document.getElementById("address1").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Address1 cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Address1 cannot be blank','address1');
+      return false;
     }
     if(this.state.stateId === 0)
     {
-        document.getElementById("statesCombo").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'State cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'State cannot be blank','statesCombo');
+      return false;
     }
     if(this.state.districtId === 0)
     {
-        document.getElementById("districtsCombo").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'District cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'District cannot be blank','districtsCombo');
+      return false;
     }
     if(document.getElementById("pin").value.trim().length === 0)
     {
-        document.getElementById("pin").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Pin cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Pin cannot be blank','pin');
+      return false;
     }
     if(document.getElementById("contactNumber").value.trim().length === 0)
     {
-        document.getElementById("contactNumber").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Contact Numbers cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Contact Numbers cannot be blank','contactNumber');
+      return false;
     }
     if(document.getElementById("email").value.trim().length === 0)
     {
-        document.getElementById("email").focus();
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:'Email Ids cannot be blank'
-        });
-        return false;
+      await this.showMessage(true,'Error Information', 'Email Ids cannot be blank','email');
+      return false;
     }
     return true;
   }
 
   async updateEmployeePersonal() 
   {
-    await this.setState({
-      showMessageBox:false,
-      title:'',
-      displayMessage:''
-    });
-
     if(!await this.validateControls())
     {
       return;
@@ -315,28 +274,16 @@ class EmployeePersonalForm extends Component {
       var data = await response.json();
       if (data.code === 0)
       {
-        await this.setState({
-          showMessageBox:true,
-          title:'Save Information',
-          displayMessage:data.message
-        });
+        await this.showMessage(true,'Save Information', data.message,'');
         localStorage.setItem('employeeId',document.getElementById("lblEmpId").value);
       }
       else
       {
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage:data.message
-        });
+        await this.showMessage(true,'Error Information', data.message,'');
       }
     } catch(err) 
     { 
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:err.message
-      });
+      await this.showMessage(true,'Error Information', err.message,'');
     }
   }
 
