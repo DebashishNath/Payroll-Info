@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Table, Button,Paper } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import HelperMethods from '../CommonComponents/HelperMethods';
 
 class ListEmployeesForm extends PureComponent {
     constructor(props) 
@@ -42,7 +43,7 @@ class ListEmployeesForm extends PureComponent {
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
         };
-        var url='http://192.168.43.241:8086/api/employees'
+        var url=HelperMethods.GetServerIP() + 'api/employees'
         try 
         {
           const response = await fetch(url,requestOptions);
