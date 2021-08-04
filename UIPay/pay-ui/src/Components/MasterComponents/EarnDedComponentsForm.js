@@ -54,58 +54,47 @@ class EarnDedComponentsForm extends PureComponent {
         document.getElementById("earnDedPriority").value=earnDedPriority;
     }
 
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async validateControls()
     {
+        await this.showMessage(false,'','','');
+
         if(document.getElementById("earnDedCode").value.trim().length === 0)
         {
-            document.getElementById("earnDedCode").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Earn Deduction code cannot be blank'
-            });
+            await this.showMessage(true,'Error Information', 'Earn Deduction code cannot be blank','earnDedCode');
             return false;
         }
         if(document.getElementById("earnDedName").value.trim().length === 0)
         {
-            document.getElementById("earnDedName").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Earn Deduction name cannot be blank'
-            });
+            await this.showMessage(true,'Error Information', 'Earn Deduction name cannot be blank','earnDedName');
             return false;
         }
         if(this.state.earnDedType === "" )
         {
-            document.getElementById("earnDedTypeCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Select Earn Deduction type'
-            });
+            await this.showMessage(true,'Error Information', 'Select Earn Deduction type','earnDedTypeCombo');
             return false;
         }
         if(document.getElementById("earnDedPriority").value.trim().length ===0)
         {
-            document.getElementById("earnDedPriority").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage:'Priority cannot be blank'
-            });
+            await this.showMessage(true,'Error Information', 'Priority cannot be blank','earnDedPriority');
             return false;
         }
         return true;
     }
     async doUpdateEarnDedComponent()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage:''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -132,12 +121,8 @@ class EarnDedComponentsForm extends PureComponent {
             
             if (data.code === 0)
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Save Information',
-                    displayMessage: data.message
-                });
                 this.displayEarnDeductions();
+                await this.showMessage(true,'Save Information', data.message,'');
                 if(this.state.earnDedId === 0)
                 {
                     this.doClearControls();
@@ -145,19 +130,11 @@ class EarnDedComponentsForm extends PureComponent {
             }
             else
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Error Information',
-                    displayMessage: data.message
-                });
+                await this.showMessage(true,'Error Information', data.message,'');
             }
         }catch(err) 
         { 
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            }); 
+            await this.showMessage(true,'Error Information', err.message,'');
         }
     }
 
@@ -214,20 +191,12 @@ class EarnDedComponentsForm extends PureComponent {
             }
             else
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Information',
-                    displayMessage: 'No Earn and Deduction data to display'
-                });
+                await this.showMessage(true,'Information', 'No Earn and Deduction data to display','');
             }
             this.setState({ earnDedComponentsToDisplay: initialDataToDisplay });
-        }   catch(err) 
+        }catch(err) 
         {
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });
+            await this.showMessage(true,'Error Information',err.message,'');
         }
     }
 
