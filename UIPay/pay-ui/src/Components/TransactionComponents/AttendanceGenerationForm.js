@@ -97,12 +97,10 @@ class AttendanceGenerationForm extends Component {
     await this.setState({ showProgressBar:true,
                     disableButton:true,
                     completed:0 });
-    alert(this.state.completed);
-    if (this.state.completed<=100)
-    {
-      setInterval(() => this.setState({completed : 
+    
+    setInterval(() => this.setState({completed : 
       setInterval(Math.floor(Math.random() * 100) + 1)}), 2000);
-    }
+    
     document.getElementById("lblMsg").innerHTML="Please wait....Attendance Generation is going on";
     document.getElementById("lblMsg").style.color = 'green';
     
