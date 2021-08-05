@@ -86,6 +86,10 @@ class AttendanceGenerationForm extends Component {
     }
     return true;
   }
+  componentWillUnmount() 
+  {
+    clearInterval(this.state.completed);
+  }
 
   async generateAttendance() 
   {
@@ -96,10 +100,17 @@ class AttendanceGenerationForm extends Component {
 
     await this.setState({ showProgressBar:true,
                     disableButton:true,
-                    completed:0 });
+                    completed:0
+                    });
     
-    setInterval(() => this.setState({completed : 
-      setInterval(Math.floor(Math.random() * 100) + 1)}), 2000);
+    setInterval(() => {
+        this.setState(prevState => {
+          return {
+            completed: prevState.completed + 1,
+          };
+        });
+      }, 1000);
+
     
     document.getElementById("lblMsg").innerHTML="Please wait....Attendance Generation is going on";
     document.getElementById("lblMsg").style.color = 'green';
