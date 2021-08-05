@@ -14,7 +14,9 @@ class ListEmployeeLeaveForm extends PureComponent {
             employeeId : 0,
             showMessageBox:false,
             title:'',
-            displayMessage:''
+            displayMessage:'',
+            showLeaveList: false,
+            paperHeight:'10vh',
         }
         this.addEmpLeave=this.addEmpLeave.bind(this);
         this.doEditOfEmpLeave=this.doEditOfEmpLeave.bind(this);
@@ -142,12 +144,16 @@ class ListEmployeeLeaveForm extends PureComponent {
                         </tr>);
                 }
                 this.setState({
+                    paperHeight:'70vh',
+                    showLeaveList:true,
                     empLeavesToDisplay: initialDataToDisplay                
                 });
             }
             else
             {
                 await this.setState({
+                    paperHeight:'10vh',
+                    showLeaveList:false,
                     showMessageBox:true,
                     title:'Leave Information',
                     displayMessage:'No Leaves taken',
@@ -166,7 +172,7 @@ class ListEmployeeLeaveForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'70vh',width:600,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:30,height:this.state.paperHeight,width:600,margin:"40px 100px",border: '5px solid brown'}
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
@@ -195,11 +201,12 @@ class ListEmployeeLeaveForm extends PureComponent {
                     </tr>
                 </Table>
             </div>
+            {this.state.showLeaveList ?
             <div style={divStyle}>
                 <Table border='1'>
                     {this.state.empLeavesToDisplay}
                 </Table>
-            </div>
+            </div> :null }
             </Paper>
         );
     }
