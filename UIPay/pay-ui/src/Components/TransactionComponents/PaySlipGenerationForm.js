@@ -53,43 +53,45 @@ class PaySlipGenerationForm extends Component {
     });
   }
 
+  async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+  {
+    if(controlName.trim().length > 0)
+    {
+        document.getElementById(controlName).focus();
+    }
+    await this.setState({
+        showMessageBox:isShowMsgBox,
+        title: messageBoxtitle,
+        displayMessage: dispMessage
+    });
+  }
+
   async validateControls()
   {
+    await this.showMessage(false,'','','');
+    
     if(document.getElementById("year").value.trim().length === 0)
     {
-      document.getElementById("year").focus();
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:'Enter Year for Pay Slip generation'
-      });
+      await this.showMessage(true,'Error Information','Enter Year for Pay Slip generation','year');
       return false;
     }
+
     if(this.state.monthId === 0)
     {
-      document.getElementById("monthsCombo").focus();
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage:'Select Month for Pay Slip generation'
-      });
+      await this.showMessage(true,'Error Information','Select Month for Pay Slip generation','monthsCombo');
       return false;
     }
+
     return true;
   }
 
   async generatePaySlip() 
   {
-    await this.setState({
-      showMessageBox:false,
-      title:'',
-      displayMessage:''
-    });
-
     if(!await this.validateControls())
     {
       return;
     }
+
     const requestOptions = 
     {
         crossDomain:true,
@@ -117,28 +119,16 @@ class PaySlipGenerationForm extends Component {
       
       if (data.code === 0)
       {
-        await this.setState({
-          showMessageBox:true,
-          title:'Save Information',
-          displayMessage: data.message
-        });
+        await this.showMessage(true,'Save Information',data.message,'');
       }
       else
       {
-        await this.setState({
-          showMessageBox:true,
-          title:'Error Information',
-          displayMessage: data.message
-        });
+        await this.showMessage(true,'Error Information',data.message,'');
       }
     }
     catch(err) 
     {
-      await this.setState({
-        showMessageBox:true,
-        title:'Error Information',
-        displayMessage: err.message
-      });  
+      await this.showMessage(true,'Error Information',err.message,'');
     }
   }
 

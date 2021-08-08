@@ -86,6 +86,7 @@ class AttendanceGenerationForm extends Component {
     }
     return true;
   }
+  
   componentWillUnmount() 
   {
     clearInterval(this.state.completed);
