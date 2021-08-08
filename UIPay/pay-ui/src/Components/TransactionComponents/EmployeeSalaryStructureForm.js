@@ -13,6 +13,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
             employeeStructId:0,
             earnDedComponentsToDisplay:[],
             earnDedId:0,
+            paperHeight:'25vh',
             showEmpSalStruct:false,
             showMessageBox:false,
             title:'',
@@ -219,17 +220,19 @@ class EmployeeSalaryStructureForm extends PureComponent {
                             { this.displayOfEmpComponent(earnDedId,earnDedAmt) }}>Edit</Button></td>
                         </tr>);
                 }
-                this.setState({ earnDedId:0 });
                 document.getElementById("earnDedAmount").value="";
                 document.getElementById("earnDedCombo").focus();
-                this.setState({ showEmpSalStruct : true });
-                this.setState({ earnDedToDisplay: initialDataToDisplay });
+                await this.setState({ earnDedId:0,
+                                paperHeight:'70vh',
+                                showEmpSalStruct : true,
+                                earnDedToDisplay: initialDataToDisplay });
             }
             else
             {
                 await this.showMessage(true, 'Information','Salary structure not created for this employeee','employeesCombo');
-                this.setState({ showEmpSalStruct : false });
-                this.setState({ earnDedToDisplay: [] });
+                this.setState({ paperHeight:'25vh',
+                                showEmpSalStruct : false,
+                                earnDedToDisplay: [] });
             }
         } catch(err) 
         { 
@@ -240,6 +243,8 @@ class EmployeeSalaryStructureForm extends PureComponent {
     clearControls()
     {
         this.setState({ 
+            paperHeight:'25vh',
+            showEmpSalStruct:false,
             employeeStructId:0,
             earnDedId:0,
             earnDedToDisplay:[]
@@ -250,7 +255,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     render()
     {
-        const paperStyle={padding:30,height:'70vh',width:600,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:30,height:this.state.paperHeight,width:600,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
             height: '40vh',
