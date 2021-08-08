@@ -47,7 +47,7 @@ class EmployeeLeaveForm extends PureComponent {
 
     async PopulateEmployee(employeeId)
     {
-        this.setState({empId:employeeId});
+        await this.setState({empId:employeeId});
         const requestOptions = {
             crossDomain:true,
             method: 'GET',
@@ -112,6 +112,19 @@ class EmployeeLeaveForm extends PureComponent {
         return noDays;
     }
 
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async populateCombos(comboName,url) 
     {
         try
@@ -150,12 +163,9 @@ class EmployeeLeaveForm extends PureComponent {
                 }
             }
         }
-        catch(err) {
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });
+        catch(err)
+        {
+            await this.showMessage(true,'Error Information', err.message,'');
         }
     }
 
@@ -178,126 +188,68 @@ class EmployeeLeaveForm extends PureComponent {
 
     async validateControls()
     {
+        await this.showMessage(false,'', '','');
+
         if((this.state.empId ===0) || 
             (document.getElementById("EmpCode").innerHTML.trim().length === 0))
         {
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'No Employee have been selected for updating leave'
-            });
+            await this.showMessage(true,'Error Information', 'No Employee have been selected for updating leave','');
             return false;
         }
         if(document.getElementById("ApplicationNo").value.trim().length === 0)
         {
-            document.getElementById("ApplicationNo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Application No cannot be blank'
-            });
+            await this.showMessage(true,'Error Information', 'Application No cannot be blank','ApplicationNo');
             return false;
         }
         if(document.getElementById("AppDate").value.trim().length === 0)
         {
-            document.getElementById("AppDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Application Date should be in DD-MM-YYYY'
-            });
+            await this.showMessage(true,'Error Information', 'Application Date should be in DD-MM-YYYY','AppDate');
             return false;
         }
         if(this.state.leaveTypeCode ==="")
         {
-            document.getElementById("leaveTypesCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Select Leave Type'
-            });
+            await this.showMessage(true,'Error Information', 'Select Leave Type','leaveTypesCombo');
             return false;
         }
         if(document.getElementById("FromDate").value.trim().length === 0)
         {
-            document.getElementById("FromDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'From Date should be in DD-MM-YYYY'
-            });
+            await this.showMessage(true,'Error Information', 'From Date should be in DD-MM-YYYY','FromDate');
             return false;
         }
         if(document.getElementById("ToDate").value.trim().length === 0)
         {
-            document.getElementById("ToDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'To Date should be in DD-MM-YYYY'
-            });
+            await this.showMessage(true,'Error Information', 'To Date should be in DD-MM-YYYY','ToDate');
             return false;
         }
         if(document.getElementById("AppDate").value > document.getElementById("FromDate").value)
         {
-            document.getElementById("AppDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Application Date cannot be greater than From Date'
-            });
+            await this.showMessage(true,'Error Information', 'Application Date cannot be greater than From Date','AppDate');
             return false;
         }
         if(document.getElementById("AppDate").value > document.getElementById("ToDate").value)
         {
-            document.getElementById("AppDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Application Date cannot be greater than To Date'
-            });
+            await this.showMessage(true,'Error Information', 'Application Date cannot be greater than To Date','AppDate');
             return false;
         }
         if(document.getElementById("FromDate").value > document.getElementById("ToDate").value)
         {
-            document.getElementById("FromDate").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'From Date cannot be greater than To Date'
-            });
+            await this.showMessage(true,'Error Information', 'From Date cannot be greater than To Date','FromDate');
             return false;
         }
         if(document.getElementById("ApplicationDetails").value.trim().length === 0)
         {
-            document.getElementById("ApplicationDetails").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Application Details cannot be blank'
-            });
+            await this.showMessage(true,'Error Information', 'Application Details cannot be blank','ApplicationDetails');
             return false;
         }
-        if(this.state.checked && this.state.approveById ===0)
+        if(this.state.approveById === 0)
         {
-            document.getElementById("approvedByCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Select the approved By'
-            });
+            await this.showMessage(true,'Error Information', 'Select the approved By','approvedByCombo');
             return false;
         }
         return true;
     }
     async updateEmployeeLeave()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage:''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -314,7 +266,7 @@ class EmployeeLeaveForm extends PureComponent {
         {
             approved_ById=this.state.approveById;
         }*/
-
+        
         const requestOptions = 
         {
             crossDomain:true,
@@ -343,27 +295,15 @@ class EmployeeLeaveForm extends PureComponent {
             var data = await response.json();
             if (data.code === 0)
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Save Information',
-                    displayMessage: data.message
-                });
+                await this.showMessage(true,'Save Information', data.message,'');
             }
             else
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Error Information',
-                    displayMessage: data.message
-                });
+                await this.showMessage(true,'Error Information', data.message,'');
             }
         } catch(err) 
         { 
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });
+            await this.showMessage(true,'Error Information', err.message,'');
         }
     }
     
