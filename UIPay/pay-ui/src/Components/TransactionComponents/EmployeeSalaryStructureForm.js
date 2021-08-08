@@ -39,49 +39,45 @@ class EmployeeSalaryStructureForm extends PureComponent {
         this.setState({ earnDedId : earnDedId });
     }
 
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async validateControls()
     {
-      if(this.state.employeeStructId === 0)
-      {
-        document.getElementById("employeesCombo").focus();
-        await this.setState({
-            showMessageBox:true,
-            title:'Error Information',
-            displayMessage:'Select employee for creating salary structure'
-        });
-        return false;
-      }
-      if(this.state.earnDedId === 0)
-      {
-        document.getElementById("earnDedCombo").focus();
-        await this.setState({
-            showMessageBox:true,
-            title:'Error Information',
-            displayMessage:'Select earn deduction component for creating salary structure'
-        });
-        return false;
-      }
-      if(document.getElementById("earnDedAmount").value.trim().length === 0)
-      {
-        document.getElementById("earnDedAmount").focus();
-        await this.setState({
-            showMessageBox:true,
-            title:'Error Information',
-            displayMessage:'Enter earn deduction amount for creating salary structure'
-        });
-        return false;
-      }
-      return true;
+        await this.showMessage(false,'','','');
+        
+        if(this.state.employeeStructId === 0)
+        {
+            await this.showMessage(true, 'Error Information','Select employee for creating salary structure','employeesCombo');
+            return false;
+        }
+
+        if(this.state.earnDedId === 0)
+        {
+            await this.showMessage(true, 'Error Information','Select earn deduction component for creating salary structure','earnDedCombo');
+            return false;
+        }
+        
+        if(document.getElementById("earnDedAmount").value.trim().length === 0)
+        {
+            await this.showMessage(true, 'Error Information','Enter earn deduction amount for creating salary structure','earnDedAmount');
+            return false;
+        }
+        return true;
     }
 
     async doUpdateEmpComponent()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage:''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -107,28 +103,16 @@ class EmployeeSalaryStructureForm extends PureComponent {
             
             if (data.code === 0)
             {
-                await this.setState({
-                    showMessageBox:true,
-                    title:'Save Information',
-                    displayMessage:data.message
-                });
                 this.displayEmpEarnDeduction( this.state.employeeStructId)
+                await this.showMessage(true, 'Save Information',data.message,'');
             }
             else
             {
-                await this.setState({
-                    showMessageBox:false,
-                    title:'Error Information',
-                    displayMessage:data.message
-                });
+                await this.showMessage(true, 'Error Information',data.message,'');
             }
         }catch(err) 
         { 
-            await this.setState({
-                showMessageBox:false,
-                title:'Error Information',
-                displayMessage:err.message
-            });
+            await this.showMessage(true, 'Error Information',err.message,'');
         }
     }
 
@@ -171,11 +155,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
           }
         } catch(err) 
         { 
-            await this.setState({
-                showMessageBox:false,
-                title:'Error Information',
-                displayMessage:err.message
-            });
+            await this.showMessage(true, 'Error Information',err.message,'');
         }
     }
 
@@ -247,17 +227,13 @@ class EmployeeSalaryStructureForm extends PureComponent {
             }
             else
             {
-                alert("Salary structure not created for this employeee");
+                await this.showMessage(true, 'Information','Salary structure not created for this employeee','employeesCombo');
                 this.setState({ showEmpSalStruct : false });
                 this.setState({ earnDedToDisplay: [] });
             }
         } catch(err) 
         { 
-            await this.setState({
-                showMessageBox:false,
-                title:'Error Information',
-                displayMessage:err.message
-            });
+            await this.showMessage(true, 'Error Information',err.message,'');
         }
     }
 
