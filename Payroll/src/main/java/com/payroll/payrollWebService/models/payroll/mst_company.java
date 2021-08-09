@@ -25,7 +25,7 @@ public class mst_company {
     private String company_pin;
     private String company_contact_number;
     private String company_email;
-    private String company_TAN_No;
+    private String company_tan_no;
 
     @Transient
     private MessageResponse returnMessage;
@@ -112,12 +112,12 @@ public class mst_company {
         this.company_email = company_email;
     }
 
-    public String getCompany_TAN_No() {
-        return company_TAN_No;
+    public String getCompany_tan_no() {
+        return company_tan_no;
     }
 
-    public void setCompany_TAN_No(String company_TAN_No) {
-        this.company_TAN_No = company_TAN_No;
+    public void setCompany_tan_no(String company_tan_no) {
+        this.company_tan_no = company_tan_no;
     }
 
     public MessageResponse getReturnMessage() {
