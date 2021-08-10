@@ -61,6 +61,19 @@ class PrintSingleEmpAttendanceForm extends Component {
       });
     }
 
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async populateCombos(url) 
     {
         try
@@ -87,11 +100,7 @@ class PrintSingleEmpAttendanceForm extends Component {
             }
         } catch(err) 
         { 
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });
+            await this.showMessage(true,'Error Information',err.message,'');
         }
     }
 
@@ -104,34 +113,21 @@ class PrintSingleEmpAttendanceForm extends Component {
 
     async validateControls()
     {
+        await this.showMessage(false,'','','');
+
         if(document.getElementById("year").value.trim().length === 0)
         {
-            document.getElementById("year").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Enter Year for attendance'
-            });
+            await this.showMessage(true,'Error Information','Enter Year for attendance','year');
             return false;
         }
         if(this.state.monthId === 0)
         {
-            document.getElementById("monthsCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Select Month for attendance'
-            });
+            await this.showMessage(true,'Error Information','Select Month for attendance','monthsCombo');
             return false;
         }
         if(this.state.employeeId === 0)
         {
-            document.getElementById("employeesCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Select Employee for attendance'
-            });
+            await this.showMessage(true,'Error Information','Select Employee for attendance','employeesCombo');
             return false;
         }
         return true;
@@ -139,12 +135,6 @@ class PrintSingleEmpAttendanceForm extends Component {
 
     async printSingleEmpAttendance()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage: ''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -203,18 +193,16 @@ class PrintSingleEmpAttendanceForm extends Component {
                 await this.setState({ 
                     paperHeight:'20vh',
                     showAttendance:false,
-                    attendanceData: [],
-                    showMessageBox:true,
-                    title:'Information',
-                    displayMessage: 'No records to display' });   
+                    attendanceData: [] });  
+                await this.showMessage(true,'Information','No records to display',''); 
             }
         } catch(err) 
         { 
             await this.setState({ 
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });  
+                paperHeight:'20vh',
+                showAttendance:false,
+                attendanceData: [] });  
+            await this.showMessage(true,'Error Information',err.message,''); 
         }
     }
     
@@ -227,7 +215,6 @@ class PrintSingleEmpAttendanceForm extends Component {
           };
 
         return (
-        <div>
             <Paper style={paperStyle} variant="outlined">
                 {this.state.showMessageBox ?
                     <div>
@@ -269,7 +256,6 @@ class PrintSingleEmpAttendanceForm extends Component {
                       : null
                 }
             </Paper>
-         </div>
         );
     }
 }
