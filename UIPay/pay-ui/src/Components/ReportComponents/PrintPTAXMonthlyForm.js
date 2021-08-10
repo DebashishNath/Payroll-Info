@@ -55,26 +55,31 @@ class PrintPTAXMonthlyForm extends Component {
       });
     }
     
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
+    }
+
     async validateControls()
     {
+        await this.showMessage(false,'','','');
+
         if(document.getElementById("year").value.trim().length === 0)
         {
-            document.getElementById("year").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Enter Year for PTAX'
-            });
+            await this.showMessage(true,'Error Information', 'Enter Year for PTAX','year');
             return false;
         }
         if(this.state.monthId === 0)
         {
-            document.getElementById("monthsCombo").focus();
-            await this.setState({
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: 'Select Month for PTAX'
-            });
+            await this.showMessage(true,'Error Information', 'Select Month for PTAX','monthsCombo');
             return false;
         }
         return true;
@@ -82,12 +87,6 @@ class PrintPTAXMonthlyForm extends Component {
 
     async printPTAX()
     {
-        await this.setState({
-            showMessageBox:false,
-            title:'',
-            displayMessage: ''
-        });
-
         if(!await this.validateControls())
         {
             return;
@@ -139,19 +138,13 @@ class PrintPTAXMonthlyForm extends Component {
                 await this.setState({ 
                     paperHeight:'10vh',
                     showPTax:false,
-                    ptaxToDisplay: [],
-                    showMessageBox:true,
-                    title:'Information',
-                    displayMessage: 'No records to display' 
+                    ptaxToDisplay: []
                 });   
+                await this.showMessage(true,'Information', 'No records to display','');
             }
         } catch(err) 
         { 
-            await this.setState({ 
-                showMessageBox:true,
-                title:'Error Information',
-                displayMessage: err.message
-            });   
+            await this.showMessage(true,'Error Information', err.message,'');
         }
     }
     
