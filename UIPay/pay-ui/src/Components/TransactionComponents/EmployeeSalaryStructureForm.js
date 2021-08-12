@@ -293,7 +293,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         <br/>
                         <tr>
                             <td>Amount</td>
-                            <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '50%'}} size="small"></TextField></td>
+                            <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '30%'}} size="small"></TextField></td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEmpComponent() }}>Update</Button></td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.clearControls() }}>Reset</Button></td>
                         </tr>
