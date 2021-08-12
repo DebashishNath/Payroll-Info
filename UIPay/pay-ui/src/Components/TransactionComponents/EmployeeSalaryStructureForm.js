@@ -258,7 +258,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
         const paperStyle={padding:30,height:this.state.paperHeight,width:600,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
-            height: '40vh',
+            height: '45vh',
             overflow: 'auto'
           };
         return (
