@@ -34,6 +34,7 @@ CREATE TABLE `mst_company` (
   `company_contact_number` varchar(50) NOT NULL,
   `company_email` varchar(50) NOT NULL,
   `company_tan_no` varchar(50) NOT NULL,
+  `project_start_date` datetime DEFAULT NULL,
   PRIMARY KEY (`company_id`),
   UNIQUE KEY `company_code_UNIQUE` (`company_code`),
   UNIQUE KEY `company_name_UNIQUE` (`company_name`)
@@ -46,7 +47,7 @@ CREATE TABLE `mst_company` (
 
 LOCK TABLES `mst_company` WRITE;
 /*!40000 ALTER TABLE `mst_company` DISABLE KEYS */;
-INSERT INTO `mst_company` VALUES (1,'DC01','Descon Limited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake',1,1,700091,'033 2357 4308','hrdes@gmail.com','TD001/95-97');
+INSERT INTO `mst_company` VALUES (1,'DC01','Descon Limited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake',1,1,700091,'033 2357 4308','hrdes@gmail.com','TD001/95-97',NULL);
 /*!40000 ALTER TABLE `mst_company` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-13 11:36:54
+-- Dump completed on 2021-08-14  1:24:18

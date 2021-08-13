@@ -99,6 +99,7 @@ proc_label:BEGIN
     DECLARE p_taxable_income DOUBLE;
     DECLARE p_tax_amount DOUBLE;
     DECLARE p_itax_id INT;
+    DECLARE p_existing_tax_rate INT;
     
     SET p_date=CONCAT(CONCAT(CONCAT(p_year,'-'),p_month),'-01');
     SET p_fin_year_id =(SELECT  DISTINCT MFY.fin_year_id 
@@ -124,9 +125,11 @@ proc_label:BEGIN
     SET tot_cnt=(SELECT COUNT(*) FROM temp_mst_employee);
     while icnt<=tot_cnt do
 		SET p_emp_id=(SELECT emp_id FROM temp_mst_employee WHERE slno=icnt);
-		SET p_earn_amount=(SELECT total_earn_amount 
-			FROM trn_monthly_emp_salary_summary tmesd
-			WHERE tmesd.emp_id=p_emp_id AND tmesd.month=p_month AND tmesd.year=p_year);
+		SET p_earn_amount=(SELECT SUM(tmess.earn_ded_amount) 
+				FROM trn_emp_salary_structure tmess
+				INNER JOIN mst_earn_ded_components medc
+				ON tmess.earn_ded_id=medc.earn_ded_id
+				WHERE medc.earn_ded_type='E' AND tmess.EMP_ID=p_emp_id);
         
         SET p_pf=(SELECT earn_ded_amount 
 			FROM trn_monthly_emp_salary_details tesd
@@ -141,10 +144,18 @@ proc_label:BEGIN
 			INNER JOIN mst_earn_ded_tag medt ON medc.earn_ded_tag_id=medt.earn_ded_tag_id
 			WHERE tesd.emp_id=p_emp_id AND medt.earn_ded_tag_name='HRA'
 			AND tesd.month=p_month AND tesd.year=p_year);
-		
-        SET p_ded_amount=(SELECT total_ded_amount 
-			FROM trn_monthly_emp_salary_summary tmesd
-			WHERE tmesd.emp_id=p_emp_id AND tmesd.month=p_month AND tmesd.year=p_year);
+
+		SET p_itax_id=(SELECT medc.earn_ded_id
+				FROM mst_earn_ded_components medc
+				INNER JOIN mst_earn_ded_tag medt ON medc.earn_ded_tag_id=medt.earn_ded_tag_id
+				WHERE medt.earn_ded_tag_name='ITAX');
+                
+        SET p_ded_amount=(SELECT SUM(tmess.earn_ded_amount) 
+				FROM trn_emp_salary_structure tmess
+				INNER JOIN mst_earn_ded_components medc
+				ON tmess.earn_ded_id=medc.earn_ded_id
+				WHERE medc.earn_ded_type='D' AND tmess.EMP_ID=p_emp_id
+				AND tmess.earn_ded_id!=p_itax_id);
 		
         SET p_investment_amount=(SELECT teytd.investment_amount FROM trn_emp_yearly_tax_deduction teytd
 					WHERE teytd.emp_id=p_emp_id AND teytd.fin_year_id=p_fin_year_id);
@@ -158,17 +169,20 @@ proc_label:BEGIN
         SET p_total_investment_amount=p_other_80C + p_total_ded_amount;
         SET p_taxable_income= p_total_earn_amount - p_total_investment_amount;
         
-        SET p_tax_amount=100;
-        IF p_tax_amount > 0 THEN
+		IF p_taxable_income > 0 THEN
         BEGIN
-			SET p_itax_id=(SELECT medc.earn_ded_id
-				FROM mst_earn_ded_components medc
-				INNER JOIN mst_earn_ded_tag medt ON medc.earn_ded_tag_id=medt.earn_ded_tag_id
-				WHERE medt.earn_ded_tag_name='ITAX');
-			IF EXISTS (SELECT earn_ded_id FROM trn_emp_salary_structure 
+			SET p_existing_tax_rate=(SELECT itax_rate_existing FROM trn_itax_slab
+				WHERE p_taxable_income BETWEEN itax_start_range AND itax_end_range 
+                AND fin_year_id=p_fin_year_id);
+			IF(ifnull(p_existing_tax_rate,0)=0) THEN
+				SET p_tax_amount=0;
+			else
+				SET p_tax_amount=(p_existing_tax_rate * p_taxable_income)/(100 *12);
+			END IF;
+            
+            IF EXISTS (SELECT earn_ded_id FROM trn_emp_salary_structure 
 				WHERE earn_ded_id=p_itax_id AND emp_id=p_emp_id) then
-				 SET p_tax_amount=100;
-                
+				                 
                 UPDATE trn_emp_salary_structure 
                 SET earn_ded_amount=p_tax_amount
                 WHERE earn_ded_id=p_itax_id AND emp_id=p_emp_id;
@@ -374,7 +388,7 @@ proc_label:BEGIN
     DECLARE p_company_id INT;
     DECLARE p_no_earn_cols INT;
     DECLARE p_no_ded_cols INT;
-    DECLARE p_pay_sheet_columns VARCHAR(2096);
+    DECLARE p_pay_sheet_columns VARCHAR(4192);
 	
     DECLARE exit handler for sqlexception
 	BEGIN
@@ -772,4 +786,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-13 11:36:57
+-- Dump completed on 2021-08-14  1:24:21

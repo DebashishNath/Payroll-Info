@@ -35,7 +35,7 @@ CREATE TABLE `mst_earn_ded_components` (
   UNIQUE KEY `earn_ded_name_UNIQUE` (`earn_ded_name`),
   KEY `FK_earn_ded_tag_idx` (`earn_ded_tag_id`),
   CONSTRAINT `FK_earn_ded_tag` FOREIGN KEY (`earn_ded_tag_id`) REFERENCES `mst_earn_ded_tag` (`earn_ded_tag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `mst_earn_ded_components` (
 
 LOCK TABLES `mst_earn_ded_components` WRITE;
 /*!40000 ALTER TABLE `mst_earn_ded_components` DISABLE KEYS */;
-INSERT INTO `mst_earn_ded_components` VALUES (1,'BS','Basic Salary','E',1,1,1),(2,'DA','Dearness Allowance','E',2,1,NULL),(3,'HRA','House Rent Allowance','E',3,1,NULL),(4,'PF','Provident Fund','D',1,1,4),(5,'ESI','ESI','D',2,1,2),(6,'MA','Mobile Allowance','E',5,1,NULL),(8,'TC','Transport Charge','D',3,1,NULL),(9,'FA','Food Allowance','E',6,1,NULL),(10,'PTAX','Professional Tax','D',4,1,3),(11,'SA','Spl Allowance','E',4,1,NULL),(13,'ITAX','Income Tax','D',5,1,5);
+INSERT INTO `mst_earn_ded_components` VALUES (1,'BS','Basic Salary','E',1,1,1),(2,'DA','Dearness Allowance','E',2,1,NULL),(3,'HRA','House Rent Allowance','E',3,1,NULL),(4,'PF','Provident Fund','D',1,1,4),(5,'ESI','ESI','D',2,1,2),(6,'LTA','Leave Travel Allowance','E',5,1,NULL),(8,'TC','Transport Charge','D',3,1,NULL),(9,'MA','Medical Allowance','E',6,1,NULL),(10,'PTAX','Professional Tax','D',4,1,3),(11,'CA','Commut. Allowance','E',4,1,NULL),(13,'ITAX','Income Tax','D',5,1,5),(14,'PP','Performance Pay','E',7,NULL,NULL),(15,'CY','CPB (CY)','E',8,NULL,NULL),(16,'SP','Special Pay - II','E',9,NULL,NULL),(17,'UP','Upkeep Pay','E',10,NULL,NULL),(18,'SBE','Statutory Bonus/Ex-gratia','E',11,NULL,NULL),(19,'SPP','Special Pay - III','E',12,NULL,NULL);
 /*!40000 ALTER TABLE `mst_earn_ded_components` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-13 11:36:55
+-- Dump completed on 2021-08-14  1:24:20
