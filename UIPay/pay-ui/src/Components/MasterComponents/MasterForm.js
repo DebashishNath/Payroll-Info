@@ -216,7 +216,7 @@ class MasterForm extends PureComponent
         const btnStyle={margin:'8px 0'}
         const divStyle = {
             border: '5px solid green',
-            height: '50vh',
+            height: '57vh',
             overflow: 'auto'
           };
 
@@ -231,11 +231,11 @@ class MasterForm extends PureComponent
                     </div> : null}
                     <Table>
                     <tr><td><label>{this.props.LabelCode}</label></td>
-                        <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }}></TextField></td>
+                        <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }} size="small"></TextField></td>
                     </tr>
                     <br/>
                     <tr><td><label>{this.props.LabelName}</label></td>
-                        <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }}></TextField></td>
+                        <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }} size="small"></TextField></td>
                     </tr>
                     <tr><td></td><td><Button type='submit' color='primary' variant='contained' 
                             startIcon={<SaveIcon />} style={btnStyle} size='small'
@@ -246,7 +246,7 @@ class MasterForm extends PureComponent
                         </td>
                     </tr>
                     </Table>    
-                </div><br/>
+                </div>
                 { this.state.showMasterRecords ?
                     <div style={divStyle}>
                         <Table border='1'>

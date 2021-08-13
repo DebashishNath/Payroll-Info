@@ -272,7 +272,7 @@ class PrintPaySlipForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '20%'}}></TextField>
+                        <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '20%'}} size="small"></TextField>
                     </td>
                     <td>
                         <Select id="monthsCombo" value={this.state.monthId} onChange={this.monthsComboChange}

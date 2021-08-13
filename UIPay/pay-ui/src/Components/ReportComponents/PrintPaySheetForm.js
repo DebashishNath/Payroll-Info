@@ -334,7 +334,7 @@ class PrintPaysheetForm extends Component {
                 <Table>
                     <tr>
                         <td>
-                            <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}}></TextField>
+                            <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}} inputProps={{ maxLength: 4 }} size="small"></TextField>
                         </td>
                         <td>
                             <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}

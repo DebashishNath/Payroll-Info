@@ -35,14 +35,14 @@ class EarnDedComponentsForm extends PureComponent {
         await document.getElementById("earnDedCode").focus();
     }
 
-    doClearControls()
+    async doClearControls()
     {
         this.setState({ earnDedId : 0 });
         document.getElementById("earnDedCode").value="";
         document.getElementById("earnDedName").value="";
         this.setState({ earnDedType : "" });
         document.getElementById("earnDedPriority").value="";
-        document.getElementById("earnDedCode").focus();
+        await document.getElementById("earnDedCode").focus();
     }
 
     displayOfEarnDedComponent(earnDedId,earnDedCode,earnDedName,earnDedType,earnDedPriority)
@@ -205,7 +205,7 @@ class EarnDedComponentsForm extends PureComponent {
         const paperStyle={padding:30,height:'80vh',width:600,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
-            height: '45vh',
+            height: '53vh',
             overflow: 'auto'
           };
         return (
@@ -220,13 +220,13 @@ class EarnDedComponentsForm extends PureComponent {
                     <Table>
                         <tr>
                             <td>Code</td>
-                            <td><TextField id="earnDedCode" variant='outlined' style ={{width: '30%'}}></TextField></td>
+                            <td><TextField id="earnDedCode" variant='outlined' style ={{width: '30%'}} size="small"></TextField></td>
                             <td></td><td></td>
                         </tr>
                         <br/>
                         <tr>
                             <td>Name</td>
-                            <td><TextField id="earnDedName" variant='outlined'></TextField></td>
+                            <td><TextField id="earnDedName" variant='outlined' size="small"></TextField></td>
                             <td>Type</td>
                             <td><Select id="earnDedTypeCombo" value={this.state.earnDedType} onChange={this.earnDedTypeComboChange}
                                     style={{ border: '1px solid' ,width:'150px' }}>
@@ -237,7 +237,7 @@ class EarnDedComponentsForm extends PureComponent {
                         <br/>
                         <tr>
                             <td>Priority</td>
-                            <td><TextField id="earnDedPriority" variant='outlined' style ={{width: '30%'}}></TextField></td>
+                            <td><TextField id="earnDedPriority" variant='outlined' style ={{width: '30%'}} size="small"></TextField></td>
                             <td><Button color="primary" variant="contained" size="small" startIcon={<SaveIcon/>} onClick={() => { this.doUpdateEarnDedComponent() }}>Save</Button></td>
                             <td><Button color="primary" variant="contained" size="small" startIcon={<ClearAllIcon/>} onClick={() => { this.doClearControls() }}>Reset</Button></td>
                         </tr>
