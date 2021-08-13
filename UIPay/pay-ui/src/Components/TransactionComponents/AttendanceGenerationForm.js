@@ -135,6 +135,7 @@ class AttendanceGenerationForm extends Component {
       
       if (data.code === 0)
       {
+        clearInterval(this.state.completed);
         await this.showMessage(true,'Save Information', data.message,'');
       }
       else
@@ -169,7 +170,10 @@ class AttendanceGenerationForm extends Component {
               <Table>
                 <tr>
                   <td>
-                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '40%'}}></TextField>
+                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '60%'}} size="small"></TextField>
+                  </td>
+                  <td width='120px'>
+                    <label>Select Month</label>
                   </td>
                   <td>
                     <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
@@ -180,7 +184,7 @@ class AttendanceGenerationForm extends Component {
                 </tr>
                 <br/>
                 <tr>
-                 <td colSpan="2">
+                 <td colSpan="3">
                     <div><Button type='submit' color='primary' variant='contained' disabled={this.state.disableButton}
                           onClick={() => { this.generateAttendance() }}>Generate Attendance</Button>
                     </div>
@@ -189,12 +193,12 @@ class AttendanceGenerationForm extends Component {
                 <br/>
                 <tr>
                 { this.state.showProgressBar ?
-                  <td colSpan="2">
+                  <td colSpan="3">
                     <ProgressBar id="pBar" bgcolor={"#6a1b9a"} completed={this.state.completed}/>
                   </td> :null }
                 </tr>
                 <tr>
-                  <td colSpan="2">
+                  <td colSpan="3">
                     <label id="lblMsg"></label>
                   </td>
                 </tr>
