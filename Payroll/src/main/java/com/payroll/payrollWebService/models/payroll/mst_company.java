@@ -3,6 +3,7 @@ package com.payroll.payrollWebService.models.payroll;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="mst_company")
@@ -26,6 +27,7 @@ public class mst_company {
     private String company_contact_number;
     private String company_email;
     private String company_tan_no;
+    private Date project_start_date;
 
     @Transient
     private MessageResponse returnMessage;
@@ -118,6 +120,14 @@ public class mst_company {
 
     public void setCompany_tan_no(String company_tan_no) {
         this.company_tan_no = company_tan_no;
+    }
+
+    public Date getProject_start_date() {
+        return project_start_date;
+    }
+
+    public void setProject_start_date(Date project_start_date) {
+        this.project_start_date = project_start_date;
     }
 
     public MessageResponse getReturnMessage() {
