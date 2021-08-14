@@ -285,7 +285,7 @@ class EmployeePersonalForm extends Component {
 
   render()
   {
-    const paperStyle={padding:20,height:'105vh',width:600,margin:"10px auto",border: '5px solid green'}
+    const paperStyle={padding:20,height:'90vh',width:600,margin:"10px auto",border: '5px solid green'}
     const btnStyle={margin:'8px 0'}
    
     return (
@@ -299,14 +299,14 @@ class EmployeePersonalForm extends Component {
         <Paper style={paperStyle} variant="outlined">
           <Table>
             <tr>
-              <td><TextField id="employeeCode" label='Code' variant='outlined' required  style ={{width: '50%'}}></TextField></td>
+              <td><TextField id="employeeCode" label='Code' variant='outlined' required  style ={{width: '50%'}} size="small"></TextField></td>
               <td></td><td><label id="lblEmpId" value='0'></label></td>
             </tr>
             <br/>
             <tr>
-                <td><TextField id="firstName" label='First Name' variant='outlined' required></TextField></td>
-                <td><TextField id="middleName" label='Middle Name' variant='outlined'></TextField></td>
-                <td><TextField id="lastName" label='Last Name' variant='outlined'></TextField></td>
+                <td><TextField id="firstName" label='First Name' variant='outlined' required size="small"></TextField></td>
+                <td><TextField id="middleName" label='Middle Name' variant='outlined' size="small"></TextField></td>
+                <td><TextField id="lastName" label='Last Name' variant='outlined' size="small"></TextField></td>
             </tr>
             <br/>
             <tr>
@@ -322,7 +322,7 @@ class EmployeePersonalForm extends Component {
             <td><label>Date Of Birth</label></td>
               <td>
                 <TextField id="dob" label="" type="date" defaultValue=""
-                  InputLabelProps={{shrink: true,}} />
+                  InputLabelProps={{shrink: true,}} size="small" />
               </td>
             </tr>
             <br/>
@@ -348,16 +348,15 @@ class EmployeePersonalForm extends Component {
                   {this.state.districtsToDisplay}
                 </Select>
                </td>
-               <td>&emsp;&emsp;<TextField id="pin" variant='outlined' label='Pin' style ={{width: '60%'}}></TextField></td>
+               <td>&emsp;&emsp;<TextField id="pin" variant='outlined' label='Pin' style ={{width: '60%'}} size="small"></TextField></td>
             </tr>
             <br/>
             <tr><td><label>Contact Numbers</label></td>
-                <td><TextField id="contactNumber" variant='outlined' style ={{width: '200%'}}></TextField></td>
-            </tr>
+                <td><TextField id="contactNumber" variant='outlined' style ={{width: '200%'}} size="small"></TextField></td>
+            </tr><br/>
             <tr><td><label>Email ids</label></td>
-                <td><TextField id="email" variant='outlined' style ={{width: '200%'}}></TextField></td>
+                <td><TextField id="email" variant='outlined' style ={{width: '200%'}} size="small"></TextField></td>
             </tr>
-            <br/>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
                   size='small' startIcon={<SaveIcon />} onClick={() => { this.updateEmployeePersonal() }}>Save</Button></td>
