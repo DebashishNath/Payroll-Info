@@ -16,30 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `trn_user_roles`
+-- Table structure for table `trn_itax_slab`
 --
 
-DROP TABLE IF EXISTS `trn_user_roles`;
+DROP TABLE IF EXISTS `trn_itax_slab`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `trn_user_roles` (
-  `user_id` bigint NOT NULL,
-  `role_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FK_user_roles_role_id` (`role_id`),
-  CONSTRAINT `FK_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `mst_roles` (`id`),
-  CONSTRAINT `FK_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `mst_users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `trn_itax_slab` (
+  `itax_slab_id` int NOT NULL AUTO_INCREMENT,
+  `fin_year_id` int NOT NULL,
+  `itax_start_range` decimal(10,0) NOT NULL,
+  `itax_end_range` decimal(10,0) NOT NULL,
+  `itax_rate_existing` decimal(10,0) NOT NULL,
+  `itax_rate_new` decimal(10,0) NOT NULL,
+  `itax_remarks` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`itax_slab_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `trn_user_roles`
+-- Dumping data for table `trn_itax_slab`
 --
 
-LOCK TABLES `trn_user_roles` WRITE;
-/*!40000 ALTER TABLE `trn_user_roles` DISABLE KEYS */;
-INSERT INTO `trn_user_roles` VALUES (169,1),(170,1),(171,1),(172,1),(169,2),(170,2),(171,2),(172,2);
-/*!40000 ALTER TABLE `trn_user_roles` ENABLE KEYS */;
+LOCK TABLES `trn_itax_slab` WRITE;
+/*!40000 ALTER TABLE `trn_itax_slab` DISABLE KEYS */;
+INSERT INTO `trn_itax_slab` VALUES (1,1,0,249999,0,0,NULL),(2,1,250000,499999,5,5,NULL),(3,1,500000,750000,20,10,NULL),(4,1,750001,1000000,20,15,NULL),(5,1,1000001,1250000,30,20,NULL),(6,1,1250001,1500000,30,25,NULL),(7,1,1500001,175000000,30,30,NULL);
+/*!40000 ALTER TABLE `trn_itax_slab` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-18 12:00:09
+-- Dump completed on 2021-08-15  0:46:39

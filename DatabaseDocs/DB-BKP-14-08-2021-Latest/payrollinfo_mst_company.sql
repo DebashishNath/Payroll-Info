@@ -16,33 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_district`
+-- Table structure for table `mst_company`
 --
 
-DROP TABLE IF EXISTS `mst_district`;
+DROP TABLE IF EXISTS `mst_company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_district` (
-  `district_id` int NOT NULL AUTO_INCREMENT,
-  `district_code` varchar(5) NOT NULL,
-  `district_name` varchar(25) NOT NULL,
-  `state_id` int NOT NULL,
-  PRIMARY KEY (`district_id`,`district_code`),
-  UNIQUE KEY `district_code_UNIQUE` (`district_code`),
-  UNIQUE KEY `district_name_UNIQUE` (`district_name`),
-  KEY `mst_district_state_id_idx` (`state_id`),
-  CONSTRAINT `mst_district_state_id` FOREIGN KEY (`state_id`) REFERENCES `mst_state` (`state_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_company` (
+  `company_id` int NOT NULL,
+  `company_code` varchar(5) NOT NULL,
+  `company_name` varchar(25) NOT NULL,
+  `company_address1` varchar(50) NOT NULL,
+  `company_address2` varchar(50) DEFAULT NULL,
+  `company_location_id` int NOT NULL,
+  `company_district_id` int NOT NULL,
+  `company_pin` int NOT NULL,
+  `company_contact_number` varchar(50) NOT NULL,
+  `company_email` varchar(50) NOT NULL,
+  `company_tan_no` varchar(50) NOT NULL,
+  `project_start_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`company_id`),
+  UNIQUE KEY `company_code_UNIQUE` (`company_code`),
+  UNIQUE KEY `company_name_UNIQUE` (`company_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_district`
+-- Dumping data for table `mst_company`
 --
 
-LOCK TABLES `mst_district` WRITE;
-/*!40000 ALTER TABLE `mst_district` DISABLE KEYS */;
-INSERT INTO `mst_district` VALUES (1,'DC001','Kolkata',1),(3,'DC002','Howrah',1),(6,'DC003','Purba Medinipur',1),(8,'DC004','Paschim Medinipur',1),(11,'DC005','Bhagalpur',3),(12,'DC006','Banka',3),(13,'DC007','Aurangabad',3),(14,'DC008','Ajmer',7),(15,'DC009','Alwar',7);
-/*!40000 ALTER TABLE `mst_district` ENABLE KEYS */;
+LOCK TABLES `mst_company` WRITE;
+/*!40000 ALTER TABLE `mst_company` DISABLE KEYS */;
+INSERT INTO `mst_company` VALUES (1,'DC01','Descon Limited','X1/2/3, Block-EP, Sector-5, Bidhan Nagar','Salt Lake',1,1,700091,'033 2357 4308','hrdes@gmail.com','TD001/95-97','2021-04-01 00:00:00');
+/*!40000 ALTER TABLE `mst_company` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-18 12:00:12
+-- Dump completed on 2021-08-15  0:46:38

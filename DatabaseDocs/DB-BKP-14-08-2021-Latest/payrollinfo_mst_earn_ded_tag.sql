@@ -16,27 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_attendance_type`
+-- Table structure for table `mst_earn_ded_tag`
 --
 
-DROP TABLE IF EXISTS `mst_attendance_type`;
+DROP TABLE IF EXISTS `mst_earn_ded_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_attendance_type` (
-  `attendance_type_code` varchar(1) NOT NULL,
-  `attendance_type_name` varchar(10) NOT NULL,
-  PRIMARY KEY (`attendance_type_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_earn_ded_tag` (
+  `earn_ded_tag_id` int NOT NULL AUTO_INCREMENT,
+  `earn_ded_tag_name` varchar(25) NOT NULL,
+  PRIMARY KEY (`earn_ded_tag_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_attendance_type`
+-- Dumping data for table `mst_earn_ded_tag`
 --
 
-LOCK TABLES `mst_attendance_type` WRITE;
-/*!40000 ALTER TABLE `mst_attendance_type` DISABLE KEYS */;
-INSERT INTO `mst_attendance_type` VALUES ('A','Absent'),('H','Holiday'),('L','Leave'),('P','Present');
-/*!40000 ALTER TABLE `mst_attendance_type` ENABLE KEYS */;
+LOCK TABLES `mst_earn_ded_tag` WRITE;
+/*!40000 ALTER TABLE `mst_earn_ded_tag` DISABLE KEYS */;
+INSERT INTO `mst_earn_ded_tag` VALUES (1,'BASIC-SALARY'),(2,'ESI'),(3,'PTAX'),(4,'PF'),(5,'ITAX'),(6,'HRA');
+/*!40000 ALTER TABLE `mst_earn_ded_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-18 12:00:11
+-- Dump completed on 2021-08-15  0:46:39

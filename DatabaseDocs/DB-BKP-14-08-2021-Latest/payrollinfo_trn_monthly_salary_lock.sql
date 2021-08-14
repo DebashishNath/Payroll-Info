@@ -16,31 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_users`
+-- Table structure for table `trn_monthly_salary_lock`
 --
 
-DROP TABLE IF EXISTS `mst_users`;
+DROP TABLE IF EXISTS `trn_monthly_salary_lock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(1045) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_username` (`username`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `trn_monthly_salary_lock` (
+  `month` int NOT NULL,
+  `year` int NOT NULL,
+  `salary_lock` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`month`,`year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_users`
+-- Dumping data for table `trn_monthly_salary_lock`
 --
 
-LOCK TABLES `mst_users` WRITE;
-/*!40000 ALTER TABLE `mst_users` DISABLE KEYS */;
-INSERT INTO `mst_users` VALUES (169,'Sandip','$2a$10$WFzQJI7r0rxVpmj0CLZ29OdhbO93ObMZnsUI29XKNTlyPlwnz7q06','sandip@gmail.com'),(170,'Biren','$2a$10$vdFik0PL43xqR1buiQ2McOIoh8KKTfD504OMOZ52g5c4sX1M6epb6','biren@gmail.com'),(171,'Suresh','$2a$10$USj8XS/IbLPBwS1GMD6cOeFqVtxGlEe/D7RBAp8K7MVVKnOFbohaa','suresh@gmail.com'),(172,'Manish','$2a$10$wySkr.mu.frAaAdmM7B9Xeoi7S6Fr9eiX85WtKfKrTTsVNtHXuooq','manish@gmail.com');
-/*!40000 ALTER TABLE `mst_users` ENABLE KEYS */;
+LOCK TABLES `trn_monthly_salary_lock` WRITE;
+/*!40000 ALTER TABLE `trn_monthly_salary_lock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trn_monthly_salary_lock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-18 12:00:11
+-- Dump completed on 2021-08-15  0:46:36

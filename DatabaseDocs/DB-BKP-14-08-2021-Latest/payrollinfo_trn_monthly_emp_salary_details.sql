@@ -1,0 +1,58 @@
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
+--
+-- Host: localhost    Database: payrollinfo
+-- ------------------------------------------------------
+-- Server version	8.0.21
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `trn_monthly_emp_salary_details`
+--
+
+DROP TABLE IF EXISTS `trn_monthly_emp_salary_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `trn_monthly_emp_salary_details` (
+  `month` int NOT NULL,
+  `year` int NOT NULL,
+  `emp_id` int NOT NULL,
+  `earn_ded_id` int NOT NULL,
+  `earn_ded_amount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`month`,`year`,`emp_id`,`earn_ded_id`),
+  KEY `FK_monthly_emp_salary_emp_id_idx` (`emp_id`),
+  KEY `FK_monthly_emp_salary_earn_ded_id_idx` (`earn_ded_id`),
+  CONSTRAINT `FK_monthly_emp_salary_earn_ded_id` FOREIGN KEY (`earn_ded_id`) REFERENCES `trn_emp_salary_structure` (`earn_ded_id`),
+  CONSTRAINT `FK_monthly_emp_salary_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `trn_emp_salary_structure` (`emp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trn_monthly_emp_salary_details`
+--
+
+LOCK TABLES `trn_monthly_emp_salary_details` WRITE;
+/*!40000 ALTER TABLE `trn_monthly_emp_salary_details` DISABLE KEYS */;
+INSERT INTO `trn_monthly_emp_salary_details` VALUES (4,2021,1,1,20500.00),(4,2021,1,3,10250.00),(4,2021,1,4,2460.00),(4,2021,1,5,10.00),(4,2021,1,6,2050.00),(4,2021,1,8,1580.00),(4,2021,1,9,1250.00),(4,2021,1,11,1600.00),(4,2021,1,13,2041.50),(4,2021,1,14,2050.00),(4,2021,1,15,4200.00),(4,2021,1,16,3075.00),(4,2021,1,17,3795.00),(4,2021,1,18,4100.00),(4,2021,1,19,2050.00),(4,2021,2,1,30000.00),(4,2021,2,2,24000.00),(4,2021,2,3,9000.00),(4,2021,2,4,3600.00),(4,2021,2,10,150.00),(4,2021,2,13,12600.00),(4,2021,3,1,35000.00),(4,2021,3,3,10000.00),(4,2021,3,4,3600.00),(4,2021,3,9,500.00),(4,2021,3,10,150.00),(4,2021,3,13,9100.00),(4,2021,4,1,40000.00),(4,2021,4,2,32000.00),(4,2021,4,3,6000.00),(4,2021,4,4,4800.00),(4,2021,4,5,2000.00),(4,2021,4,10,200.00),(4,2021,4,11,2000.00),(4,2021,4,13,16600.00),(4,2021,4,16,3000.00),(4,2021,6,1,25000.00),(4,2021,6,2,6000.00),(4,2021,6,3,4000.00),(4,2021,6,4,1000.00),(4,2021,6,5,600.00),(4,2021,6,10,130.00),(4,2021,6,13,1900.00),(4,2021,6,14,1000.00),(4,2021,6,16,2000.00),(4,2021,8,1,30000.00),(4,2021,8,2,5000.00),(4,2021,8,3,3000.00),(4,2021,8,4,3600.00),(4,2021,8,10,130.00),(4,2021,8,13,8800.00),(4,2021,8,15,1000.00),(4,2021,8,17,2000.00),(4,2021,8,18,3000.00),(4,2021,9,1,30000.00),(4,2021,9,2,6000.00),(4,2021,9,3,3600.00),(4,2021,9,4,4000.00),(4,2021,9,5,200.00),(4,2021,9,6,1500.00),(4,2021,9,10,130.00),(4,2021,9,13,2055.00),(4,2021,11,1,50000.00),(4,2021,11,2,15000.00),(4,2021,11,3,10000.00),(4,2021,11,4,6000.00),(4,2021,11,5,2600.00),(4,2021,11,6,10000.00),(4,2021,11,10,200.00),(4,2021,11,13,28650.00),(4,2021,11,14,3000.00),(4,2021,11,15,2500.00),(4,2021,11,16,5000.00),(4,2021,12,1,45000.00),(4,2021,12,2,17500.00),(4,2021,12,3,3000.00),(4,2021,12,4,6000.00),(4,2021,12,10,200.00),(4,2021,12,11,3000.00),(4,2021,12,13,14560.00),(4,2021,12,14,2800.00),(4,2021,12,15,1500.00);
+/*!40000 ALTER TABLE `trn_monthly_emp_salary_details` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-08-15  0:46:36

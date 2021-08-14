@@ -39,10 +39,9 @@ CREATE TABLE `trn_emp_leave` (
   KEY `trn_emp_leave_emp_id_idx` (`emp_id`),
   KEY `trn_emp_leave_leave_type_code_idx` (`leave_type_code`),
   KEY `trn_emp_leave_approved_by_idx` (`approved_by`),
-  CONSTRAINT `trn_emp_leave_approved_by` FOREIGN KEY (`approved_by`) REFERENCES `mst_employee` (`emp_id`),
   CONSTRAINT `trn_emp_leave_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `mst_employee` (`emp_id`),
   CONSTRAINT `trn_emp_leave_leave_type_code` FOREIGN KEY (`leave_type_code`) REFERENCES `mst_leave_type` (`leave_type_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +50,7 @@ CREATE TABLE `trn_emp_leave` (
 
 LOCK TABLES `trn_emp_leave` WRITE;
 /*!40000 ALTER TABLE `trn_emp_leave` DISABLE KEYS */;
-INSERT INTO `trn_emp_leave` VALUES (1,2,'SFSAF','2021-07-06','EL','2021-07-07','2021-07-09','ASFSAF','Y',5,'SFSFSF'),(2,2,'SFSFSF','2021-07-06','EL','2021-07-15','2021-07-19','SAFSAF-\ngvgd\n\n\ngsddhh','Y',6,'zvxzvxzzbz-bbxc'),(3,2,'AAFAG','2021-07-07','SL','2021-07-21','2021-07-24','GSDGDG','Y',18,'GSDGDGD'),(4,8,'safa','2021-06-01','CL','2021-06-02','2021-06-04','aagaggd','Y',18,''),(5,8,'gdhdf','2021-06-18','EL','2021-07-20','2021-07-23','wtwtwe','Y',12,''),(6,5,'E005/1','2021-03-10','EL','2021-03-16','2021-03-18','ABCD','Y',11,'DAD');
+INSERT INTO `trn_emp_leave` VALUES (1,2,'07/001','2021-07-06','EL','2021-07-07','2021-07-09','Dear Sir,\n   I want to take earn leave for 3 days.\n   Please approve it.\n\nThanks & regards,\nNihar Ranjan Pramanik','Y',5,'Leave Granted'),(2,2,'A/E002/07-1','2021-07-06','EL','2021-07-15','2021-07-19','Dear Sir.....I want to take leave\n\n\n\ngsddhh','Y',6,'Leave granted'),(3,2,'AAFAG','2021-07-07','SL','2021-07-21','2021-07-24','GSDGDG-afafsfsaf','Y',18,'GSDGDGD'),(4,8,'safa','2021-06-01','CL','2021-06-02','2021-06-04','aagaggd','Y',18,''),(5,8,'gdhdf','2021-06-18','EL','2021-07-20','2021-07-23','wtwtwe','Y',12,''),(6,5,'E005/1','2021-03-10','EL','2021-03-16','2021-03-18','ABCD','Y',11,'DAD'),(8,2,'A/E002/1','2021-04-01','EL','2021-04-05','2021-04-07','aff-sfassaga','Y',11,'sfsafsafsfsfsf'),(9,3,'E/04/1','2021-04-02','CL','2021-04-13','2021-04-16','Dear Sir, I want 4 days leave.','Y',18,'Leave granted'),(10,11,'004-1','2021-04-02','CL','2021-04-06','2021-04-08','Dear Sir','Y',6,'Leave Guranted'),(11,11,'05/0001','2021-05-01','CL','2021-05-04','2021-05-08','Dear Sir/Madam, I want to take leave for 5 days','Y',19,'Leave Guranted');
 /*!40000 ALTER TABLE `trn_emp_leave` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -64,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-18 12:00:11
+-- Dump completed on 2021-08-15  0:46:40

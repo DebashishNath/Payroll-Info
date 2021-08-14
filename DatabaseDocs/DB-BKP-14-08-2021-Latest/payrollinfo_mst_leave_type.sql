@@ -16,30 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `mst_category`
+-- Table structure for table `mst_leave_type`
 --
 
-DROP TABLE IF EXISTS `mst_category`;
+DROP TABLE IF EXISTS `mst_leave_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mst_category` (
-  `category_id` int NOT NULL AUTO_INCREMENT,
-  `category_code` varchar(5) NOT NULL,
-  `category_name` varchar(25) NOT NULL,
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_code_UNIQUE` (`category_code`),
-  UNIQUE KEY `category_name_UNIQUE` (`category_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `mst_leave_type` (
+  `leave_type_code` varchar(2) NOT NULL,
+  `leave_type_name` varchar(15) NOT NULL,
+  PRIMARY KEY (`leave_type_code`),
+  UNIQUE KEY `leave_type_name_UNIQUE` (`leave_type_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mst_category`
+-- Dumping data for table `mst_leave_type`
 --
 
-LOCK TABLES `mst_category` WRITE;
-/*!40000 ALTER TABLE `mst_category` DISABLE KEYS */;
-INSERT INTO `mst_category` VALUES (1,'CT001','Permanent'),(2,'CT002','Temporary'),(40,'CT003','CAT-3'),(41,'CT004','CAT-4'),(42,'CT005','CAT-5'),(43,'CT006','CAT-6'),(44,'CT007','CAT-7'),(45,'CT008','CAT-8'),(46,'CT009','CAT-9'),(47,'CT010','CAT-10'),(48,'CT011','Category-11'),(49,'CT012','CAT-12'),(50,'CT013','CAT-13'),(51,'CT014','CAT-14'),(52,'CT015','CAT-15'),(53,'CT016','CAT-16'),(54,'CT017','Category-17'),(55,'C00','N/A');
-/*!40000 ALTER TABLE `mst_category` ENABLE KEYS */;
+LOCK TABLES `mst_leave_type` WRITE;
+/*!40000 ALTER TABLE `mst_leave_type` DISABLE KEYS */;
+INSERT INTO `mst_leave_type` VALUES ('CL','Casual Leave'),('EL','Earn Leave'),('SL','Sick Leave');
+/*!40000 ALTER TABLE `mst_leave_type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-18 12:00:11
+-- Dump completed on 2021-08-15  0:46:37
