@@ -227,7 +227,7 @@ class EmployeeOfficialForm extends Component {
 
   render()
   {
-    const paperStyle={padding:20,height:'90vh',width:600,margin:"10px auto",border: '5px solid green'}
+    const paperStyle={padding:20,height:'90vh',width:600,margin:"10px auto",border: '1px solid blue'}
     const btnStyle={margin:'8px 0'}
    
     return (
@@ -250,16 +250,16 @@ class EmployeeOfficialForm extends Component {
               </td>
             </tr><br/>
             <tr><td><label>AADHAR No</label></td>
-                <td><TextField id="AADHARNo" variant='outlined'></TextField></td>
+                <td><TextField id="AADHARNo" variant='outlined' size="small"></TextField></td>
             </tr><br/>
             <tr><td><label>PAN No</label></td>
-                <td><TextField id="PANNo" variant='outlined'></TextField></td>
+                <td><TextField id="PANNo" variant='outlined' size="small"></TextField></td>
             </tr><br/>
             <tr><td><label>PF No</label></td>
-                <td><TextField id="PFNo" variant='outlined'></TextField></td>
+                <td><TextField id="PFNo" variant='outlined' size="small"></TextField></td>
             </tr><br/>
             <tr><td><label>ESI No</label></td>
-                <td><TextField id="ESINo" variant='outlined'></TextField></td>
+                <td><TextField id="ESINo" variant='outlined' size="small"></TextField></td>
             </tr><br/>
             <tr><td><label>Category</label></td>
                 <td>

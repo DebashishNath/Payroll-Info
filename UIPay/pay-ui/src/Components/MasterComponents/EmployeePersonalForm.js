@@ -285,7 +285,7 @@ class EmployeePersonalForm extends Component {
 
   render()
   {
-    const paperStyle={padding:20,height:'90vh',width:600,margin:"10px auto",border: '5px solid green'}
+    const paperStyle={padding:20,height:'90vh',width:600,margin:"10px auto",border: '1px solid blue'}
     const btnStyle={margin:'8px 0'}
    
     return (
@@ -327,10 +327,10 @@ class EmployeePersonalForm extends Component {
             </tr>
             <br/>
             <tr><td><label>Address</label></td>
-                <td><TextField id="address1" multiline variant='outlined' style ={{width: '200%'}}></TextField></td>
+                <td><TextField id="address1" multiline variant='outlined' style ={{width: '190%'}}></TextField></td>
             </tr><br/>
             <tr><td></td>
-                <td><TextField id="address2" multiline variant='outlined' style ={{width: '200%'}}></TextField></td>
+                <td><TextField id="address2" multiline variant='outlined' style ={{width: '190%'}}></TextField></td>
             </tr><br/>
             <tr><td><label>State</label></td>
                 <td>
@@ -352,10 +352,10 @@ class EmployeePersonalForm extends Component {
             </tr>
             <br/>
             <tr><td><label>Contact Numbers</label></td>
-                <td><TextField id="contactNumber" variant='outlined' style ={{width: '200%'}} size="small"></TextField></td>
+                <td><TextField id="contactNumber" variant='outlined' style ={{width: '190%'}} size="small"></TextField></td>
             </tr><br/>
             <tr><td><label>Email ids</label></td>
-                <td><TextField id="email" variant='outlined' style ={{width: '200%'}} size="small"></TextField></td>
+                <td><TextField id="email" variant='outlined' style ={{width: '190%'}} size="small"></TextField></td>
             </tr>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
