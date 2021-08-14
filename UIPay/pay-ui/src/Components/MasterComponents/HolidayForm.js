@@ -17,7 +17,7 @@ class HolidayForm extends Component {
             holidayRecords:[],
             monthId:0,
             holidayId:0,
-            paperHeight:'30vh',
+            paperHeight:'25vh',
             showMessageBox:false,
             title:'',
             displayMessage:''
@@ -222,7 +222,7 @@ class HolidayForm extends Component {
             {
                 await this.setState({
                     showHolidays:false,
-                    paperHeight : '30vh',
+                    paperHeight : '25vh',
                     holidayRecords: []
                 });
                 await this.showMessage(true,'Information','No records to display','');
@@ -247,7 +247,7 @@ class HolidayForm extends Component {
         const paperStyle={padding:20,height:this.state.paperHeight,width:550,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
-            height: '40vh',
+            height: '45vh',
             overflow: 'auto'
           };
         return (
@@ -263,7 +263,7 @@ class HolidayForm extends Component {
                     <tr>
                     <td><label>Year</label></td>
                     <td>
-                        <TextField id="year" variant='outlined' style ={{width: '60%'}}></TextField>
+                        <TextField id="year" variant='outlined' style ={{width: '60%'}} size="small"></TextField>
                     </td>
                     <td><label>Month</label></td>
                     <td>
@@ -276,11 +276,11 @@ class HolidayForm extends Component {
                     <tr>
                     <td><label>Holiday Code</label></td>
                     <td>
-                        <TextField id="holidayCode" variant='outlined' style ={{width: '60%'}}></TextField>
+                        <TextField id="holidayCode" variant='outlined' style ={{width: '60%'}} size="small"></TextField>
                     </td>
                     <td><label>Holiday Name</label></td>
                     <td>
-                        <TextField id="holidayName" variant='outlined'></TextField>
+                        <TextField id="holidayName" variant='outlined' size="small"></TextField>
                     </td>
                     </tr><br/>
                     <tr>

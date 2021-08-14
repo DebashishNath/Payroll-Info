@@ -318,7 +318,7 @@ class PrintPaysheetForm extends Component {
         const paperStyle={padding:20,height:this.state.paperHeight,width:700,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
-            height: '85vh',
+            height: '90vh',
             overflow: 'auto'
           };
 

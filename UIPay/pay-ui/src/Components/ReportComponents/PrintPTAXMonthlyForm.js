@@ -129,7 +129,7 @@ class PrintPTAXMonthlyForm extends Component {
                         </tr>);
                 }
                 this.setState({ 
-                    paperHeight:'50vh',
+                    paperHeight:'45vh',
                     showPTax:true,
                     ptaxToDisplay: initialDataToDisplay });   
                 }
@@ -168,7 +168,7 @@ class PrintPTAXMonthlyForm extends Component {
                 <Table>
                     <tr>
                         <td>
-                            <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}}></TextField>
+                            <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}} size="small"></TextField>
                         </td>
                         <td>
                             <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
