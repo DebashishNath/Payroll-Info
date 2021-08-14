@@ -13,11 +13,6 @@ abstract public class EmpAttendanceServiceImpl implements EmpAttendanceService{
     }
 
     @Override
-    public MessageResponse GenerateSingleAttendance(Integer p_month, Integer p_year,Long p_emp_id){
-        return new EmpAttendanceServiceDAL().GenerateSingleAttendance(p_month,p_year,p_emp_id);
-    }
-
-    @Override
     public List<trn_emp_attendance> GetAttendanceOfSingleEmployee(AttendanceIdentity attendanceIdentity){
         return new EmpAttendanceServiceDAL().GetAttendanceOfSingleEmployee(attendanceIdentity);
     }

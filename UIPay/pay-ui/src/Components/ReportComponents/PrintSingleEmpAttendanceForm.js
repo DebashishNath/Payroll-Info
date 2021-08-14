@@ -15,7 +15,7 @@ class PrintSingleEmpAttendanceForm extends Component {
             monthId:0,
             employeeId:0,
             showAttendance: false,
-            paperHeight:'20vh',
+            paperHeight:'15vh',
             showMessageBox:false,
             title:'',
             displayMessage:''
@@ -191,7 +191,7 @@ class PrintSingleEmpAttendanceForm extends Component {
             else
             {
                 await this.setState({ 
-                    paperHeight:'20vh',
+                    paperHeight:'15vh',
                     showAttendance:false,
                     attendanceData: [] });  
                 await this.showMessage(true,'Information','No records to display',''); 
@@ -225,7 +225,7 @@ class PrintSingleEmpAttendanceForm extends Component {
                 <Table>
                     <tr>
                     <td>
-                        <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}}></TextField>
+                        <TextField id="year" label='Year' placeholder='Year' variant='outlined' style ={{width: '30%'}} size="small"></TextField>
                     </td>
                     <td>
                         <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}

@@ -22,13 +22,6 @@ public class AttendanceController {
         return empAttendanceService.GenerateAllAttendance(month,year);
     }
 
-    @PostMapping("/empsingleattendance/{month}/{year}/{empid}")
-    public MessageResponse GenerateSingleAttendance(@PathVariable(value = "month") Integer month,
-                                              @PathVariable(value = "year") Integer year,
-                                              @PathVariable(value = "empid") Long empid){
-        return empAttendanceService.GenerateSingleAttendance(month,year,empid);
-    }
-
     @GetMapping("/get_single_emp_attendance/{month}/{year}/{empid}")
     public List<trn_emp_attendance> GetAttendanceOfSingleEmployee(@PathVariable(value = "month") Integer month,
                                                                   @PathVariable(value = "year") Integer year,

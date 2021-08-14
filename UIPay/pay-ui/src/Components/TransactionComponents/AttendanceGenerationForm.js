@@ -144,8 +144,8 @@ class AttendanceGenerationForm extends Component {
       }
       
       this.setState({ showProgressBar:false,
-        disableButton:false,
-        completed:0 });
+              disableButton:false,
+              completed:0 });
       
       document.getElementById("lblMsg").innerHTML="";
     }
