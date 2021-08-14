@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem } from '@material-ui/core';
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 import HelperMethods from '../CommonComponents/HelperMethods';
+import SaveIcon from '@material-ui/icons/Save';
 
 class EmployeeOfficialForm extends Component {
 
@@ -287,7 +288,7 @@ class EmployeeOfficialForm extends Component {
             </tr><br/>
             <tr><td></td>
                 <td><Button type='submit' color='primary' variant='contained' style={btnStyle} 
-                  onClick={() => { this.updateEmployeeOfficial() }}>Save</Button></td>
+                  size='small' startIcon={<SaveIcon />} onClick={() => { this.updateEmployeeOfficial() }}>Save</Button></td>
             </tr>
           </Table>
         </Paper>
