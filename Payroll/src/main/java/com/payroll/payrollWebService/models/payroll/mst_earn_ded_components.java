@@ -2,10 +2,7 @@ package com.payroll.payrollWebService.models.payroll;
 
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name="mst_earn_ded_components")
@@ -16,6 +13,11 @@ public class mst_earn_ded_components {
     private String earn_ded_name;
     private String earn_ded_type;
     private Long earn_ded_priority;
+    private String is_taxable;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "earn_ded_tag_id", referencedColumnName = "earn_ded_tag_id")
+    private mst_earn_ded_tag earnDedTag;
 
     @Transient
     private MessageResponse returnMessage;
@@ -60,6 +62,22 @@ public class mst_earn_ded_components {
 
     public void setEarn_ded_priority(Long earn_ded_priority) {
         this.earn_ded_priority = earn_ded_priority;
+    }
+
+    public String getIs_taxable() {
+        return is_taxable;
+    }
+
+    public void setIs_taxable(String is_taxable) {
+        this.is_taxable = is_taxable;
+    }
+
+    public mst_earn_ded_tag getEarnDedTag() {
+        return earnDedTag;
+    }
+
+    public void setEarnDedTag(mst_earn_ded_tag earnDedTag) {
+        this.earnDedTag = earnDedTag;
     }
 
     public MessageResponse getReturnMessage() {
