@@ -180,6 +180,8 @@ class EmployeeSalaryStructureForm extends PureComponent {
 
     async displayEmpEarnDeduction(empId)
     {
+        await this.showMessage(false, '','','');
+        
         let initialDataToDisplay = [];
         
         const requestOptions = {
@@ -230,7 +232,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
             else
             {
                 await this.showMessage(true, 'Information','Salary structure not created for this employeee','employeesCombo');
-                this.setState({ paperHeight:'25vh',
+                await this.setState({ paperHeight:'25vh',
                                 showEmpSalStruct : false,
                                 earnDedToDisplay: [] });
             }
