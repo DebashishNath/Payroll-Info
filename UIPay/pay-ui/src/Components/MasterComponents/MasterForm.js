@@ -193,9 +193,8 @@ class MasterForm extends PureComponent
                 this.setState ({ 
                     paperHeight:'20vh',
                     showMasterRecords:false });
-                alert("No Records to display");
+                await this.showMessage(true,'Error Information','No Records to display','');
             }
-            
         }catch(err) 
         {
             await this.showMessage(true,'Error Information',err.message,'');
