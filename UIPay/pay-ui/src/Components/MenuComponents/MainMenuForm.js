@@ -22,6 +22,7 @@ import PrintPTAXMonthlyForm from '../ReportComponents/PrintPTAXMonthlyForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
 import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
+import EmployeesToPrint from '../ReportComponents/EmployeesToPrint';
 import TestForm from '../ReportComponents/TestForm';
 
 export default class MainMenuForm extends Component {
@@ -68,6 +69,7 @@ export default class MainMenuForm extends Component {
             { name: "attendance", label: "Attendance",route: '/printattendance', onClick },
             { name: "payslip", label: "Payslip",route: '/printpayslip', onClick },
             { name: "paysheet", label: "Paysheet",route: '/printpaysheet', onClick },
+            { name: "printemployeelist", label: "Employee List",route: '/printemployeelist', onClick },
             { name: "test", label: "Test",route: '/test', onClick }
           ]
         }
@@ -102,6 +104,7 @@ export default class MainMenuForm extends Component {
               <Route path='/printattendance' exact component={PrintSingleEmpAttendanceForm}></Route>
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
               <Route path='/printpaysheet' exact component={PrintPaysheetForm}></Route>
+              <Route path='/printemployeelist' exact component={EmployeesToPrint}></Route>
               <Route path='/test' exact component={TestForm}></Route>
             </switch>
           </Router>

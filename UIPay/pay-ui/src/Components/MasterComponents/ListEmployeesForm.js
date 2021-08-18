@@ -3,6 +3,7 @@ import { Table, Button,Paper } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import HelperMethods from '../CommonComponents/HelperMethods';
+import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 
 class ListEmployeesForm extends PureComponent {
     constructor(props) 
@@ -10,7 +11,11 @@ class ListEmployeesForm extends PureComponent {
         super(props);
         this.state = {
             employeesToDisplay:[],
-            noOfRecords:0
+            noOfRecords:0,
+            showMessageBox:false,
+            title:'',
+            displayMessage:'',
+            showPrintEmployee:false
         }
         this.addNewEmployee=this.addNewEmployee.bind(this);
         this.doEditOfEmployee=this.doEditOfEmployee.bind(this);
@@ -32,6 +37,19 @@ class ListEmployeesForm extends PureComponent {
         localStorage.setItem('employeeId',empId);
         const { history } = this.props;
         if(history) history.push('/employee');
+    }
+
+    async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
+    {
+        if(controlName.trim().length > 0)
+        {
+            document.getElementById(controlName).focus();
+        }
+        await this.setState({
+            showMessageBox:isShowMsgBox,
+            title: messageBoxtitle,
+            displayMessage: dispMessage
+        });
     }
 
     async DisplayAllEmployees()
@@ -82,7 +100,7 @@ class ListEmployeesForm extends PureComponent {
             initialDataToDisplay.push("No Employees to display");
           }
         } catch(err) {
-            alert(err.message);
+            await this.showMessage(true,'Error Information',err.message,'');
         }
     }
 
@@ -98,6 +116,12 @@ class ListEmployeesForm extends PureComponent {
 
         return (
             <Paper style={paperStyle} variant="outlined">
+            {this.state.showMessageBox ?
+            <div>
+                <MessageBoxForm title={this.state.title}>
+                {this.state.displayMessage}
+                </MessageBoxForm>
+            </div> : null}
             <div align='right'>
                 <Button color='primary' variant='contained' style={btnStyle} size='small'
                     startIcon={<AddIcon />} onClick={() => { this.addNewEmployee()}}>Add New Employee</Button>

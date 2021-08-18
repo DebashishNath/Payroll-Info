@@ -67,3 +67,8 @@ User=root;Password=rooT678;Option=3;
 Report
 ----------
 https://www.laravelcode.com/post/how-to-generate-pdf-in-react-using-jspdf
+
+-----------------------------------------------------------------------------------------
+Pagination
+------------
+https://stackoverflow.com/questions/40232847/how-to-implement-pagination-in-react
