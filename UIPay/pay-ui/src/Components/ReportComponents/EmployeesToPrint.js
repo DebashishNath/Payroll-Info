@@ -44,11 +44,6 @@ export class EmployeesListToPrint extends React.PureComponent
         var data = await response.json();
         if(data!=null && data.length>0)
         {
-          initialDataToDisplay.push(<tr>
-               <th>Slno</th><th>Code</th><th>Name</th>
-               <th>Gender</th><th>Department</th><th>Designation</th>
-               <th></th></tr>);
-          initialDataToDisplay.push(<br></br>);
           for(var i=0;i<=data.length-1;i++)
           {
               let gender='Male';
@@ -102,7 +97,11 @@ export class EmployeesListToPrint extends React.PureComponent
     return(
       <div>
         <Table>
-            {currentPosts}
+          <tr>
+            <th>Slno</th><th>Code</th><th>Name</th>
+            <th>Gender</th><th>Department</th><th>Designation</th>
+          </tr><br></br>
+          {currentPosts}
         </Table><br/>
         <div align='right'>
           {renderPageNumbers}
