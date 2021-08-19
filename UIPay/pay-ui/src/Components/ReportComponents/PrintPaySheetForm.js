@@ -21,6 +21,7 @@ class PrintPaysheetForm extends Component {
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.printPaysheet=this.printPaysheet.bind(this);
+        this.displayPaysheet=this.displayPaysheet.bind(this);
     }
 
     async componentDidMount(){
@@ -55,6 +56,7 @@ class PrintPaysheetForm extends Component {
       this.setState({
         monthId : event.target.value
       });
+      this.displayPaysheet();
     }
     
     async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
@@ -87,7 +89,19 @@ class PrintPaysheetForm extends Component {
         return true;
     }
 
-    async printPaysheet()
+    printPaysheet()
+    {
+        var content = document.getElementById('printEmpPaySheet');
+        var pri = document.getElementById('ifmPaySheetContentsToPrint').contentWindow;
+        pri.document.open();
+        pri.document.write(content.innerHTML);
+        pri.document.close();
+        pri.focus();
+        pri.print();
+
+    }
+
+    async displayPaysheet()
     {
         if(!await this.validateControls())
         {
@@ -350,13 +364,16 @@ class PrintPaysheetForm extends Component {
                 </Table>
                 <br/>
                 { this.state.showPaysheet
-                    ?<div style={divStyle}>
+                    ?<div id="printEmpPaySheet" style={divStyle}>
                     <Table id='tablePaysheet' border='1'>
                         {this.state.paysheetToDisplay}
                     </Table>
                     </div>
                       : null
                 }
+                <iframe id="ifmPaySheetContentsToPrint" 
+                    style={{ height: '0px', width: '0px', position: 'absolute' }}>
+                </iframe>
             </Paper>
          </div>
         );
