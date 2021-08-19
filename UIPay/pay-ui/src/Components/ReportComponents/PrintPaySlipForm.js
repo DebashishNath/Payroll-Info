@@ -20,6 +20,7 @@ class PrintPaySlipForm extends Component {
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.employeesComboChange = this.employeesComboChange.bind(this);
+        this.displayPaySlip=this.displayPaySlip.bind(this);
         this.printPaySlip=this.printPaySlip.bind(this);
     }
 
@@ -107,6 +108,7 @@ class PrintPaySlipForm extends Component {
         this.setState({
             employeeId : event.target.value
         });
+        this.displayPaySlip();
     }
 
     async validateControls()
@@ -130,7 +132,7 @@ class PrintPaySlipForm extends Component {
         return true;
     }
 
-    async printPaySlip()
+    async displayPaySlip()
     {
         if(!await this.validateControls()) 
         {
@@ -253,6 +255,16 @@ class PrintPaySlipForm extends Component {
         }
     }
     
+    printPaySlip() {
+        var content = document.getElementById('printEmpPaySlip');
+        var pri = document.getElementById('ifmcontentstoprint').contentWindow;
+        pri.document.open();
+        pri.document.write(content.innerHTML);
+        pri.document.close();
+        pri.focus();
+        pri.print();
+    }
+
     render() {
         const paperStyle={padding:20,height:this.state.paperHeight,width:650,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
@@ -295,11 +307,14 @@ class PrintPaySlipForm extends Component {
                 </Table>
                 <br/>
                 { this.state.showPaySlip
-                ?   <div style={divStyle}>
+                ?   <div id="printEmpPaySlip" style={divStyle}>
                     <Table id='tablePaySlip' border='1'>
                         {this.state.paySlipData}
                     </Table>
                 </div> : null }
+                <iframe id="ifmcontentstoprint" 
+                    style={{ height: '0px', width: '0px', position: 'absolute' }}>
+                </iframe> 
             </Paper>
         );
     }
