@@ -371,7 +371,7 @@ class PrintPaysheetForm extends Component {
                     </div>
                       : null
                 }
-                <iframe id="ifmPaySheetContentsToPrint" 
+                <iframe id="ifmPaySheetContentsToPrint" title="Paysheet" 
                     style={{ height: '0px', width: '0px', position: 'absolute' }}>
                 </iframe>
             </Paper>

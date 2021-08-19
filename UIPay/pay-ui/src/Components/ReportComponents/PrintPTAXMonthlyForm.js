@@ -19,6 +19,7 @@ class PrintPTAXMonthlyForm extends Component {
         }
         this.monthsComboChange=this.monthsComboChange.bind(this);
         this.printPTAX=this.printPTAX.bind(this);
+        this.displayPTAX=this.displayPTAX.bind(this);
     }
 
     async componentDidMount(){
@@ -53,6 +54,7 @@ class PrintPTAXMonthlyForm extends Component {
       this.setState({
         monthId : event.target.value
       });
+      this.displayPTAX();
     }
     
     async showMessage(isShowMsgBox,messageBoxtitle,dispMessage,controlName) 
@@ -85,7 +87,7 @@ class PrintPTAXMonthlyForm extends Component {
         return true;
     }
 
-    async printPTAX()
+    async displayPTAX()
     {
         if(!await this.validateControls())
         {
@@ -148,6 +150,17 @@ class PrintPTAXMonthlyForm extends Component {
         }
     }
     
+    printPTAX()
+    {
+        var content = document.getElementById('printPTAX');
+        var pri = document.getElementById('ifmPTAXContentsToPrint').contentWindow;
+        pri.document.open();
+        pri.document.write(content.innerHTML);
+        pri.document.close();
+        pri.focus();
+        pri.print();
+    }
+
     render() {
         const paperStyle={padding:20,height:this.state.paperHeight,width:550,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
@@ -184,13 +197,16 @@ class PrintPTAXMonthlyForm extends Component {
                 </Table>
                 <br/>
                 { this.state.showPTax
-                    ?<div style={divStyle}>
+                    ?<div id='printPTAX' style={divStyle}>
                     <Table id='tablePTAX' border='1'>
                         {this.state.ptaxToDisplay}
                     </Table>
                     </div>
                       : null
                 }
+                 <iframe id="ifmPTAXContentsToPrint" title="PTAXMonthly" 
+                    style={{ height: '0px', width: '0px', position: 'absolute' }}>
+                </iframe>
             </Paper>
          </div>
         );

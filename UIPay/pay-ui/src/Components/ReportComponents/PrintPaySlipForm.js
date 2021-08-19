@@ -257,7 +257,7 @@ class PrintPaySlipForm extends Component {
     
     printPaySlip() {
         var content = document.getElementById('printEmpPaySlip');
-        var pri = document.getElementById('ifmcontentstoprint').contentWindow;
+        var pri = document.getElementById('ifmPaySlipContentsToPrint').contentWindow;
         pri.document.open();
         pri.document.write(content.innerHTML);
         pri.document.close();
@@ -312,7 +312,7 @@ class PrintPaySlipForm extends Component {
                         {this.state.paySlipData}
                     </Table>
                 </div> : null }
-                <iframe id="ifmcontentstoprint" 
+                <iframe id="ifmPaySlipContentsToPrint" title="Payslip" 
                     style={{ height: '0px', width: '0px', position: 'absolute' }}>
                 </iframe> 
             </Paper>
