@@ -79,6 +79,11 @@ class AttendanceGenerationForm extends Component {
       await this.showMessage(true,'Error Information', 'Enter Year for attendance generation','year');
       return false;
     }
+    if(isNaN(document.getElementById("year").value.trim()))
+    {
+      await this.showMessage(true,'Error Information', 'Enter numeric value for Year ','year');
+      return false;
+    }
     if(this.state.monthId === 0)
     {
       await this.showMessage(true,'Error Information', 'Select Month for attendance generation','monthsCombo');
@@ -170,7 +175,7 @@ class AttendanceGenerationForm extends Component {
               <Table>
                 <tr>
                   <td>
-                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '60%'}} size="small"></TextField>
+                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '60%'}} inputProps={{ maxLength: 4 }} size="small"></TextField>
                   </td>
                   <td width='120px'>
                     <label>Select Month</label>

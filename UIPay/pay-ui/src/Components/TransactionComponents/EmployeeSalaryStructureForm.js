@@ -74,6 +74,11 @@ class EmployeeSalaryStructureForm extends PureComponent {
             await this.showMessage(true, 'Error Information','Enter earn deduction amount for creating salary structure','earnDedAmount');
             return false;
         }
+        if(isNaN(document.getElementById("earnDedAmount").value.trim()))
+        {
+            await this.showMessage(true,'Error Information', 'Enter numeric value for Earn Deduction Amount','earnDedAmount');
+            return false;
+        }
         return true;
     }
 
@@ -295,7 +300,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         <br/>
                         <tr>
                             <td>Amount</td>
-                            <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '30%'}} size="small"></TextField></td>
+                            <td><TextField id="earnDedAmount" variant='outlined' style ={{width: '30%'}} inputProps={{ maxLength: 6 }} size="small"></TextField></td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.doUpdateEmpComponent() }}>Update</Button></td>
                             <td><Button color="primary" variant="contained" onClick={() => { this.clearControls() }}>Reset</Button></td>
                         </tr>

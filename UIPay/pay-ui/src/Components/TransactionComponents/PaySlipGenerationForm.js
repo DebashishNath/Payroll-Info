@@ -75,7 +75,11 @@ class PaySlipGenerationForm extends Component {
       await this.showMessage(true,'Error Information','Enter Year for Pay Slip generation','year');
       return false;
     }
-
+    if(isNaN(document.getElementById("year").value.trim()))
+    {
+      await this.showMessage(true,'Error Information', 'Enter numeric value for Year ','year');
+      return false;
+    }
     if(this.state.monthId === 0)
     {
       await this.showMessage(true,'Error Information','Select Month for Pay Slip generation','monthsCombo');
@@ -147,7 +151,7 @@ class PaySlipGenerationForm extends Component {
               <Table>
                 <tr>
                   <td>
-                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '30%'}} size="small"></TextField>
+                    <TextField id="year" label='Year' placeholder='Year' variant='outlined' style={{width: '30%'}} inputProps={{ maxLength: 4 }} size="small"></TextField>
                   </td>
                   <td>
                     <Select id="monthsCombo" value={this.state.value} onChange={this.monthsComboChange}
