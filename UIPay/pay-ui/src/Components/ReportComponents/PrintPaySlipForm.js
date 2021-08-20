@@ -229,6 +229,13 @@ class PrintPaySlipForm extends Component {
                     <td align='right'>{net_amount}</td>
                     </tr>);
                 
+                var converter = require('number-to-words');
+                var netAmtInwords = converter.toWords(net_amount);
+                payData.push(<tr>
+                    <td></td><td></td>
+                    <td colspan='3' align='right'>In words:&nbsp;&nbsp;{netAmtInwords.toUpperCase()}</td>
+                </tr>)
+                
                 this.setState({ 
                     showPaySlip:true,
                     paperHeight : '60vh',
