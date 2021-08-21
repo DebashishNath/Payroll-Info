@@ -207,26 +207,26 @@ class PrintPaySlipForm extends Component {
                 for(i=0;i<rows;i++)
                 {
                     payData.push(<tr>
-                        <td>{i+1}</td>
+                        <td align='center'>{i+1}</td>
                         <td>{earnData[i][0]}</td>
-                        <td align='right'>{earnData[i][1]}</td>
+                        <td align='right'>{earnData[i][1].toLocaleString()}</td>
                         <td>{dedData[i][0]}</td>
-                        <td align='right'>{dedData[i][1]}</td>
+                        <td align='right'>{dedData[i][1].toLocaleString()}</td>
                         </tr>);
                 }
                 payData.push(<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>);
                 payData.push(<tr>
                     <td></td>
                     <td>Total Earn Amount</td>
-                    <td align='right'>{total_earn_amount}</td>
+                    <td align='right'>{total_earn_amount.toLocaleString()}</td>
                     <td>Total Ded Amount</td>
-                    <td align='right'>{total_ded_amount}</td>
+                    <td align='right'>{total_ded_amount.toLocaleString()}</td>
                     </tr>);
                 
                 payData.push(<tr>
                     <td></td><td></td><td></td>
                     <td>Net Amount</td>
-                    <td align='right'>{net_amount}</td>
+                    <td align='right'>{net_amount.toLocaleString()}</td>
                     </tr>);
                 
                 var converter = require('number-to-words');

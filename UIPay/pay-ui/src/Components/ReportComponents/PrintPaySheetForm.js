@@ -190,7 +190,7 @@ class PrintPaysheetForm extends Component {
                 {
                     if(this.state.earnColsInGrid[x] === ps_values[y].earn_ded_id)
                     {
-                        initialDataToDisplay.push(<td align='right'>{ps_values[y].amount}</td>);
+                        initialDataToDisplay.push(<td align='right'>{ps_values[y].amount.toLocaleString()}</td>);
                         oneBlankSpace=false;
                         break;
                     }
@@ -208,7 +208,7 @@ class PrintPaysheetForm extends Component {
                 initialDataToDisplay.push(<td align='right'>{0}</td>)
             }
         }
-        initialDataToDisplay.push(<td align='right'>{data[pos].total_earn_amount}</td>);
+        initialDataToDisplay.push(<td align='right'>{data[pos].total_earn_amount.toLocaleString()}</td>);
         initialDataToDisplay.push(<td>&nbsp;</td>)
 
         if(this.state.dedColsInGrid.length>0 && ps_values.length>0)
@@ -223,7 +223,7 @@ class PrintPaysheetForm extends Component {
                 {
                     if(this.state.dedColsInGrid[x] === ps_values[y].earn_ded_id)
                     {
-                        initialDataToDisplay.push(<td align='right'>{ps_values[y].amount}</td>);
+                        initialDataToDisplay.push(<td align='right'>{ps_values[y].amount.toLocaleString()}</td>);
                         oneBlankSpace=false;
                         break;
                     }
@@ -241,8 +241,8 @@ class PrintPaysheetForm extends Component {
                 initialDataToDisplay.push(<td align='right'>{0}</td>)
             }
         }
-        initialDataToDisplay.push(<td align='right'>{data[pos].total_ded_amount}</td>);
-        initialDataToDisplay.push(<td align='right'>{data[pos].net_amount}</td>)
+        initialDataToDisplay.push(<td align='right'>{data[pos].total_ded_amount.toLocaleString()}</td>);
+        initialDataToDisplay.push(<td align='right'>{data[pos].net_amount.toLocaleString()}</td>)
     }
 
     async setHeaders(data,initialDataToDisplay)

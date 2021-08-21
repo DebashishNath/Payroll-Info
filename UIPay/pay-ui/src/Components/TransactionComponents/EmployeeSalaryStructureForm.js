@@ -222,7 +222,7 @@ class EmployeeSalaryStructureForm extends PureComponent {
                         <td>{data[i].earnDedComponents.earn_ded_code}</td>
                         <td>{data[i].earnDedComponents.earn_ded_name}</td>
                         <td>{earnDedType}</td>
-                        <td>{earnDedAmt}</td>
+                        <td>{earnDedAmt.toLocaleString()}</td>
                         <td><Button color="primary" variant="contained" onClick={() => 
                             { this.displayOfEmpComponent(earnDedId,earnDedAmt) }}>Edit</Button></td>
                         </tr>);
