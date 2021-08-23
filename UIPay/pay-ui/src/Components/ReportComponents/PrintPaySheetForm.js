@@ -329,7 +329,7 @@ class PrintPaysheetForm extends Component {
     }    
 
     render() {
-        const paperStyle={padding:20,height:this.state.paperHeight,width:700,margin:"40px 100px",border: '5px solid brown'}
+        const paperStyle={padding:20,height:this.state.paperHeight,width:800,margin:"40px 100px",border: '5px solid brown'}
         const divStyle = {
             border: '5px solid green',
             height: '90vh',

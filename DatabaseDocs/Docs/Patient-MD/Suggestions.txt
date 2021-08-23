@@ -1,0 +1,8 @@
+a) Hrms - there should be a different loging and UI for employees
+b) Employees show get few are the options only
+c) 	1) personal details 
+	2) leave details including leave records, application, leave balance details, 
+	up coming holiday details 
+	3) Payslips tab - hr will upload payslips in tht tab and employees will 
+	get access to download or print the payslips 
+	4) resignation tab- where hr will set list of questions as exit interview
