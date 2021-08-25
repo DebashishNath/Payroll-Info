@@ -23,7 +23,7 @@ import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
 import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
 import EmployeesToPrint from '../ReportComponents/EmployeesToPrint';
-import TestForm from '../ReportComponents/TestForm';
+import ModalTestForm from '../ReportComponents/ModalTestForm';
 
 export default class MainMenuForm extends Component {
 
@@ -105,7 +105,7 @@ export default class MainMenuForm extends Component {
               <Route path='/printpayslip' exact component={PrintPaySlipForm}></Route>
               <Route path='/printpaysheet' exact component={PrintPaysheetForm}></Route>
               <Route path='/printemployeelist' exact component={EmployeesToPrint}></Route>
-              <Route path='/test' exact component={TestForm}></Route>
+              <Route path='/test' exact component={ModalTestForm}></Route>
             </switch>
           </Router>
           </Grid>

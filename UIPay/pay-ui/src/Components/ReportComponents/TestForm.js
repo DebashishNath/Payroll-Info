@@ -62,7 +62,7 @@ class TestForm extends React.Component {
         }
     }
     render() { 
-        const paperStyle={padding:20,height:200,width:300,margin:"40px 100px",border: '2px solid brown'}
+        const paperStyle={padding:20,height:150,width:300,margin:"0px 0px",border: '2px solid brown'}
         return(
             <Paper style={paperStyle} variant="outlined">
             <div>
@@ -75,11 +75,11 @@ class TestForm extends React.Component {
                 : null }
                 <Table>
                     <tr><td><label>Code</label></td>
-                        <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }}></TextField></td>
+                        <td><TextField id="code" variant='outlined' required style ={{width: '30%'}} inputProps={{ maxLength: 5 }} size="small"></TextField></td>
                     </tr>
                     <br/>
                     <tr><td><label>Name</label></td>
-                        <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }}></TextField></td>
+                        <td><TextField id="name" variant='outlined' required inputProps={{ maxLength: 25 }} size="small"></TextField></td>
                     </tr>
                     <br/>
                     <tr>
