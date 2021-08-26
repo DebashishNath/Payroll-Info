@@ -1,12 +1,21 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
+import { makeStyles, Dialog } from '@material-ui/core';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import TestForm from '../TestComponents/TestForm'
+
+const useStyles = makeStyles({
+  newPosOfDialog: {
+    position: "absolute",
+    top: "25%",
+    left: "40%",
+    transform: "translate(-50%, -50%)",
+  }
+});
 
 const styles = (theme) => ({
   root: {
@@ -20,7 +29,7 @@ const styles = (theme) => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],
-  },
+  }
 });
 
 const DialogTitle = withStyles(styles)((props) => {
@@ -51,9 +60,11 @@ export default function ModalTestForm({children,title}) {
     setOpen(false);
   };
 
+  const classes = useStyles();
+
   return (
     <div>
-      <Dialog margin="20px 40px" aria-labelledby="customized-dialog-title" open={open}>
+      <Dialog classes={{ paper: classes.newPosOfDialog }} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           {title}
         </DialogTitle>
