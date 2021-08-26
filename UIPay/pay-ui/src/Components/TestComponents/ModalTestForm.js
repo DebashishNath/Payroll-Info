@@ -6,7 +6,7 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import TestForm from '../ReportComponents/TestForm'
+import TestForm from '../TestComponents/TestForm'
 
 const styles = (theme) => ({
   root: {
@@ -53,7 +53,7 @@ export default function ModalTestForm({children,title}) {
 
   return (
     <div>
-      <Dialog aria-labelledby="customized-dialog-title" open={open}>
+      <Dialog margin="20px 40px" aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           {title}
         </DialogTitle>

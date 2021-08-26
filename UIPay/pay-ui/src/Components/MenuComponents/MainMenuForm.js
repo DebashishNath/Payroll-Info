@@ -23,7 +23,7 @@ import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
 import PrintPaysheetForm from '../ReportComponents/PrintPaySheetForm';
 import EmployeesToPrint from '../ReportComponents/EmployeesToPrint';
-import ModalTestForm from '../ReportComponents/ModalTestForm';
+import ModalTestForm from '../TestComponents/ModalTestForm';
 
 export default class MainMenuForm extends Component {
 
