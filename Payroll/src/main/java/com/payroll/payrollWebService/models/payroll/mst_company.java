@@ -16,10 +16,6 @@ public class mst_company {
     private String company_address2;
 
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "company_location_id", referencedColumnName = "location_id")
-    private mst_location location;
-
-    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "company_district_id", referencedColumnName = "district_id")
     private mst_district district;
 
@@ -72,14 +68,6 @@ public class mst_company {
 
     public void setCompany_address2(String company_address2) {
         this.company_address2 = company_address2;
-    }
-
-    public mst_location getLocation() {
-        return location;
-    }
-
-    public void setLocation(mst_location location) {
-        this.location = location;
     }
 
     public mst_district getDistrict() {

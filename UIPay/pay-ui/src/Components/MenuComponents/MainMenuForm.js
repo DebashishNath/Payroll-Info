@@ -6,6 +6,7 @@ import ReportIcon from '@material-ui/icons/Report';
 import Sidebar from "./Sidebar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
+import CompanyForm from "../MasterComponents/CompanyForm";
 import CategoryForm from "../MasterComponents/CategoryForm";
 import DepartmentForm from "../MasterComponents/DepartmentForm";
 import DesignationForm from "../MasterComponents/DesignationForm";
@@ -40,6 +41,7 @@ export default class MainMenuForm extends Component {
     const items = [
     { name: "master", label: "Master", Icon: HomeIcon,
         items: [
+          { name: "company", label: "Company", route: '/company', onClick },
           { name: "category", label: "Category", route: '/category', onClick },
           { name: "department", label: "Department",route: '/department', onClick },
           { name: "designation", label: "Designation",route: '/designation', onClick },
@@ -88,6 +90,7 @@ export default class MainMenuForm extends Component {
           <Router>
             <Sidebar items={items} />
             <switch>
+              <Route path='/company' exact component={CompanyForm} />
               <Route path='/category' exact component={CategoryForm} />
               <Route path='/department' exact component={DepartmentForm} />
               <Route path='/designation' exact component={DesignationForm} />
