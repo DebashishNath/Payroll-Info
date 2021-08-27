@@ -269,8 +269,8 @@ class CompanyForm extends Component {
         <Paper style={paperStyle} variant="outlined">
           <Table>
             <tr>
-              <td><TextField id="companyCode" variant='outlined' required  style ={{width: '50%'}} size="small"></TextField></td>
-              <td><TextField id="companyName" variant='outlined' required size="small"></TextField></td>
+              <td><TextField id="companyCode" variant='outlined' label='Code' required  style ={{width: '50%'}} size="small"></TextField></td>
+              <td><TextField id="companyName" variant='outlined' label='Company Name' required size="small"></TextField></td>
               <td><label id="lblCompanyId" value='0'></label></td>
             </tr>
             <br/>
