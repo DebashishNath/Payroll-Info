@@ -15,7 +15,6 @@ public class mst_menu_item {
     private String menu_item_name;
     private String menu_item_label;
     private String menu_item_route;
-    private String menu_item_show;
     private String menu_item_action;
 
     @Transient
@@ -61,14 +60,6 @@ public class mst_menu_item {
 
     public void setMenu_item_route(String menu_item_route) {
         this.menu_item_route = menu_item_route;
-    }
-
-    public String getMenu_item_show() {
-        return menu_item_show;
-    }
-
-    public void setMenu_item_show(String menu_item_show) {
-        this.menu_item_show = menu_item_show;
     }
 
     public String getMenu_item_action() {

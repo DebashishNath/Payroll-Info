@@ -58,7 +58,7 @@ class MenuServiceDAL extends MenuServiceImpl {
         }catch(Exception ex)
         {
             System.out.println(ex.getMessage());
-            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),"Failed to delete category");
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),"Failed to delete menu details");
             return msgResp;
         }
     }
