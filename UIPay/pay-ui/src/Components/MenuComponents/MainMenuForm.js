@@ -41,13 +41,13 @@ export default class MainMenuForm extends Component {
     const items = [
     { name: "master", label: "Master", Icon: HomeIcon,
         items: [
-          { name: "company", label: "Company", route: '/company',show:true, onClick },
-          { name: "category", label: "Category", route: '/category',show:false, onClick },
-          { name: "department", label: "Department",route: '/department',show:true, onClick },
-          { name: "designation", label: "Designation",route: '/designation',show:true, onClick },
-          { name: "holiday", label: "Holiday",route: '/holiday',show:true, onClick },
-          { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents',show:true, onClick },
-          { name: "employee", label: "Employee",route: '/list_employees',show:true, onClick }
+          { name: "company", label: "Company", route: '/company', onClick },
+          { name: "category", label: "Category", route: '/category', onClick },
+          { name: "department", label: "Department",route: '/department', onClick },
+          { name: "designation", label: "Designation",route: '/designation', onClick },
+          { name: "holiday", label: "Holiday",route: '/holiday', onClick },
+          { name: "earndedcomponents", label: "Earn Ded Component",route: '/earndedcomponents', onClick },
+          { name: "employee", label: "Employee",route: '/list_employees', onClick }
         ] },
         "divider",
         {
@@ -55,10 +55,10 @@ export default class MainMenuForm extends Component {
           label: "Transaction",
           Icon: ReceiptIcon,
           items: [
-            { name: "salarystructure", label: "Salary Structure",route: '/salarystructure',show:false, onClick },
-            { name: "listempleave", label: "Leave",route: '/listempleave',show:true, onClick },
-            { name: "generateattendance", label: "Generate Attendance",route: '/generateattendance',show:true, onClick },
-            { name: "generatepayslip", label: "Generate Payslip",route: '/generatepayslip',show:true, onClick },
+            { name: "salarystructure", label: "Salary Structure",route: '/salarystructure', onClick },
+            { name: "listempleave", label: "Leave",route: '/listempleave', onClick },
+            { name: "generateattendance", label: "Generate Attendance",route: '/generateattendance', onClick },
+            { name: "generatepayslip", label: "Generate Payslip",route: '/generatepayslip', onClick },
           ]
         },
         "divider",
