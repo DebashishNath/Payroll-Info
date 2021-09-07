@@ -22,6 +22,8 @@ public class trn_emp_attendance {
     @JoinColumn(name = "attendance_type_code", referencedColumnName = "attendance_type_code")
     private mst_attendance_type attendanceType;
 
+    private double no_hours_worked;
+
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "leave_type_code", referencedColumnName = "leave_type_code")
     private mst_leave_type leaveType;
@@ -34,11 +36,12 @@ public class trn_emp_attendance {
     public trn_emp_attendance(){}
 
     public trn_emp_attendance(AttendanceIdentity attendanceIdentity,
-                              mst_leave_type leaveType,mst_attendance_type attendanceType,
-                              String remarks)
+                              mst_leave_type leaveType,double no_hours_worked,
+                              mst_attendance_type attendanceType,String remarks)
     {
         this.attendanceIdentity =attendanceIdentity;
         this.attendanceType=attendanceType;
+        this.no_hours_worked=no_hours_worked;
         this.leaveType=leaveType;
         this.remarks=remarks;
     }
@@ -57,6 +60,14 @@ public class trn_emp_attendance {
 
     public void setAttendanceType(mst_attendance_type attendanceType) {
         this.attendanceType = attendanceType;
+    }
+
+    public double getNo_hours_worked() {
+        return no_hours_worked;
+    }
+
+    public void setNo_hours_worked(double no_hours_worked) {
+        this.no_hours_worked = no_hours_worked;
     }
 
     public mst_leave_type getLeaveType() {
