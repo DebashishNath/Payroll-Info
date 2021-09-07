@@ -166,7 +166,7 @@ class PrintSingleEmpAttendanceForm extends Component {
                 initialDataToDisplay.push(<tr>
                     <th>Slno</th>
                     <th>Date</th><th>Type</th>
-                    <th>Leave</th>
+                    <th>Hrs worked</th><th>Leave</th>
                     </tr>);
                 for (var i = 0; i < data.length; i++)
                 {
@@ -180,6 +180,7 @@ class PrintSingleEmpAttendanceForm extends Component {
                     initialDataToDisplay.push(<tr>
                         <td>{i+1}</td><td>{attendanceDate}</td>
                         <td>{data[i].attendanceType.attendance_type_code}</td>
+                        <td>{data[i].no_hours_worked}</td>
                         <td>{leaveTypeName}</td>
                     </tr>)
                 }
