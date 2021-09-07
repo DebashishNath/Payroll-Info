@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, TextField , Button,Paper,Select,MenuItem} from '@material-ui/core';
-import ProgressBar from "./progress-bar.component";
+import ProgressBar from "../CommonComponents/progress-bar.component";
 import MessageBoxForm from '../CommonComponents/MessageBoxForm';
 import HelperMethods from '../CommonComponents/HelperMethods';
 

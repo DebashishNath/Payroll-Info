@@ -123,19 +123,18 @@ class EmployeeTimesheetForm extends PureComponent {
                         </MessageBoxForm>
                     </div> : null}
                 <Table>
-                    <tr><td><label>Code</label></td>
-                        <td><label id ="EmpCode"></label></td>
-                        <td><label>Name</label></td>
+                    <tr>
+                        <td colspan='3'><label>Name&nbsp;</label></td>
                         <td><label id ="EmpName"></label></td>
                     </tr><br/>
-                    <tr><td><label>Date</label></td>
+                    <tr><td><label>Date&nbsp;</label></td>
                         <td>
-                            <TextField id="attendanceDate" label="" type="date" defaultValue=""
+                            <TextField id="attendanceDate" label="" type="date" defaultValue="" style ={{width: '90%'}}
                             InputLabelProps={{shrink: true,}} />
                         </td>
-                        <td><label>Hours </label></td>
+                        <td><label>Hours&nbsp;</label></td>
                         <td>
-                            <TextField id="noHoursWorked" variant='outlined' required  style ={{width: '50%'}} size="small" />
+                            <TextField id="noHoursWorked" variant='outlined' required  style ={{width: '40%'}} size="small" />
                         </td>
                     </tr><br/>
                     <tr>
