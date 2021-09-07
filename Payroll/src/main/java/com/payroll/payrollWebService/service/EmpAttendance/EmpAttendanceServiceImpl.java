@@ -8,6 +8,11 @@ import java.util.List;
 
 abstract public class EmpAttendanceServiceImpl implements EmpAttendanceService{
     @Override
+    public trn_emp_attendance save(trn_emp_attendance empAttendance){
+        return new EmpAttendanceServiceDAL().save(empAttendance);
+    }
+
+    @Override
     public MessageResponse GenerateAllAttendance(Integer p_month, Integer p_year) {
        return new EmpAttendanceServiceDAL().GenerateAllAttendance(p_month,p_year);
     }

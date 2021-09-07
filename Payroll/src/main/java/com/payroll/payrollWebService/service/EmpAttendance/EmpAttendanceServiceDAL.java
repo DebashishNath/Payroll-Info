@@ -2,6 +2,7 @@ package com.payroll.payrollWebService.service.EmpAttendance;
 
 import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.payroll.AttendanceIdentity;
+import com.payroll.payrollWebService.models.payroll.mst_category;
 import com.payroll.payrollWebService.models.payroll.mst_employee;
 import com.payroll.payrollWebService.models.payroll.trn_emp_attendance;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
@@ -30,6 +31,27 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
     @PersistenceContext
     private EntityManager em;
 
+    @Override
+    public trn_emp_attendance save(trn_emp_attendance empAttendance)
+    {
+        MessageResponse msgResp =new MessageResponse();
+        try
+        {
+            trn_emp_attendance attendanceToSave = empAttendanceRep.save(empAttendance);
+            msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
+                        "Attendance details updated successfully!");
+            attendanceToSave.setReturnMessage(msgResp);
+            return attendanceToSave;
+        }catch(Exception ex)
+        {
+            System.out.println("Error Is: " + ex.getMessage());
+            msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
+                    "Failed to update attendance details");
+            empAttendance.setReturnMessage(msgResp);
+            return empAttendance;
+        }
+    }
+    
     @Override
     public MessageResponse GenerateAllAttendance(Integer p_month, Integer p_year) {
         MessageResponse msp = new MessageResponse();

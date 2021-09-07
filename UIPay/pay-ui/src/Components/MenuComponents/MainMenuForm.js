@@ -19,6 +19,7 @@ import ListEmployeeLeaveForm from '../TransactionComponents/ListEmployeeLeaveFor
 import EmployeeLeaveForm from '../TransactionComponents/EmployeeLeaveForm';
 import PaySlipGenerationForm from '../TransactionComponents/PaySlipGenerationForm';
 import AttendanceGenerationForm from '../TransactionComponents/AttendanceGenerationForm';
+import EmployeeTimesheetForm from '../TransactionComponents/EmployeeTimesheetForm';
 import PrintPTAXMonthlyForm from '../ReportComponents/PrintPTAXMonthlyForm';
 import PrintPaySlipForm from '../ReportComponents/PrintPaySlipForm';
 import PrintSingleEmpAttendanceForm from '../ReportComponents/PrintSingleEmpAttendanceForm';
@@ -57,6 +58,7 @@ export default class MainMenuForm extends Component {
           items: [
             { name: "salarystructure", label: "Salary Structure",route: '/salarystructure', onClick },
             { name: "listempleave", label: "Leave",route: '/listempleave', onClick },
+            { name: "timesheet", label: "Timesheet",route: '/timesheet', onClick },
             { name: "generateattendance", label: "Generate Attendance",route: '/generateattendance', onClick },
             { name: "generatepayslip", label: "Generate Payslip",route: '/generatepayslip', onClick },
           ]
@@ -101,6 +103,7 @@ export default class MainMenuForm extends Component {
               <Route path="/salarystructure" exact component={EmployeeSalaryStructureForm} />
               <Route path="/listempleave" exact component={ListEmployeeLeaveForm} />
               <Route path="/empleave" exact component={EmployeeLeaveForm} />
+              <Route path="/timesheet" exact component={EmployeeTimesheetForm} />
               <Route path='/generateattendance' exact component={AttendanceGenerationForm}></Route>
               <Route path='/generatepayslip' exact component={PaySlipGenerationForm}></Route>
               <Route path='/ptaxmonthly' exact component={PrintPTAXMonthlyForm}></Route>

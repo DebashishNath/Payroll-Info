@@ -1,12 +1,16 @@
 package com.payroll.payrollWebService.controllers.payroll;
 
+import com.payroll.payrollWebService.models.common.CodeConstants;
 import com.payroll.payrollWebService.models.payroll.AttendanceIdentity;
+import com.payroll.payrollWebService.models.payroll.mst_category;
 import com.payroll.payrollWebService.models.payroll.trn_emp_attendance;
 import com.payroll.payrollWebService.payload.response.MessageResponse;
 import com.payroll.payrollWebService.service.EmpAttendance.EmpAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -15,6 +19,18 @@ import java.util.List;
 public class AttendanceController {
     @Autowired
     private EmpAttendanceService empAttendanceService;
+
+    @PostMapping("/save_attendance")
+    public ResponseEntity<?> saveAttendance(@Valid @RequestBody trn_emp_attendance emp_attendance) {
+        try
+        {
+            trn_emp_attendance attendanceToUpdate= empAttendanceService.save(emp_attendance);
+            return ResponseEntity.ok(new MessageResponse(attendanceToUpdate.getReturnMessage().getCode(),
+                    attendanceToUpdate.getReturnMessage().getMessage()));
+        }catch(Exception ex){
+            return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
+        }
+    }
 
     @PostMapping("/empattendance/{month}/{year}")
     public MessageResponse GenerateAttendance(@PathVariable(value = "month") Integer month,
