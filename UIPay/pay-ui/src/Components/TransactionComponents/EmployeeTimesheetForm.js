@@ -19,7 +19,11 @@ class EmployeeTimesheetForm extends PureComponent {
 
     componentDidMount()
     {
-        
+        try
+        {
+            this.setState({empId:localStorage.getItem('loginEmpId')});
+            document.getElementById("empName").innerHTML = localStorage.getItem('loginEmpName');
+        }catch(err){}
     }
  
 
@@ -48,7 +52,7 @@ class EmployeeTimesheetForm extends PureComponent {
         await this.showMessage(false,'', '','');
 
         if((this.state.empId ===0) || 
-            (document.getElementById("EmpCode").innerHTML.trim().length === 0))
+            (document.getElementById("empName").innerHTML.trim().length === 0))
         {
             await this.showMessage(true,'Error Information', 'No Employee have been selected for entering attendance','');
             return false;
@@ -78,15 +82,19 @@ class EmployeeTimesheetForm extends PureComponent {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
                         'Authorization' : 'Bearer ' + localStorage.getItem('tokenValue') },
-            body: JSON.stringify({
-                "month" : 4,
-                "year"  : 2021,
-                "emp" : {"emp_id" : this.state.empId },
-                "attendance_date" : document.getElementById("attendanceDate").value,
-                "attendance_type_code" : "P",
+            body: JSON.stringify
+            ({
+                "attendanceIdentity": 
+                { 
+                    "month" : 4,
+                    "year"  : 2021,
+                    "emp_id" : this.state.empId,
+                    "attendance_date" : document.getElementById("attendanceDate").value
+                },
+                "attendanceType" : {"attendance_type_code" : "P" },
                 "no_hours_worked" : document.getElementById("noHoursWorked").value
-                })
-            };
+            })
+        };
     
         let url= HelperMethods.GetServerIP() + 'api/save_attendance';
         
@@ -124,8 +132,8 @@ class EmployeeTimesheetForm extends PureComponent {
                     </div> : null}
                 <Table>
                     <tr>
-                        <td colspan='3'><label>Name&nbsp;</label></td>
-                        <td><label id ="EmpName"></label></td>
+                        <td><label>Name&nbsp;</label></td>
+                        <td colspan='3'><label id ="empName"></label></td>
                     </tr><br/>
                     <tr><td><label>Date&nbsp;</label></td>
                         <td>

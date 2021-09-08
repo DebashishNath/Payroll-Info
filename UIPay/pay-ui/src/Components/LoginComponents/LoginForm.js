@@ -46,6 +46,21 @@ function LoginContent()
         {
           localStorage.setItem('userId',data.id);
           localStorage.setItem('userName',data.username);
+          var name="";
+          if(data.employee!=null)
+          {
+            localStorage.setItem('loginEmpId',data.employee.emp_id);
+                        
+            if(data.employee.emp_middle_name.trim().length > 0)
+            {
+              name=data.employee.emp_code + " -- " + data.employee.emp_first_name + " " + data.employee.emp_middle_name + " " + data.employee.emp_last_name;
+            }
+            else
+            {
+              name=data.employee.emp_code + " -- " + data.employee.emp_first_name + " " + data.employee.emp_last_name;
+            }
+          }
+          localStorage.setItem('loginEmpName',name);
           localStorage.setItem('tokenValue',data.accessToken);
           let todayDate=new Date();
           localStorage.setItem('TodayDate',moment(todayDate).format('DD-MMM-YYYY'));

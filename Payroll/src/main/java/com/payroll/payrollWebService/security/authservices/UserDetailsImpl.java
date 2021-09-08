@@ -6,11 +6,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.payroll.payrollWebService.models.auth.User;
+import com.payroll.payrollWebService.models.payroll.mst_employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
@@ -26,12 +31,17 @@ public class UserDetailsImpl implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
+	@OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "emp_id", referencedColumnName = "emp_id")
+	private mst_employee employee;
+
 	public UserDetailsImpl(Long id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+			mst_employee employee,Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.employee=employee;
 		this.authorities = authorities;
 	}
 
@@ -44,7 +54,8 @@ public class UserDetailsImpl implements UserDetails {
 				user.getId(), 
 				user.getUsername(), 
 				user.getEmail(),
-				user.getPassword(), 
+				user.getPassword(),
+				user.getEmployee(),
 				authorities);
 	}
 
@@ -69,6 +80,10 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 		return username;
+	}
+
+	public mst_employee getEmployee() {
+		return employee;
 	}
 
 	@Override

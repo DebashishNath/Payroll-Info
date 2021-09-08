@@ -1,7 +1,11 @@
 package com.payroll.payrollWebService.payload.response;
 
 import com.payroll.payrollWebService.models.auth.Role;
+import com.payroll.payrollWebService.models.payroll.mst_employee;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,14 +16,21 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private Set<Role> roles=new HashSet<>();
+
+	@OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "emp_id", referencedColumnName = "emp_id")
+	private mst_employee employee;
+
 	private MessageResponse returnMessage;
 
 	public JwtResponse(String accessToken, Long id, String username, String email,
-					   Set<Role> userRoles, MessageResponse returnMessage) {
+					   mst_employee employee,Set<Role> userRoles,
+					   MessageResponse returnMessage) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
+		this.employee=employee;
 		this.roles = userRoles;
 		this.returnMessage = returnMessage;
 	}
@@ -62,6 +73,14 @@ public class JwtResponse {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public mst_employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(mst_employee employee) {
+		this.employee = employee;
 	}
 
 	public Set<Role> getRoles() {

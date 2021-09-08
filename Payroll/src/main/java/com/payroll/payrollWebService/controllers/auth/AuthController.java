@@ -89,11 +89,12 @@ public class AuthController {
 					userDetails.getId(),
 					userDetails.getUsername(),
 					userDetails.getEmail(),
+					userDetails.getEmployee(),
 					userRoles, new MessageResponse(CodeConstants.SUCCESS.getID(),
 					"Successful Sign in.")));
 		}catch(Exception ex){
 			return ResponseEntity.ok(new JwtResponse("",new Long(0),
-					"","",null,
+					"","",null,null,
 					new MessageResponse(CodeConstants.UNAUTHORIZED.getID(),
 					"Invalid login/Password")));
 		}
@@ -113,7 +114,7 @@ public class AuthController {
 
 			User user = new User(signUpRequest.getUsername(),
 					encoder.encode(signUpRequest.getPassword()),
-					signUpRequest.getEmail());
+					signUpRequest.getEmail(), signUpRequest.getEmployee());
 
 			if (signUpRequest.getRoles() != null) {
 				System.out.println("Inside getRoles() values");

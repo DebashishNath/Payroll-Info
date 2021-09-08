@@ -1,5 +1,7 @@
 package com.payroll.payrollWebService.models.auth;
 
+import com.payroll.payrollWebService.models.payroll.mst_employee;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -26,6 +28,10 @@ public class User {
 	@Size(max = 120)
 	private String email;
 
+	@OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "emp_id", referencedColumnName = "emp_id")
+	private mst_employee employee;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "trn_user_roles",
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -37,10 +43,11 @@ public class User {
 
 	public User() {}
 
-	public User(String username, String password,String email) {
+	public User(String username, String password,String email,mst_employee employee) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.employee=employee;
 	}
 
 	public Long getId() {
@@ -73,6 +80,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public mst_employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(mst_employee employee) {
+		this.employee = employee;
 	}
 
 	public Set<Role> getRoles() {
