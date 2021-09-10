@@ -13,6 +13,11 @@ import javax.persistence.*;
         procedureName="GenerateMonthlyAttendance",
         resultClasses = { trn_emp_attendance.class }
 )
+@NamedStoredProcedureQuery(
+        name="ManageSingleEmpAttendance",
+        procedureName="ManageSingleEmpAttendance",
+        resultClasses = { trn_emp_attendance.class }
+)
 public class trn_emp_attendance {
 
     @EmbeddedId

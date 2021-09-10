@@ -75,7 +75,8 @@ class EmployeeTimesheetForm extends PureComponent {
         {
             return;
         }
-            
+        var attendanceDate=document.getElementById("attendanceDate").value;
+        
         const requestOptions = 
         {
             crossDomain:true,
@@ -86,10 +87,10 @@ class EmployeeTimesheetForm extends PureComponent {
             ({
                 "attendanceIdentity": 
                 { 
-                    "month" : 4,
-                    "year"  : 2021,
+                    "month" : attendanceDate.substring(5,7),
+                    "year"  : attendanceDate.substring(0,4),
                     "emp_id" : this.state.empId,
-                    "attendance_date" : document.getElementById("attendanceDate").value
+                    "attendance_date" : attendanceDate
                 },
                 "attendanceType" : {"attendance_type_code" : "P" },
                 "no_hours_worked" : document.getElementById("noHoursWorked").value

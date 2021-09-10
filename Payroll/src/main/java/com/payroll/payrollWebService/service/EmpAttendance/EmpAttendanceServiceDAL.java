@@ -16,6 +16,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import java.time.Month;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,24 +33,36 @@ class EmpAttendanceServiceDAL extends EmpAttendanceServiceImpl {
     private EntityManager em;
 
     @Override
-    public trn_emp_attendance save(trn_emp_attendance empAttendance)
+    public MessageResponse ManageSingleEmpAttendance(trn_emp_attendance empAttendance)
     {
         MessageResponse msgResp =new MessageResponse();
         try
         {
-            trn_emp_attendance attendanceToSave = empAttendanceRep.save(empAttendance);
-            msgResp = new MessageResponse(CodeConstants.SUCCESS.getID(),
-                        "Attendance details updated successfully!");
-            attendanceToSave.setReturnMessage(msgResp);
-            return attendanceToSave;
+            StoredProcedureQuery generateAttendance =
+                    em.createNamedStoredProcedureQuery("ManageSingleEmpAttendance")
+                            .registerStoredProcedureParameter("p_month", Integer.class, ParameterMode.IN)
+                            .setParameter("p_month", empAttendance.getAttendanceIdentity().getMonth())
+                            .registerStoredProcedureParameter("p_year", Integer.class, ParameterMode.IN)
+                            .setParameter("p_year", empAttendance.getAttendanceIdentity().getYear())
+                            .registerStoredProcedureParameter("p_emp_id", Long.class, ParameterMode.IN)
+                            .setParameter("p_emp_id", empAttendance.getAttendanceIdentity().getEmp_id())
+                            .registerStoredProcedureParameter("p_attendance_date", Date.class, ParameterMode.IN)
+                            .setParameter("p_attendance_date", empAttendance.getAttendanceIdentity().getAttendance_date())
+                            .registerStoredProcedureParameter("p_no_hours_worked", Double.class, ParameterMode.IN)
+                            .setParameter("p_no_hours_worked", empAttendance.getNo_hours_worked())
+                            .registerStoredProcedureParameter("p_return_message", String.class, ParameterMode.OUT);
+            generateAttendance.execute();
+            String returnMsg= (String)generateAttendance.getOutputParameterValue("p_return_message");
+            msgResp.setCode(Integer.parseInt(returnMsg.substring(0,1)));
+            msgResp.setMessage(returnMsg.substring(2));
         }catch(Exception ex)
         {
             System.out.println("Error Is: " + ex.getMessage());
             msgResp = new MessageResponse(CodeConstants.FAILURE.getID(),
                     "Failed to update attendance details");
             empAttendance.setReturnMessage(msgResp);
-            return empAttendance;
         }
+        return msgResp;
     }
     
     @Override

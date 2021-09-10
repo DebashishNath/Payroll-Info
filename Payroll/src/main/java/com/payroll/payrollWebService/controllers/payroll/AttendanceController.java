@@ -21,14 +21,12 @@ public class AttendanceController {
     private EmpAttendanceService empAttendanceService;
 
     @PostMapping("/save_attendance")
-    public ResponseEntity<?> saveAttendance(@Valid @RequestBody trn_emp_attendance emp_attendance) {
+    public MessageResponse ManageSingleEmpAttendance(@Valid @RequestBody trn_emp_attendance emp_attendance) {
         try
         {
-            trn_emp_attendance attendanceToUpdate= empAttendanceService.save(emp_attendance);
-            return ResponseEntity.ok(new MessageResponse(attendanceToUpdate.getReturnMessage().getCode(),
-                    attendanceToUpdate.getReturnMessage().getMessage()));
+            return empAttendanceService.ManageSingleEmpAttendance(emp_attendance);
         }catch(Exception ex){
-            return ResponseEntity.ok(new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage()));
+            return new MessageResponse(CodeConstants.FAILURE.getID(),ex.getMessage());
         }
     }
 

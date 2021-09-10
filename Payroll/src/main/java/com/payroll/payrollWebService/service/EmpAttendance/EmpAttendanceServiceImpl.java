@@ -8,8 +8,8 @@ import java.util.List;
 
 abstract public class EmpAttendanceServiceImpl implements EmpAttendanceService{
     @Override
-    public trn_emp_attendance save(trn_emp_attendance empAttendance){
-        return new EmpAttendanceServiceDAL().save(empAttendance);
+    public MessageResponse ManageSingleEmpAttendance(trn_emp_attendance empAttendance){
+        return new EmpAttendanceServiceDAL().ManageSingleEmpAttendance(empAttendance);
     }
 
     @Override

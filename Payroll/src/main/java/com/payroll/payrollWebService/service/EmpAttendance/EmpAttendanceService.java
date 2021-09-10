@@ -7,7 +7,7 @@ import com.payroll.payrollWebService.payload.response.MessageResponse;
 import java.util.List;
 
 public interface EmpAttendanceService {
-    trn_emp_attendance save(trn_emp_attendance empAttendance);
+    MessageResponse ManageSingleEmpAttendance(trn_emp_attendance empAttendance);
     MessageResponse GenerateAllAttendance(Integer p_month, Integer p_year);
     List<trn_emp_attendance> GetAttendanceOfSingleEmployee(AttendanceIdentity attendanceIdentity);
 }
